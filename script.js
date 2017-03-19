@@ -10,55 +10,52 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     alert('The File APIs are not fully supported in this browser.');
 }
 
-var text, obj, stringifyObj;
-//    document.getElementById("h").innerHTML = "TESP";
-//    text = localStorage.getItem("test.json");
-//    obj = { "name":"John", "age":31, "city":"New York" };
-// text = <?php echo $jsonFile; ?>;
-obj = JSON.parse(text);
-stringifyObj = (obj);
-//
-for (var a in obj) {
-    document.getElementById("loop").innerHTML += a.concat(", ");
-}
-
-for (var b in obj) {
-    document.getElementById("loop2").innerHTML += obj[b] + "<br>";
-}
-
-
-for(var c in obj){
-//        if(obj[c].toString().search("[object Object]") >= 0){
-//            document.getElementById("debug").innerHTML += c+", "+obj[c];
-//        }
-    if(obj[c] == "[object Object]"){
-        document.getElementById("loop3").innerHTML += "<h1>"+ c +"</h1>"
-            + loopMore(JSON.stringify(obj[c])) + "<br>";
-
-    }else{
-        document.getElementById("loop3").innerHTML += "<h1>"+ c +"</h1>" + obj[c]
-            + "<br>";
+function randomStuff() {
+    // create nav anchor links
+    id = "#";
+    for (var x in obj) {
+        document.getElementById("nav").innerHTML += "<a href="+id.concat(x)+">" +x+"</a>" + "\t";
     }
-}
-function loopMore(objText) {
-    var json = JSON.parse(objText);
-    var str = " ";
-    for(var c in json){
-        if(json[c] == "[object Object]"){
-            str += loopMore(JSON.stringify(json[c])) + " ";
-        }else{
-            if(true) {// <--- FIXEME json[c].toString().search("[{") >= 0
-                str += "<br><h3>" + c + "</h3><br> " + json[c];
-            } else {
-                str += "<br><h3>" + c + "</h3><br> " + JSON.stringify(json[c]);
-            }
-        }
-    }
-    return str;
+
+    // create textarea to edit items
+    $(document).ready(function(){
+        $("h2").click(function () {
+            $(this).after("<br> <textarea name='text_change'> </textarea> <br>");
+            $(this).after("<br> <input type='submit' value='Save Changes'> <br>");
+        });
+
+        // color hierarchy
+        $("h2").css("color", "purple");
+        $("h3").css("color", "blue");
+        $("p").css("color", "green");
+
+
+
+
+    });
+
+
 }
 
-document.getElementById("h").innerHTML += obj.definitions.Error.properties.code.format;
-document.getElementById("stringifyJson").innerHTML = JSON.stringify(obj);
+
+
+
+
+
+/**
+ *
+ * TODO:   1. click on element show a submit button that says edit/add/remove /  cancel button
+ *         2. display something(i.e alert box, text box/area) to enter text to edit the text
+ *         3. submit button updates changes
+ *         4. AvidXchange css stuff
+ *         5. add API test file to remote server and get from server
+ *         6. process to add and modify APIs
+ *
+ *
+ *
+ *
+ **/
+
 
 
 
