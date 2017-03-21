@@ -11,11 +11,24 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 
 function randomStuff() {
+    // for(var x in obj){
+    //     // document.getElementById("debug").innerHTML +=  x + "1: "+obj[x]+"<br>";
+    //     document.getElementById("debug").innerHTML += x+"<br> ";
+    //     for(var y in obj[x]){
+    //         // document.getElementById("debug").innerHTML += y + "2: " + x + "2: "+obj[x][y]+", "+"<br>";
+    //         for(var z in obj[x][y]){
+    //             // document.getElementById("debug").innerHTML += x+", "+y+", "+z+", " + "3: " + x + "3: "+obj[x]+". "+obj[x][y]+". "+obj[x][y][z]+", "+"<br>";
+    //             document.getElementById("debug").innerHTML += z+"<br>" + "<br>"+obj[x][y][z]+"<br>";
+    //
+    //         }
+    //     }
+    // }
     // create nav anchor links
     id = "#";
     for (var x in obj) {
         document.getElementById("nav").innerHTML += "<a href="+id.concat(x)+">" +x+"</a>" + "\t";
     }
+
 
     // create textarea to edit items
     $(document).ready(function(){
