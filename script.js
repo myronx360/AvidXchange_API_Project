@@ -23,19 +23,47 @@ function randomStuff() {
     //         }
     //     }
     // }
-    // create nav anchor links
-    id = "#";
-    for (var x in obj) {
-        document.getElementById("nav").innerHTML += "<a href="+id.concat(x)+">" +x+"</a>" + "\t";
-    }
+
 
 
     // create textarea to edit items
     $(document).ready(function(){
-        $("h2").click(function () {
-            $(this).after("<br> <textarea name='text_change'> </textarea> <br>");
-            $(this).after("<br> <input type='submit' value='Save Changes'> <br>");
+        var isEditing = false;
+        $("h2,h3,p").click(function () {
+            startEdit(this);
         });
+        function startEdit(elementClicked) {
+
+            var textArea = "<br> <textarea name='text_change'></textarea> <br>";
+            var confirmBtn = "<br> <input type='button' name='confirm_btn' value='Confirm Changes'> <br>";
+            var cancelBtn = "<br> <input type='button' name='cancel_btn' value='Cancel'> <br>";
+
+                if(!isEditing) {
+                    isEditing = true;
+                    $(elementClicked).after("<div id='editor'></div>");
+                    $("#editor").html(textArea+confirmBtn+cancelBtn);
+                    $("[name='text_change']").val($(this).text());
+                }else{
+                    isEditing = false;
+                    $("#editor").html("");
+                    // $("#editor").hide();
+                    startEdit();
+                }
+                $("[name='confirm_btn']").click(function () {
+                    isEditing = false;
+                });
+                $("[name='cancel_btn']").click(function () {
+                    isEditing = false;
+                    $("#editor").html("");
+                    // $("#editor").hide();
+                });
+
+                $("#nav").click(function () {
+                    alert(isEditing);
+                })
+
+        }
+
 
         // color hierarchy
         $("h2").css("color", "purple");

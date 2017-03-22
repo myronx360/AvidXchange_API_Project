@@ -1,9 +1,9 @@
 <?php
 
-$jsonFile = file_get_contents("jsonFiles/UberAPI.json");
+//$jsonFile = file_get_contents("jsonFiles/UberAPI.json");
 //$jsonFile = file_get_contents("jsonFiles/test.json");
 //$jsonFile = file_get_contents("jsonFiles/fitbitAPI.json");
-//$jsonFile = file_get_contents("jsonFiles/TwitterAPI.json");
+$jsonFile = file_get_contents("jsonFiles/TwitterAPI.json");
 $jsonFile = json_encode($jsonFile);
 ?>
 <!DOCTYPE html>
@@ -20,8 +20,10 @@ $jsonFile = json_encode($jsonFile);
 <h1>Getting Started</h1>
 <form action="" method="post">
     <div id="divJson">Use recursion to access everything:</div>
-</form>
+    <input type="hidden" name="jsonFile" value="">
 
+    <input type="file" name="jsonFileBox">
+</form>
 
     <p id="debug">Debug for loop:<br></p>
 
@@ -36,7 +38,27 @@ $jsonFile = json_encode($jsonFile);
 
 
 <script>
-    var obj = JSON.parse(<?php echo $jsonFile; ?>);
+    //test json files
+
+      var apiUrl = "jsonFiles/UberAPI.json"
+//    var apiUrl = "jsonFiles/test.json"
+//    var apiUrl = "jsonFiles/fitbitAPI.json"
+//    var apiUrl = "jsonFiles/TwitterAPI.json"
+
+
+
+
+//    $.getJSON(apiUrl, function(result){
+//        transverseJSON(result);
+//    });
+
+    $.ajax({url: apiUrl, async: false, success: function(result){
+        transverseJSON(result);
+    }});
+
+
+
+//    var obj = JSON.parse(<?php //echo $jsonFile; ?>//);
     transverseJSON();
     randomStuff();
 

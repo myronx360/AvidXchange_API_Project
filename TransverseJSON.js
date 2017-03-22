@@ -2,7 +2,12 @@
  * Created by mxw13 on 3/18/2017.
  */
 
-function transverseJSON() {
+function transverseJSON(obj) {
+    // create nav anchor links
+    id = "#";
+    for (var x in obj) {
+        document.getElementById("nav").innerHTML += "<a href="+id.concat(x)+">" +x+"</a>" + "\t";
+    }
 
 // prints top level headings
     for (var c in obj) {
@@ -23,7 +28,7 @@ function transverseJSON() {
             if (json[c] == "[object Object]") { // transverse further through the JSON object array
                 if (isNaN(c)) {
                     str += "<br><h3>" + c + "</h3> " + loopMore(JSON.stringify(json[c])) + " ";
-                }else {// is an array of objects
+                }else {// is the start of an array of [objects Objects]
                     for(var x in json[c]){
                        str += "<br><h3>" + x + "</h3> ";
                         for(var y in json[c][x]){
