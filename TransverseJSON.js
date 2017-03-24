@@ -1,12 +1,12 @@
 /**
- * Created by mxw13 on 3/18/2017.
+ * Created by Myron on 3/18/2017.
  */
 
 function transverseJSON(obj) {
+    var wholeStr = "";
     // create nav anchor links
-    id = "#";
     for (var x in obj) {
-        document.getElementById("nav").innerHTML += "<a href="+id.concat(x)+">" +x+"</a>" + "\t";
+        document.getElementById("nav").innerHTML += "<a href="+'#'.concat(x)+">" +x+"</a>" + "\t";
     }
 
 // prints top level headings
@@ -14,9 +14,11 @@ function transverseJSON(obj) {
         if (obj[c] == "[object Object]" || Array.isArray(obj[c])) {
             // start transversing the JSON object array
             document.getElementById("divJson").innerHTML += "<div id="+ c +"><h2>" + c + "</h2></div>" + loopMore(JSON.stringify(obj[c])) + "<br>";
+            wholeStr += "<div id="+ c +"><h2>" + c + "</h2></div>" + loopMore(JSON.stringify(obj[c])) + "<br>";
         } else {
             // show the value of the JSON object
             document.getElementById("divJson").innerHTML += "<div id="+ c +"><h2>" + c + "</h2></div>" + "<p>" + obj[c] + "</p>";
+            wholeStr += "<div id="+ c +"><h2>" + c + "</h2></div>" + "<p>" + obj[c] + "</p>";
         }
     }
 
@@ -57,4 +59,5 @@ function transverseJSON(obj) {
         }
         return str;
     }
+    return wholeStr;
 }

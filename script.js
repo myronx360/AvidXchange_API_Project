@@ -30,7 +30,9 @@ function randomStuff() {
     $(document).ready(function(){
         var isEditing = false;
         $("h2,h3,p").click(function () {
-            startEdit(this);
+            // if(!isEditing) {
+                startEdit(this);
+            // }
         });
         function startEdit(elementClicked) {
 
@@ -42,26 +44,26 @@ function randomStuff() {
                     isEditing = true;
                     $(elementClicked).after("<div id='editor'></div>");
                     $("#editor").html(textArea+confirmBtn+cancelBtn);
-                    $("[name='text_change']").val($(this).text());
+                    $("[name='text_change']").val($(elementClicked).text());
                 }else{
-                    isEditing = false;
-                    $("#editor").html("");
-                    // $("#editor").hide();
-                    startEdit();
+                    reset();
                 }
                 $("[name='confirm_btn']").click(function () {
                     isEditing = false;
                 });
                 $("[name='cancel_btn']").click(function () {
-                    isEditing = false;
-                    $("#editor").html("");
-                    // $("#editor").hide();
+                    reset();
                 });
 
                 $("#nav").click(function () {
-                    alert(isEditing);
+                    // alert(isEditing);
                 })
 
+        }
+
+        function reset() {
+            isEditing = false;
+            $("#editor").remove();
         }
 
 

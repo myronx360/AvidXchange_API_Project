@@ -3,8 +3,8 @@
 //$jsonFile = file_get_contents("jsonFiles/UberAPI.json");
 //$jsonFile = file_get_contents("jsonFiles/test.json");
 //$jsonFile = file_get_contents("jsonFiles/fitbitAPI.json");
-$jsonFile = file_get_contents("jsonFiles/TwitterAPI.json");
-$jsonFile = json_encode($jsonFile);
+//$jsonFile = file_get_contents("jsonFiles/TwitterAPI.json");
+//$jsonFile = json_encode($jsonFile);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,11 +19,21 @@ $jsonFile = json_encode($jsonFile);
 <nav id="nav">Jump to: </nav>
 <h1>Getting Started</h1>
 <form action="" method="post">
+
     <div id="divJson">Use recursion to access everything:</div>
     <input type="hidden" name="jsonFile" value="">
 
     <input type="file" name="jsonFileBox">
 </form>
+<!--<div ng-app="myApp" ng-controller="myCtrl">-->
+<!--Select a API:-->
+<!--<select id="apiSelector" name="apiSelector"  ng-model="apiViewer">-->
+<!--<option value="">Select an API:</option>-->
+<!--</select>-->
+<!--{{apiViewer}}-->
+<!--<div id="displayAPI"><b>API info will be listed here...</b></div>-->
+<!--<!--    <div>{{apiViewer}}</div>-->-->
+<!--</div>-->
 
     <p id="debug">Debug for loop:<br></p>
 
@@ -45,21 +55,93 @@ $jsonFile = json_encode($jsonFile);
 //    var apiUrl = "jsonFiles/fitbitAPI.json"
 //    var apiUrl = "jsonFiles/TwitterAPI.json"
 
+    // API list
+//    var apiURLList = [
+//        "jsonFiles/UberAPI.json",
+//        "jsonFiles/test.json",
+//        "jsonFiles/fitbitAPI.json",
+//        "jsonFiles/TwitterAPI.json"
+//    ];
 
+//    // show a list of API names
+//    for(var i = 0; i < apiURLList.length; i++){
+//       var name = getURLName(apiURLList[i]);
+//        document.getElementById("apiSelector").innerHTML += "<option value= "+apiURLList[i]+">"+name+"</option>";
+//    }
 
+//    function getURLName(apiURL) {
+//        var pos1 = apiURL.lastIndexOf("/");
+//        var pos2 = apiURL.lastIndexOf(".");
+//        var name = apiURL.slice(pos1+1, pos2);
+//        return name;
+//    }
+
+//    var app = angular.module('myApp', []);
+//    app.controller('myCtrl', function($scope) {
+//        $.ajax({
+//            url: $scope.apiViewer, async: false, success: function (result) {
+//                transverseJSON(result);
+//            }
+//        });
+//        });
 
 //    $.getJSON(apiUrl, function(result){
 //        transverseJSON(result);
 //    });
+//    var tre = "fgfgfd";
+<?php
+//    if (isset($_POST["apiSelector"])  && ($_POST["apiSelector"] != "")) {
+//        echo "document.getElementById('debug').innerHTML+='test1';"; ?>
+//       $.ajax({url:<?php //echo $_POST['apiSelector'] ?>//, async: false, success: function(result){
+//            transverseJSON(result);
+//        }});
+//         document.getElementById('debug').innerHTML+='test2';
+//
+//
+//        <?php // }else{
+//        echo "document.getElementById('debug').innerHTML+='test3';";
+//    }
+//    ?>
+//
+//    function showAPI(apiURL) {
+//        apiUrl = $("apiSelector").val();
+//        $.ajax({
+//            url: apiUrl, async: false, success: function (result) {
+//                transverseJSON(result);
+//            }
+//        });
+//    }
+
 
     $.ajax({url: apiUrl, async: false, success: function(result){
         transverseJSON(result);
     }});
 
 
+//    function showAPI(apiURL) {
+//        if (apiURL=="") {
+//            document.getElementById("displayAPI").innerHTML="";
+//            return;
+//        }
+//        if (window.XMLHttpRequest) {
+//            // code for IE7+, Firefox, Chrome, Opera, Safari
+//            xmlhttp=new XMLHttpRequest();
+//        } else {  // code for IE6, IE5
+//            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//        }
+//        xmlhttp.onreadystatechange=function() {
+//            if (this.readyState==4 && this.status==200) {
+//                document.getElementById("displayAPI").innerHTML=this.responseText;
+//            }
+//        }
+//        var name = getURLName(apiURL)
+//        xmlhttp.open("POST","index.php",true);
+//        xmlhttp.send();
+//    }
+
+
 
 //    var obj = JSON.parse(<?php //echo $jsonFile; ?>//);
-    transverseJSON();
     randomStuff();
 
 
