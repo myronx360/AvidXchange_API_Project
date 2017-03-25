@@ -3,6 +3,10 @@
  */
 
 function transverseJSON(obj) {
+    // $("#nav").remove();
+    // $("#divJson").remove();
+    document.getElementById("nav").innerHTML = "";
+    document.getElementById("divJson").innerHTML = "";
     var wholeStr = "";
     // create nav anchor links
     for (var x in obj) {

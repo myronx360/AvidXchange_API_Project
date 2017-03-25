@@ -1,4 +1,10 @@
 <?php
+$dir = "jsonFiles/";
+$dh  = opendir($dir);
+while (false !== ($filename = readdir($dh))) {
+    $files[] = $filename;
+}
+
 
 //$jsonFile = file_get_contents("jsonFiles/UberAPI.json");
 //$jsonFile = file_get_contents("jsonFiles/test.json");
@@ -16,9 +22,19 @@
 </head>
 <body>
 <header></header>
-<nav id="nav">Jump to: </nav>
+Jump to:<nav id="nav"> </nav>
 <h1>Getting Started</h1>
 <form action="" method="post">
+
+    Select a API:
+    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
+    <option value="">Select an API:</option>
+        <?php foreach ($files as $file):?>
+            <?php if(!($file == "." || $file == "..")):?> // this has a not
+                <option value="<?php echo $dir.$file; ?>"> <?php echo $file; ?> </option>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </select>
 
     <div id="divJson">Use recursion to access everything:</div>
     <input type="hidden" name="jsonFile" value="">
@@ -49,32 +65,18 @@
 
 <script>
     //test json files
+    function setFile(file) {
+//        alert(file);
 
-      var apiUrl = "jsonFiles/UberAPI.json"
-//    var apiUrl = "jsonFiles/test.json"
-//    var apiUrl = "jsonFiles/fitbitAPI.json"
-//    var apiUrl = "jsonFiles/TwitterAPI.json"
 
-    // API list
-//    var apiURLList = [
-//        "jsonFiles/UberAPI.json",
-//        "jsonFiles/test.json",
-//        "jsonFiles/fitbitAPI.json",
-//        "jsonFiles/TwitterAPI.json"
-//    ];
+        apiUrl = file;
+        $.ajax({url: apiUrl, async: false, success: function(result){
+            transverseJSON(result);
+        }});
 
-//    // show a list of API names
-//    for(var i = 0; i < apiURLList.length; i++){
-//       var name = getURLName(apiURLList[i]);
-//        document.getElementById("apiSelector").innerHTML += "<option value= "+apiURLList[i]+">"+name+"</option>";
-//    }
+        randomStuff();
+    }
 
-//    function getURLName(apiURL) {
-//        var pos1 = apiURL.lastIndexOf("/");
-//        var pos2 = apiURL.lastIndexOf(".");
-//        var name = apiURL.slice(pos1+1, pos2);
-//        return name;
-//    }
 
 //    var app = angular.module('myApp', []);
 //    app.controller('myCtrl', function($scope) {
@@ -88,7 +90,6 @@
 //    $.getJSON(apiUrl, function(result){
 //        transverseJSON(result);
 //    });
-//    var tre = "fgfgfd";
 <?php
 //    if (isset($_POST["apiSelector"])  && ($_POST["apiSelector"] != "")) {
 //        echo "document.getElementById('debug').innerHTML+='test1';"; ?>
@@ -113,9 +114,6 @@
 //    }
 
 
-    $.ajax({url: apiUrl, async: false, success: function(result){
-        transverseJSON(result);
-    }});
 
 
 //    function showAPI(apiURL) {
@@ -142,7 +140,7 @@
 
 
 //    var obj = JSON.parse(<?php //echo $jsonFile; ?>//);
-    randomStuff();
+
 
 
 
