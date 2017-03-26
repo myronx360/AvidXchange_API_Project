@@ -12,33 +12,34 @@ $target_dir = "jsonFiles/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $APIFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-
+$successMsg = "";
+$failMsg = "";
 
 
 
 
 // Check if file already exists
     if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
+        $failMsg .= "Sorry, file already exists. <br>";
         $uploadOk = 0;
     }
 
 // Allow certain file formats
     if ($APIFileType != "json") {
-        echo "Sorry, only JSON files are allowed.";
+        $failMsg .=  "Sorry, only JSON files are allowed.<br>";
         $uploadOk = 0;
     }
 
 // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        $failMsg .=  "Sorry, your file was not uploaded.<br>";
 // if everything is ok, try to upload file
     } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded." . "<br>";
-            echo date("m.d.y")."\t\t Server Time:".date("h:i:sa");
+            $successMsg .= "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded." . "<br>";
+            $successMsg .= "Server date/time: \t\t".date("m.d.y")."\t\t ".date("h:i:sa")."<br>";
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            $failMsg .=  "Sorry, there was an error uploading your file.<br>";
         }
     }
 }
@@ -53,15 +54,27 @@ $APIFileType = pathinfo($target_file,PATHINFO_EXTENSION);
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
 </head>
 <body>
-<header></header>
-<a href="index.php">API Editor</a><br>
-<h1>Getting Started</h1>
+<header class="page-header">
+    <div class="navbar-fixed-top">
+        <a href="index.php">API Editor</a><br>
+    </div>
+</header>
+<h1 class="h1">Getting Started</h1>
 
 <form action="upload.php" method="post" enctype="multipart/form-data">
     Select API to upload:
     <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload API" name="submit">
+    <input class="btn-success" type="submit" value="Upload API" name="submit">
 </form>
+<div class="has-error" id="uploadMessage">
+<?php
+if (!empty($successMsg)){
+    echo $successMsg;
+}else{
+    echo $failMsg;
+}
+?>
+</div>
 <footer></footer>
 </body>
 </html>

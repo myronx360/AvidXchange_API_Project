@@ -4,6 +4,10 @@ $dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
+if(isset($_POST['text_change'])) {
+    $file = filter_input(INPUT_POST,'text_change');
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -15,24 +19,29 @@ while (false !== ($filename = readdir($dh))) {
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 </head>
 <body>
-<header></header>
-<a href="upload.php">Add API</a><br>
-Jump to:<nav id="nav"> </nav>
-<h1>Getting Started</h1>
-<form action="" method="post">
+<header class="page-header">
+    <div class="navbar-fixed-top">
+        <a href="upload.php">Add New API</a>|<a href="">Save This</a>|<a href="">Save This As</a>
+        <br><br>
+        <nav id="nav"> </nav>
+    </div>
+</header>
+
+<h1 class="h1"> Getting Started</h1>
+<?php echo $file; ?>
+<form action="." method="post">
 
     Select a API:
-    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
+    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)">
     <option value="">Select an API:</option>
         <?php foreach ($files as $file):?>
             <?php if(!($file == "." || $file == "..")):?> // this has a not
-                <option value="<?php echo $dir.$file; ?>"> <?php echo $file; ?> </option>
+                <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
             <?php endif; ?>
         <?php endforeach; ?>
     </select>
-
-    <div id="divJson">Use recursion to access everything:</div>
-    <input type="hidden" name="jsonFile" value="">
+    <span id="loadingMsg"></span>
+    <div id="displayJson"></div>
 </form>
 <form action="upload.php" method="post" enctype="multipart/form-data">
     Select API to upload:
@@ -56,26 +65,14 @@ Jump to:<nav id="nav"> </nav>
 
 
 <footer></footer>
-
+<script src="GetJSON.js" ></script>
 <script src="TransverseJSON.js" ></script>
-<script src="script.js" ></script>
+<script src="EditScripts.js" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
 <script>
-    //test json files
-    function setFile(file) {
 
-        apiUrl = file;
-        $.getJSON(apiUrl, function(result,status){
-            document.getElementById('debug').innerHTML+=status+"<br>";
-            transverseJSON(result);
-            document.getElementById('debug').innerHTML+=status+"2<br>";
-        });
-
-
-        randomStuff();
-    }
 
 
 //    var app = angular.module('myApp', []);
@@ -94,62 +91,6 @@ Jump to:<nav id="nav"> </nav>
 //    $.getJSON(apiUrl, function(result){
 //        transverseJSON(result);
 //    });
-<?php
-//    if (isset($_POST["apiSelector"])  && ($_POST["apiSelector"] != "")) {
-//        echo "document.getElementById('debug').innerHTML+='test1';"; ?>
-//       $.ajax({url:<?php //echo $_POST['apiSelector'] ?>//, async: false, success: function(result){
-//            transverseJSON(result);
-//        }});
-//         document.getElementById('debug').innerHTML+='test2';
-//
-//
-//        <?php // }else{
-//        echo "document.getElementById('debug').innerHTML+='test3';";
-//    }
-//    ?>
-//
-//    function showAPI(apiURL) {
-//        apiUrl = $("apiSelector").val();
-//        $.ajax({
-//            url: apiUrl, async: false, success: function (result) {
-//                transverseJSON(result);
-//            }
-//        });
-//    }
-
-
-
-
-//    function showAPI(apiURL) {
-//        if (apiURL=="") {
-//            document.getElementById("displayAPI").innerHTML="";
-//            return;
-//        }
-//        if (window.XMLHttpRequest) {
-//            // code for IE7+, Firefox, Chrome, Opera, Safari
-//            xmlhttp=new XMLHttpRequest();
-//        } else {  // code for IE6, IE5
-//            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//        }
-//        xmlhttp.onreadystatechange=function() {
-//            if (this.readyState==4 && this.status==200) {
-//                document.getElementById("displayAPI").innerHTML=this.responseText;
-//            }
-//        }
-//        var name = getURLName(apiURL)
-//        xmlhttp.open("POST","index.php",true);
-//        xmlhttp.send();
-//    }
-
-
-
-//    var obj = JSON.parse(<?php //echo $jsonFile; ?>//);
-
-
-
-
-
-
 </script>
 </body>
 </html>
