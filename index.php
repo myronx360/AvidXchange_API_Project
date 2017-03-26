@@ -5,23 +5,18 @@ while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
 
-
-//$jsonFile = file_get_contents("jsonFiles/UberAPI.json");
-//$jsonFile = file_get_contents("jsonFiles/test.json");
-//$jsonFile = file_get_contents("jsonFiles/fitbitAPI.json");
-//$jsonFile = file_get_contents("jsonFiles/TwitterAPI.json");
-//$jsonFile = json_encode($jsonFile);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON Parser</title>
+    <title>JSON Editor</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 </head>
 <body>
 <header></header>
+<a href="upload.php">Add API</a><br>
 Jump to:<nav id="nav"> </nav>
 <h1>Getting Started</h1>
 <form action="" method="post">
@@ -38,9 +33,13 @@ Jump to:<nav id="nav"> </nav>
 
     <div id="divJson">Use recursion to access everything:</div>
     <input type="hidden" name="jsonFile" value="">
-
-    <input type="file" name="jsonFileBox">
 </form>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select API to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload API" name="submit">
+</form>
+
 <!--<div ng-app="myApp" ng-controller="myCtrl">-->
 <!--Select a API:-->
 <!--<select id="apiSelector" name="apiSelector"  ng-model="apiViewer">-->
@@ -48,7 +47,7 @@ Jump to:<nav id="nav"> </nav>
 <!--</select>-->
 <!--{{apiViewer}}-->
 <!--<div id="displayAPI"><b>API info will be listed here...</b></div>-->
-<!--<!--    <div>{{apiViewer}}</div>-->-->
+<!--    <div>{{apiViewer}}</div>-->
 <!--</div>-->
 
     <p id="debug">Debug for loop:<br></p>
@@ -66,13 +65,14 @@ Jump to:<nav id="nav"> </nav>
 <script>
     //test json files
     function setFile(file) {
-//        alert(file);
-
 
         apiUrl = file;
-        $.ajax({url: apiUrl, async: false, success: function(result){
+        $.getJSON(apiUrl, function(result,status){
+            document.getElementById('debug').innerHTML+=status+"<br>";
             transverseJSON(result);
-        }});
+            document.getElementById('debug').innerHTML+=status+"2<br>";
+        });
+
 
         randomStuff();
     }
@@ -86,6 +86,10 @@ Jump to:<nav id="nav"> </nav>
 //            }
 //        });
 //        });
+
+//    $.ajax({url: apiUrl, async: false, success: function(result){
+//        transverseJSON(result);
+//    }});
 
 //    $.getJSON(apiUrl, function(result){
 //        transverseJSON(result);
