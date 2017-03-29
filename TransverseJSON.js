@@ -4,7 +4,7 @@
 
 function transverseJSON(obj) {
     // resets parts the page for displaying it asynchronously
-    document.getElementById("nav").innerHTML = "";
+    document.getElementById("nav").innerHTML = "Jump To: ";
     document.getElementById("displayJson").innerHTML = "";
 
     // create nav anchor links

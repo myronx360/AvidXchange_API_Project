@@ -8,7 +8,6 @@ if(isset($_POST['text_change'])) {
     $file = filter_input(INPUT_POST,'text_change');
 
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,18 +20,18 @@ if(isset($_POST['text_change'])) {
 <body>
 <header class="page-header">
     <div class="navbar-fixed-top">
-        <a href="upload.php">Add New API</a>|<a href="">Save This</a>|<a href="">Save This As</a>
+        <a href="upload.php">Add New API</a>|<a href="">Save</a>|<a href="">Save As</a>
         <br><br>
         <nav id="nav"> </nav>
     </div>
 </header>
 
 <h1 class="h1"> Getting Started</h1>
-<?php echo $file; ?>
 <form action="." method="post">
 
     Select a API:
-    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)">
+<!--    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)"> // Only worked in IE 11-->
+    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
     <option value="">Select an API:</option>
         <?php foreach ($files as $file):?>
             <?php if(!($file == "." || $file == "..")):?> // this has a not
@@ -65,11 +64,11 @@ if(isset($_POST['text_change'])) {
 
 
 <footer></footer>
+
 <script src="GetJSON.js" ></script>
 <script src="TransverseJSON.js" ></script>
 <script src="EditScripts.js" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 
 <script>
 

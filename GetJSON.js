@@ -9,12 +9,11 @@ function setFile(apiUrl,fileName) {
     $(document).ajaxStart(function () {
         $("#loadingMsg").text("Loading...");
     });
-
     $.getJSON(apiUrl, function(result,status){;
         transverseJSON(result); // show json file on the webpage
         $(document).ajaxComplete(function () {
 
-            $("#loadingMsg").text(fileName+" loaded " + status); // display the status of the loaded json file
+            $("#loadingMsg").text(" Loaded: " + status); // display the status of the loaded json file
 
         });
 

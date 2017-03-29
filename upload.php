@@ -68,10 +68,13 @@ $failMsg = "";
 </form>
 <div class="has-error" id="uploadMessage">
 <?php
-if (!empty($successMsg)){
-    echo $successMsg;
-}else{
-    echo $failMsg;
+if(isset($_POST["submit"])) {
+    if (!empty($successMsg)) {
+        echo $successMsg;
+    } else {
+        echo $failMsg;
+
+    }
 }
 ?>
 </div>
