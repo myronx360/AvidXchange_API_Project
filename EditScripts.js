@@ -18,21 +18,35 @@ function setUpEditor() {
     $(document).ready(function(){
 
         var isEditing = false;
-        $("h2,h3,p").click(function () {
+        $(".editArea").click(function () {
             startEdit(this);
         });
         function startEdit(elementClicked) {
+            var prev =  $(elementClicked).prev().text();
+            // alert("PRev: "+$("p").prev("p")+", "+prev);
+            var next =  $(elementClicked).next().text();
 
+            // alert("Next: "+$("p").next("p")+", "+next);
             var textArea = "<br> <textarea name='text_change'></textarea> <br>";
+            var originalText = "<input type='hidden' name='originalText' id='origText'>";
             var confirmBtn = "<br> <input type='submit' name='confirm_btn' value='Confirm Changes'> <br>";
             var cancelBtn = "<br> <input type='button' name='cancel_btn' value='Cancel'> <br>";
-            // var newData = "<input type='hidden' name='newData value=''>";
+            // var newText = "<input type='hidden' name='newText' id='newText'>";
+            var prevText = "<input type='hidden' name='prevText' id='prevText'>";
+            var afterText = "<input type='hidden' name='afterText' id='afterText'>";
+            var lineID = "<input type='hidden' name='lineID' id='lineID'>";
 
             if(!isEditing) {
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
-                $("#editor").html("<form action='FileHandler.php' method='post'>"+textArea+confirmBtn+cancelBtn+"</form>");
+                $("#editor").html("<form action='FileHandler.php' method='post'>"+textArea+originalText+lineID+prevText+afterText+confirmBtn+cancelBtn+"</form>");
+                $("#origText").val($(elementClicked).text());
+
                 $("[name='text_change']").val($(elementClicked).text());
+                $("[name='prevText']").val($(elementClicked).prev().text());
+                $("[name='afterText']").val($(elementClicked).next().text());
+                $("[name='lineID']").val($(elementClicked).attr("id"));
+                alert($(elementClicked).attr("id"));
             }else{
                 reset();
             }
@@ -78,6 +92,7 @@ function setUpEditor() {
  *         5. add API test file to remote server and get from server
  *         6. process to add and modify APIs
  *         7. a way to view/open plain text file of json
+ *         8. After a file is uploaded display it on success may with a link to the index page with json file auto loaded
  *
  *
  *

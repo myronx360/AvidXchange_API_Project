@@ -37,7 +37,7 @@ $failMsg = "";
     } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             $successMsg .= "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded." . "<br>";
-            $successMsg .= "Server date/time: \t\t".date("m.d.y")."\t\t ".date("h:i:sa")."<br>";
+//            $successMsg .= "Server date/time: \t\t".date("m.d.y")."\t\t ".date("h:i:sa")."<br>";
         } else {
             $failMsg .=  "Sorry, there was an error uploading your file.<br>";
         }
@@ -71,13 +71,28 @@ $failMsg = "";
 if(isset($_POST["submit"])) {
     if (!empty($successMsg)) {
         echo $successMsg;
+?>
+    <div id = "dateTime"></div>
+<?php
     } else {
         echo $failMsg;
-
+?>
+    <div id = "dateTime"></div>
+<?php
     }
 }
 ?>
 </div>
+
 <footer></footer>
+<script>
+    var date = new Date();
+    var localDate = date.toLocaleDateString();
+    var time = date.toLocaleTimeString();
+    var dt = localDate + "  " + time;
+
+    document.getElementById("dateTime").innerHTML += dt;
+
+</script>
 </body>
 </html>

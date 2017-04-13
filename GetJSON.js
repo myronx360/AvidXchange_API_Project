@@ -10,10 +10,11 @@ function setFile(apiUrl,fileName) {
         $("#loadingMsg").text("Loading...");
     });
     $.getJSON(apiUrl, function(result,status){;
-        transverseJSON(result); // show json file on the webpage
+        traverseJSON(result); // show json file on the webpage
+        // $("#debug").text(JSON.stringify(result));
         $(document).ajaxComplete(function () {
-
-            $("#loadingMsg").text(" Loaded: " + status); // display the status of the loaded json file
+            // ptions(this.selectedIndex)
+            $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
 
         });
 

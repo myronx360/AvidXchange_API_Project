@@ -1,4 +1,5 @@
 <?php
+//$baseUrl = "http://".$_SERVER['SERVER_NAME']."/";
 $dir = "jsonFiles/";
 $dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
@@ -6,8 +7,21 @@ while (false !== ($filename = readdir($dh))) {
 }
 if(isset($_POST['text_change'])) {
     $file = filter_input(INPUT_POST,'text_change');
-
 }
+
+function url(){
+    if(isset($_SERVER['HTTPS'])){
+        $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+    }
+    else{
+        $protocol = 'http';
+    }
+    return $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+//echo location.gethostname()."<br>";
+//echo url()."<br>";
+//echo $_SERVER['SERVER_NAME']."<br>";
+//echo $_SERVER['HTTP_HOST']."<br>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +30,10 @@ if(isset($_POST['text_change'])) {
     <title>JSON Editor</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="GetJSON.js" ></script>
+    <script src="TransverseJSON.js" ></script>
+    <script src="EditScripts.js" ></script>
 </head>
 <body>
 <header class="page-header">
@@ -26,22 +44,27 @@ if(isset($_POST['text_change'])) {
     </div>
 </header>
 
-<h1 class="h1"> Getting Started</h1>
+<h1 class="h1" id="head"> Getting Started</h1>
 <form action="." method="post">
 
     Select a API:
-<!--    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)"> // Only worked in IE 11-->
+    <!--    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)"> // Only worked in IE 11-->
     <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
-    <option value="">Select an API:</option>
+    <option value="" selected>Select an API:</option>
         <?php foreach ($files as $file):?>
             <?php if(!($file == "." || $file == "..")):?> // this has a not
                 <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
             <?php endif; ?>
         <?php endforeach; ?>
     </select>
+
     <span id="loadingMsg"></span>
-    <div id="displayJson"></div>
 </form>
+
+
+    <div id="displayJson"></div>
+
+
 <form action="upload.php" method="post" enctype="multipart/form-data">
     Select API to upload:
     <input type="file" name="fileToUpload" id="fileToUpload">
@@ -59,16 +82,12 @@ if(isset($_POST['text_change'])) {
 <!--</div>-->
 
     <p id="debug">Debug for loop:<br></p>
-
-    <p id="stringifyJson"></p>
+<!--    <p id="stringifyJson">$.parseJSON(json)</p>-->
 
 
 <footer></footer>
 
-<script src="GetJSON.js" ></script>
-<script src="TransverseJSON.js" ></script>
-<script src="EditScripts.js" ></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 <script>
 
@@ -91,5 +110,6 @@ if(isset($_POST['text_change'])) {
 //        transverseJSON(result);
 //    });
 </script>
+
 </body>
 </html>
