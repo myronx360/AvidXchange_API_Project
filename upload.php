@@ -50,7 +50,7 @@ $failMsg = "";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON Uploader</title>
+    <title>API Uploader</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
 </head>
 <body>

@@ -74,8 +74,8 @@
     }
   }],
   "employees":[
-    {"firstName":true, "lastName":"Doe"},
-    {"firstName":"Anna", "lastName":"Smith"},
-    {"firstName":"Peter", "lastName":"Jones"}
+    {"firstName": true, "lastName": "Doe"},
+    {"firstName": "Anna", "lastName": "Smith"},
+    {"firstName": "Peter", "lastName": "Jones"}
   ]
 }

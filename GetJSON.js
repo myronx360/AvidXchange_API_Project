@@ -3,14 +3,15 @@
  */
 
 //get selected json file
-function setFile(apiUrl,fileName) {
+function setFile(apiUrl) {
 
     // show loading message
     $(document).ajaxStart(function () {
         $("#loadingMsg").text("Loading...");
     });
-    $.getJSON(apiUrl, function(result,status){;
-        traverseJSON(result); // show json file on the webpage
+    $.getJSON(apiUrl, function(result,status){
+
+        traverseJSON(result); // show json file on the web-page
         // $("#debug").text(JSON.stringify(result));
         $(document).ajaxComplete(function () {
             // ptions(this.selectedIndex)

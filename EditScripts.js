@@ -19,34 +19,24 @@ function setUpEditor() {
 
         var isEditing = false;
         $(".editArea").click(function () {
+            reset();// so that only set of edit elements shows up
             startEdit(this);
         });
         function startEdit(elementClicked) {
-            var prev =  $(elementClicked).prev().text();
-            // alert("PRev: "+$("p").prev("p")+", "+prev);
-            var next =  $(elementClicked).next().text();
 
-            // alert("Next: "+$("p").next("p")+", "+next);
-            var textArea = "<br> <textarea name='text_change'></textarea> <br>";
+            var textArea = "<br> <textarea name='newText'></textarea> <br>";
             var originalText = "<input type='hidden' name='originalText' id='origText'>";
-            var confirmBtn = "<br> <input type='submit' name='confirm_btn' value='Confirm Changes'> <br>";
-            var cancelBtn = "<br> <input type='button' name='cancel_btn' value='Cancel'> <br>";
-            // var newText = "<input type='hidden' name='newText' id='newText'>";
-            var prevText = "<input type='hidden' name='prevText' id='prevText'>";
-            var afterText = "<input type='hidden' name='afterText' id='afterText'>";
+            var confirmBtn = "<br> <input type='submit' name='confirm_btn' value='Confirm Changes'>";
+            var cancelBtn = "<input type='button' name='cancel_btn' value='Cancel'> <br>";
             var lineID = "<input type='hidden' name='lineID' id='lineID'>";
 
             if(!isEditing) {
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
-                $("#editor").html("<form action='FileHandler.php' method='post'>"+textArea+originalText+lineID+prevText+afterText+confirmBtn+cancelBtn+"</form>");
-                $("#origText").val($(elementClicked).text());
-
-                $("[name='text_change']").val($(elementClicked).text());
-                $("[name='prevText']").val($(elementClicked).prev().text());
-                $("[name='afterText']").val($(elementClicked).next().text());
+                $("#editor").html("<form action='FileHandler.php' method='post'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form>");
+                $("[name='newText']").val($(elementClicked).text());
+                $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
-                alert($(elementClicked).attr("id"));
             }else{
                 reset();
             }
@@ -65,10 +55,12 @@ function setUpEditor() {
         }
 
 
-        // color hierarchy
-        $("h2").css("color", "purple");
-        $("h3").css("color", "blue");
-        $("p").css("color", "green");
+        // highlight editable text
+        $(".editArea").hover(function(){
+            $(this).css("background-color", "yellow");
+        }, function(){
+            $(this).css("background-color", "transparent");
+        });
 
 
 

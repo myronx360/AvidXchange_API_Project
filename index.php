@@ -1,41 +1,50 @@
 <?php
+/**
+ * InClass # HW #
+ * API_Editor.
+ * User: Myron Williams
+ * Date: 3/26/2017
+ * Time: 1:28 PM
+ */
+
+
+
 //$baseUrl = "http://".$_SERVER['SERVER_NAME']."/";
 $dir = "jsonFiles/";
 $dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
-if(isset($_POST['text_change'])) {
-    $file = filter_input(INPUT_POST,'text_change');
-}
 
-function url(){
-    if(isset($_SERVER['HTTPS'])){
-        $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
-    }
-    else{
-        $protocol = 'http';
-    }
-    return $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-}
-//echo location.gethostname()."<br>";
-//echo url()."<br>";
-//echo $_SERVER['SERVER_NAME']."<br>";
-//echo $_SERVER['HTTP_HOST']."<br>";
+//fclose($myfile);
+//-------------------------------------------------------------------
+//$myfile = fopen($path, "r") or die("Unable to open file!");
+//$content = fread($myfile, filesize($path));
+//fclose($myfile);
+
+
+// using the same name replaces file else write new file
+
+//$myfile = fopen($path, "w") or die("Unable to open file!");
+////fwrite(file,string,length)
+//fwrite($myfile,$content);
+//fclose($myfile);
+
+// use css to highlight selectable areas on mouse over
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON Editor</title>
+    <title>JSON Uploader</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="GetJSON.js" ></script>
-    <script src="TransverseJSON.js" ></script>
-    <script src="EditScripts.js" ></script>
+
 </head>
-<body>
+<body class="panel-body">
 <header class="page-header">
     <div class="navbar-fixed-top">
         <a href="upload.php">Add New API</a>|<a href="">Save</a>|<a href="">Save As</a>
@@ -43,72 +52,58 @@ function url(){
         <nav id="nav"> </nav>
     </div>
 </header>
+<h1 class="h1">Getting Started</h1>
+<main>
+    <form action="." method="post">
 
-<h1 class="h1" id="head"> Getting Started</h1>
-<form action="." method="post">
+        Select a API:
+        <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
+            <option value="" selected>Select an API:</option>
+            <?php foreach ($files as $file):?>
+                <?php if(!($file == "." || $file == "..")):?> // this has a not
+                    <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </select>
 
-    Select a API:
-    <!--    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, this.options(this.selectedIndex).text)"> // Only worked in IE 11-->
-    <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
-    <option value="" selected>Select an API:</option>
-        <?php foreach ($files as $file):?>
-            <?php if(!($file == "." || $file == "..")):?> // this has a not
-                <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </select>
-
-    <span id="loadingMsg"></span>
-</form>
-
-
+        <span id="loadingMsg"></span>
+    </form>
     <div id="displayJson"></div>
 
-
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    Select API to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload API" name="submit">
-</form>
-
-<!--<div ng-app="myApp" ng-controller="myCtrl">-->
-<!--Select a API:-->
-<!--<select id="apiSelector" name="apiSelector"  ng-model="apiViewer">-->
-<!--<option value="">Select an API:</option>-->
-<!--</select>-->
-<!--{{apiViewer}}-->
-<!--<div id="displayAPI"><b>API info will be listed here...</b></div>-->
-<!--    <div>{{apiViewer}}</div>-->
-<!--</div>-->
-
-    <p id="debug">Debug for loop:<br></p>
-<!--    <p id="stringifyJson">$.parseJSON(json)</p>-->
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        Select API to upload:
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload API" name="submit">
+    </form>
 
 
+</main>
 <footer></footer>
-
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="EditScripts.js" ></script>
 <script>
+    //get selected json file
+    function setFile(apiUrl) {
+        <?php require_once ('FileHandler.php'); ?>
+        $("#displayJson").text(apiUrl);
+        // show loading message
+        $(document).ajaxStart(function () {
+            $("#loadingMsg").text("Loading...");
+        });
+        $.post("FileEditor.php", {suggest: apiUrl}, function(result,status){
+            $("#displayJson").html(result);
+            $(document).ajaxComplete(function () {
+                if($("#apiSelector option:selected").text() != "Select an API:") {
+                    $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
+                    setUpEditor();
+                }else{
+                    $("#loadingMsg").text("");
 
+                }
+            });
 
-
-//    var app = angular.module('myApp', []);
-//    app.controller('myCtrl', function($scope) {
-//        $.ajax({
-//            url: $scope.apiViewer, async: false, success: function (result) {
-//                transverseJSON(result);
-//            }
-//        });
-//        });
-
-//    $.ajax({url: apiUrl, async: false, success: function(result){
-//        transverseJSON(result);
-//    }});
-
-//    $.getJSON(apiUrl, function(result){
-//        transverseJSON(result);
-//    });
+        });
+    }
 </script>
 
 </body>
