@@ -16,21 +16,6 @@ while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
 
-//fclose($myfile);
-//-------------------------------------------------------------------
-//$myfile = fopen($path, "r") or die("Unable to open file!");
-//$content = fread($myfile, filesize($path));
-//fclose($myfile);
-
-
-// using the same name replaces file else write new file
-
-//$myfile = fopen($path, "w") or die("Unable to open file!");
-////fwrite(file,string,length)
-//fwrite($myfile,$content);
-//fclose($myfile);
-
-// use css to highlight selectable areas on mouse over
 
 ?>
 
@@ -38,7 +23,7 @@ while (false !== ($filename = readdir($dh))) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON Uploader</title>
+    <title>API Editor</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>

@@ -8,12 +8,12 @@
  */
 
 if(isset($_POST["submit"])) {
-$target_dir = "jsonFiles/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$APIFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-$successMsg = "";
-$failMsg = "";
+    $target_dir = "jsonFiles/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $APIFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    $successMsg = "";
+    $failMsg = "";
 
 
 
