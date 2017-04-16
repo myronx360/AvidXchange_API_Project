@@ -6,16 +6,22 @@
  * Date: 4/14/2017
  * Time: 11:37 PM
  */
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $path = filter_input(INPUT_POST, 'suggest');
 
-$totalIdNums = 0;
-$content = "";
+
+
+
+static $totalIdNums = 0;
+static $content = "";
 $findLineHashMap = array(); // holds an idNum as a key and a line of text as a value
+$finalContent = "";
 if(isset($path) && $path != "") setUpJsonText($path);
 function setUpJsonText($path){
     global $findLineHashMap;
-    global  $content;
+    static $content;
     global $totalIdNums;
 
 
@@ -103,20 +109,70 @@ function setUpJsonText($path){
         }
         $totalIdNums = $idNum;
     }
+    echo $formattedContent."<br>";
+//    print_r($findLineHashMap);
+//    $serialFindLineHashMap = json_encode($findLineHashMap);
+//    echo $serialFindLineHashMap;
+//    echo "<input type='hidden' name='totIDs' value='.$totalIdNums.'>";
+//    $contentTag = "<input type='hidden' name='orgContent' value=".$content.">";
+//    echo $contentTag;
+    $_SESSION['totIDs'] = $totalIdNums;
+    $_SESSION['orgContent'] = $content;
+    $_SESSION['findLineHashMap'] = $findLineHashMap;
+//    echo "<input type='hidden' name='findLineHashMapw' value='.$serialFindLineHashMap.'>";
+//    foreach($findLineHashMap as $idx=>$value) {
+//        $id=htmlentities('findLineHashMap['.$idx.']');
+//        $val=htmlentities($value);
+//        echo '<input type="hidden" name="'.$id.'" value="'.$val.'">';
+//
+//    }
 
-    echo $formattedContent;
+
+
+//    fclose($myfile);
+}
+
+//header location this #@edit
+if(isset($_POST["newText"])){
+//    $newText = filter_input(INPUT_POST, 'newText');
+//    $originalText = filter_input(INPUT_POST, 'originalText');
+//    $lineID = filter_input(INPUT_POST, 'lineID');
+//    $totalIdNums = filter_input(INPUT_POST, 'totID');
+//    $content = filter_input(INPUT_POST, 'orgContents');
+//    $findLineHashMap = $_SESSION['findLineHashMap'];
+//    print_r( $findLineHashMap);
+//    echo $content;
+//    $findLineHashMap = unserialize(filter_input(INPUT_POST, '$findLineHashMapS'));
+//    echo "ID: ".json_decode($_POST["$findLineHashMapS"]);
+//    echo "oc: ".$_POST["$findLineHashMapS"];
+//    echo $newText."--".$originalText."---".$lineID;
+//    echo $totalIdNums."<br>--content<br>".$content."---<br>";
+//    editContent($totalIdNums, $content,$findLineHashMap);
     editContent();
+
 }
 
 function editContent(){
 
+//if(isset($newText)) {
+//     $totalIdNums;
+//    static $content;
+//    global $findLineHashMap;
+    $finalContent = "";
+
     $newText = filter_input(INPUT_POST, 'newText');
     $originalText = filter_input(INPUT_POST, 'originalText');
     $lineID = filter_input(INPUT_POST, 'lineID');
-    global $totalIdNums;
-    global $content;
-    global $findLineHashMap;
-    $finalContent = "";
+//    $totalIdNums = filter_input(INPUT_POST, 'totID');
+//    $content = filter_input(INPUT_POST, 'orgContents');
+    $totalIdNums = $_SESSION['totIDs'];
+    $content = $_SESSION['orgContent'];
+    $findLineHashMap = $_SESSION['findLineHashMap'];
+//    echo "<br>1." . $newText . "<br>";
+//    echo "2." . $originalText . "<br>";
+//    echo "3." . $lineID . "<br>";
+//    echo "4." . $totalIdNums . "<br>";
+//    echo "5." . $content . "<br>";
 
 // Edits the contents of the file with new data
     for ($i = 0; $i < $totalIdNums; $i++) {// loop through all of the ids
@@ -135,5 +191,18 @@ function editContent(){
             }
         }
     }
-    return $finalContent;
+    echo $finalContent;
+//    global $dir;
+//    global $path;
+//    $myfile = fopen($path, "w") or die("Unable to open file!");
+//    fwrite($myfile,$content);//fwrite(file,string,length)
+//    fclose($myfile);
+
+    $myfile = fopen("jsonFiles/newJson.json", "w") or die("Unable to open file!");
+    fwrite($myfile, $finalContent);//fwrite(file,string,length)
+    fclose($myfile);
+//    header("location: index.php");
+//    return $finalContent;
+//}
 }
+?>

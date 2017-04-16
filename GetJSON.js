@@ -9,16 +9,18 @@ function setFile(apiUrl) {
     $(document).ajaxStart(function () {
         $("#loadingMsg").text("Loading...");
     });
-    $.getJSON(apiUrl, function(result,status){
-
-        traverseJSON(result); // show json file on the web-page
-        // $("#debug").text(JSON.stringify(result));
+    $.post("FileEditor.php", {suggest: apiUrl}, function(result,status){
+        $("#displayJson").html(result);
         $(document).ajaxComplete(function () {
-            // ptions(this.selectedIndex)
-            $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
+            if($("#apiSelector option:selected").text() != "Select an API:") {
+                $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
+                setUpEditor();
+            }else{
+                $("#loadingMsg").text("");
 
+            }
         });
 
     });
-
 }
+

@@ -14,7 +14,7 @@ function setUpEditor() {
 
 
 
-    // create text-area and buttons to edit items
+
     $(document).ready(function(){
 
         var isEditing = false;
@@ -23,26 +23,70 @@ function setUpEditor() {
             startEdit(this);
         });
         function startEdit(elementClicked) {
-
+            // create text-area and buttons to edit items
             var textArea = "<br> <textarea name='newText'></textarea> <br>";
             var originalText = "<input type='hidden' name='originalText' id='origText'>";
-            var confirmBtn = "<br> <input type='submit' name='confirm_btn' value='Confirm Changes'>";
-            var cancelBtn = "<input type='button' name='cancel_btn' value='Cancel'> <br>";
+            var confirmBtn = "<br> <input type='button' onclick='confirmChanges()' name='confirm_btn' value='Confirm Changes'>";
+            var cancelBtn = "<input type='button' name='cancel_btn' value='Close'> <br>";
             var lineID = "<input type='hidden' name='lineID' id='lineID'>";
+            var totID = "<input type='hidden' name='totID' id='totID'>";
+            var orgContent = "<input type='hidden' name='orgContents' id='orgContent'>";
+            // var findLine = "<input type='hidden' name='findLineHashMapS' id='findLineHashMapS'>";
 
             if(!isEditing) {
+
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
-                $("#editor").html("<form action='FileHandler.php' method='post'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form>");
+                $("#editor").html("<form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+totID+orgContent+"</form>");
                 $("[name='newText']").val($(elementClicked).text());
                 $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
+                $("[name='totID']").val($("[name='totIDs']").val());
+                $("[name='orgContents']").val($("[name='orgContent']").val());
+                // $("[name='findLineHashMapS']").val($("[name='findLineHashMapw']").val());
+
+                // $("#editForm").submit(function(event) {
+                //
+                //     event.preventDefault(); // Prevent the form from submitting via the browser
+                //     var form = $(this);
+                //     $.ajax({
+                //         type: form.attr('method'),
+                //         url: form.attr('action'),
+                //         data: form.serialize() // serializes the form's elements.
+                //     }).done(function(data) {
+                //         // Optionally alert the user of success here...
+                //         alert(data);
+                //     }).fail(function(data) {
+                //         // Optionally alert the user of an error here...
+                //     });
+                // });
             }else{
                 reset();
             }
-            // $("[name='confirm_btn']").click(function () {
-            //     isEditing = false;
-            // });
+            $("[name='confirm_btn']").click(function () {
+
+                        var form = $("#editForm");
+
+                        $.ajax({
+                            type: form.attr('method'),
+                            url: form.attr('action'),
+                            data: form.serialize() // serializes the form's elements.
+                        }).done(function(data) {
+                            // Optionally alert the user of success here...
+                            $("#displayJson2").text(data);
+                            alert(data);
+                        }).fail(function(data) {
+                            // Optionally alert the user of an error here...
+                        });
+
+
+                    // $.post("FileWriter.php", {suggest: $(elementClicked).text()}, function(result){
+                    //     alert("fff");
+                    //     alert(result);
+                    // });
+
+                //reset();
+            });
             $("[name='cancel_btn']").click(function () {
                 reset();
             });
@@ -62,6 +106,9 @@ function setUpEditor() {
             $(this).css("background-color", "transparent");
         });
 
+        $("[name='originalText']").hover(function () {
+           alert("mess");
+        });
 
 
 

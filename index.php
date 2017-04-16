@@ -16,6 +16,7 @@ while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
 
+require_once ('FileEditor.php');
 
 ?>
 
@@ -53,6 +54,7 @@ while (false !== ($filename = readdir($dh))) {
 
         <span id="loadingMsg"></span>
     </form>
+    <div id="displayJson2"></div>
     <div id="displayJson"></div>
 
     <form action="upload.php" method="post" enctype="multipart/form-data">
@@ -65,30 +67,13 @@ while (false !== ($filename = readdir($dh))) {
 </main>
 <footer></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="GetJSON.js"></script>
 <script src="EditScripts.js" ></script>
 <script>
-    //get selected json file
-    function setFile(apiUrl) {
-        <?php require_once ('FileHandler.php'); ?>
-        $("#displayJson").text(apiUrl);
-        // show loading message
-        $(document).ajaxStart(function () {
-            $("#loadingMsg").text("Loading...");
-        });
-        $.post("FileEditor.php", {suggest: apiUrl}, function(result,status){
-            $("#displayJson").html(result);
-            $(document).ajaxComplete(function () {
-                if($("#apiSelector option:selected").text() != "Select an API:") {
-                    $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
-                    setUpEditor();
-                }else{
-                    $("#loadingMsg").text("");
 
-                }
-            });
 
-        });
-    }
+
+
 </script>
 
 </body>

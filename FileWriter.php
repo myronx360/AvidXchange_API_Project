@@ -18,20 +18,16 @@ a+ 	Open a file for read/write. The existing data in file is preserved. File poi
 x+ 	Creates a new file for read/write. Returns FALSE and an error if file already exists
  */
 
-
-//fclose($myfile);
-//-------------------------------------------------------------------
-//$myfile = fopen($path, "r") or die("Unable to open file!");
-//$content = fread($myfile, filesize($path));
-//fclose($myfile);
-
-
+if(isset($_POST["newText"])){
+    echo "work";
+}
+$contents = filter_input(INPUT_POST,'content');
+$path = filter_input(INPUT_POST, 'path');
 // using the same name replaces file else write new file
 
-//$myfile = fopen($path, "w") or die("Unable to open file!");
-////fwrite(file,string,length)
-//fwrite($myfile,$content);
-//fclose($myfile);
+$myfile = fopen($path, "w") or die("Unable to open file!");
+fwrite($myfile,$content);//fwrite(file,string,length)
+fclose($myfile);
 
 
 ?>
