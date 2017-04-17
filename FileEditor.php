@@ -9,8 +9,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+
 $path = filter_input(INPUT_POST, 'suggest');
 
+//$changedContent = filter_input(INPUT_POST, 'edit');
 
 
 
@@ -24,8 +27,16 @@ function setUpJsonText($path){
     static $content;
     global $totalIdNums;
 
-
-    $myfile = fopen($path, "r") or die("Unable to open file!");
+//    if(isset($_SESSION["finalContent"])){
+//        $temp = tmpfile();
+//        fwrite($temp, $_SESSION["finalContent"]);
+//        //Rewind to the start of file
+//        rewind($temp);
+//        $myfile = fopen($temp, "r") or die("Unable to open file!");
+//    }else{
+        $myfile = fopen($path, "r") or die("Unable to open file!");
+//    }
+    $_SESSION["path"] = $path;
     $idNum = 0;
     $formattedContent = "";
     $lineLengthLeft = 0;
@@ -110,75 +121,38 @@ function setUpJsonText($path){
         $totalIdNums = $idNum;
     }
     echo $formattedContent."<br>";
-//    print_r($findLineHashMap);
-//    $serialFindLineHashMap = json_encode($findLineHashMap);
-//    echo $serialFindLineHashMap;
-//    echo "<input type='hidden' name='totIDs' value='.$totalIdNums.'>";
-//    $contentTag = "<input type='hidden' name='orgContent' value=".$content.">";
-//    echo $contentTag;
+
     $_SESSION['totIDs'] = $totalIdNums;
     $_SESSION['orgContent'] = $content;
     $_SESSION['findLineHashMap'] = $findLineHashMap;
-//    echo "<input type='hidden' name='findLineHashMapw' value='.$serialFindLineHashMap.'>";
-//    foreach($findLineHashMap as $idx=>$value) {
-//        $id=htmlentities('findLineHashMap['.$idx.']');
-//        $val=htmlentities($value);
-//        echo '<input type="hidden" name="'.$id.'" value="'.$val.'">';
-//
-//    }
+
 
 
 
 //    fclose($myfile);
 }
 
-//header location this #@edit
+
 if(isset($_POST["newText"])){
-//    $newText = filter_input(INPUT_POST, 'newText');
-//    $originalText = filter_input(INPUT_POST, 'originalText');
-//    $lineID = filter_input(INPUT_POST, 'lineID');
-//    $totalIdNums = filter_input(INPUT_POST, 'totID');
-//    $content = filter_input(INPUT_POST, 'orgContents');
-//    $findLineHashMap = $_SESSION['findLineHashMap'];
-//    print_r( $findLineHashMap);
-//    echo $content;
-//    $findLineHashMap = unserialize(filter_input(INPUT_POST, '$findLineHashMapS'));
-//    echo "ID: ".json_decode($_POST["$findLineHashMapS"]);
-//    echo "oc: ".$_POST["$findLineHashMapS"];
-//    echo $newText."--".$originalText."---".$lineID;
-//    echo $totalIdNums."<br>--content<br>".$content."---<br>";
-//    editContent($totalIdNums, $content,$findLineHashMap);
     editContent();
 
 }
 
 function editContent(){
-
-//if(isset($newText)) {
-//     $totalIdNums;
-//    static $content;
-//    global $findLineHashMap;
     $finalContent = "";
 
     $newText = filter_input(INPUT_POST, 'newText');
     $originalText = filter_input(INPUT_POST, 'originalText');
     $lineID = filter_input(INPUT_POST, 'lineID');
-//    $totalIdNums = filter_input(INPUT_POST, 'totID');
-//    $content = filter_input(INPUT_POST, 'orgContents');
     $totalIdNums = $_SESSION['totIDs'];
     $content = $_SESSION['orgContent'];
     $findLineHashMap = $_SESSION['findLineHashMap'];
-//    echo "<br>1." . $newText . "<br>";
-//    echo "2." . $originalText . "<br>";
-//    echo "3." . $lineID . "<br>";
-//    echo "4." . $totalIdNums . "<br>";
-//    echo "5." . $content . "<br>";
 
 // Edits the contents of the file with new data
     for ($i = 0; $i < $totalIdNums; $i++) {// loop through all of the ids
         if ($lineID == $i) {// if the searched line id ($i) is the same as the submitted search line id ($lindID)
             $cursorPos = 0;
-
+//FIXME
             // uses strpos the loop through the original file's contents to find the text that was changed ($originalText).
             //Returns the position of the first occurrence of a string inside another string, or FALSE if the string is not found.
             while ($cursorPos = strpos($content, $originalText, $cursorPos)) {  // strpos(string,find,start)
@@ -191,18 +165,20 @@ function editContent(){
             }
         }
     }
-    echo $finalContent;
-//    global $dir;
-//    global $path;
-//    $myfile = fopen($path, "w") or die("Unable to open file!");
-//    fwrite($myfile,$content);//fwrite(file,string,length)
-//    fclose($myfile);
 
-    $myfile = fopen("jsonFiles/newJson.json", "w") or die("Unable to open file!");
-    fwrite($myfile, $finalContent);//fwrite(file,string,length)
-    fclose($myfile);
-//    header("location: index.php");
-//    return $finalContent;
-//}
+    $_SESSION["finalContent"] = $finalContent;
+
+    $filePath = strstr($_SESSION["path"],'.', true);
+    if(strpos($filePath,"TEMP") === false) {
+        $filePath = $filePath . "TEMP.json";// append temp to a new temporary file
+    }else{
+        $filePath = $filePath . ".json"; // continue to use temp file
+    }
+    $tempFile = fopen($filePath, "w");
+    fwrite($tempFile, $finalContent);
+    fclose($tempFile);
+
+    echo $filePath;
+
 }
 ?>

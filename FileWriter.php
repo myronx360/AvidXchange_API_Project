@@ -18,15 +18,33 @@ a+ 	Open a file for read/write. The existing data in file is preserved. File poi
 x+ 	Creates a new file for read/write. Returns FALSE and an error if file already exists
  */
 
-if(isset($_POST["newText"])){
-    echo "work";
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
-$contents = filter_input(INPUT_POST,'content');
-$path = filter_input(INPUT_POST, 'path');
-// using the same name replaces file else write new file
 
+$contents = $_SESSION["finalContent"];
+$path = $_SESSION["path"];
+$dir = $_SESSION["dir"];
+
+$newName = filter_input(INPUT_POST, "newName");
+$save = filter_input(INPUT_POST, "saveBtn");
+
+if(isset($save)){ // save
+    $path = preg_replace('/TEMP./', ".", $path);//preg_replace($pattern, $replacement, $string);
+}
+
+if (isset($newName)){// save as
+
+    if(strpos($newName,".json") === false){
+        $path = $dir.$newName.".json";
+    }else{
+        $path = $dir.$newName;
+    }
+
+
+}
 $myfile = fopen($path, "w") or die("Unable to open file!");
-fwrite($myfile,$content);//fwrite(file,string,length)
+fwrite($myfile,$contents);//fwrite(file,string,length)
 fclose($myfile);
 
 

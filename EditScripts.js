@@ -29,37 +29,16 @@ function setUpEditor() {
             var confirmBtn = "<br> <input type='button' onclick='confirmChanges()' name='confirm_btn' value='Confirm Changes'>";
             var cancelBtn = "<input type='button' name='cancel_btn' value='Close'> <br>";
             var lineID = "<input type='hidden' name='lineID' id='lineID'>";
-            var totID = "<input type='hidden' name='totID' id='totID'>";
-            var orgContent = "<input type='hidden' name='orgContents' id='orgContent'>";
-            // var findLine = "<input type='hidden' name='findLineHashMapS' id='findLineHashMapS'>";
 
             if(!isEditing) {
 
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
-                $("#editor").html("<form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+totID+orgContent+"</form>");
+                $("#editor").html("<form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form>");
                 $("[name='newText']").val($(elementClicked).text());
                 $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
-                $("[name='totID']").val($("[name='totIDs']").val());
-                $("[name='orgContents']").val($("[name='orgContent']").val());
-                // $("[name='findLineHashMapS']").val($("[name='findLineHashMapw']").val());
 
-                // $("#editForm").submit(function(event) {
-                //
-                //     event.preventDefault(); // Prevent the form from submitting via the browser
-                //     var form = $(this);
-                //     $.ajax({
-                //         type: form.attr('method'),
-                //         url: form.attr('action'),
-                //         data: form.serialize() // serializes the form's elements.
-                //     }).done(function(data) {
-                //         // Optionally alert the user of success here...
-                //         alert(data);
-                //     }).fail(function(data) {
-                //         // Optionally alert the user of an error here...
-                //     });
-                // });
             }else{
                 reset();
             }
@@ -71,21 +50,19 @@ function setUpEditor() {
                             type: form.attr('method'),
                             url: form.attr('action'),
                             data: form.serialize() // serializes the form's elements.
-                        }).done(function(data) {
+                        }).done(function(result) {
                             // Optionally alert the user of success here...
-                            $("#displayJson2").text(data);
-                            alert(data);
-                        }).fail(function(data) {
+                            // alert(result);
+                            $.post("FileEditor.php", {suggest: result}, function(result) {
+                                // alert(result);
+                                $("#displayJson").html(result);
+                            });
+                            // $("#displayJson").html(result);
+                            // alert(result);
+                        }).fail(function(result) {
                             // Optionally alert the user of an error here...
                         });
 
-
-                    // $.post("FileWriter.php", {suggest: $(elementClicked).text()}, function(result){
-                    //     alert("fff");
-                    //     alert(result);
-                    // });
-
-                //reset();
             });
             $("[name='cancel_btn']").click(function () {
                 reset();
@@ -133,7 +110,10 @@ function setUpEditor() {
  *         7. a way to view/open plain text file of json
  *         8. After a file is uploaded display it on success may with a link to the index page with json file auto loaded
  *
- *
+ *header location this #@edit
+ * linefinder
+ * destroy sessions variables when selected file changes or save
+ * txt box proction with savas
  *
  *
  **/

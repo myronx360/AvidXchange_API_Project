@@ -7,7 +7,9 @@
  * Time: 1:28 PM
  */
 
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 //$baseUrl = "http://".$_SERVER['SERVER_NAME']."/";
 $dir = "jsonFiles/";
@@ -16,7 +18,8 @@ while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
 
-require_once ('FileEditor.php');
+
+$_SESSION["dir"] = $dir;
 
 ?>
 
@@ -33,12 +36,17 @@ require_once ('FileEditor.php');
 <body class="panel-body">
 <header class="page-header">
     <div class="navbar-fixed-top">
-        <a href="upload.php">Add New API</a>|<a href="">Save</a>|<a href="">Save As</a>
+        <nav id="nav">
+        <a href="upload.php"><input type="button" value="Add New API"></a>
+        <a id="saveBtn"><input type="button" value="Save"></a>
+        <a id="saveAsFormBtn"> <input type="button" value="Save As"></a>
+        <span id='saveAsForm'> <input type='text' id="newName" name='name' value="" placeholder='Enter Name'><input type='button' id="saveAsBtn" name="saveAsBtn" value='Save'></span>
         <br><br>
-        <nav id="nav"> </nav>
+         </nav>
     </div>
 </header>
 <h1 class="h1">Getting Started</h1>
+<br><br>
 <main>
     <form action="." method="post">
 
@@ -50,13 +58,15 @@ require_once ('FileEditor.php');
                     <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
                 <?php endif; ?>
             <?php endforeach; ?>
+
         </select>
 
         <span id="loadingMsg"></span>
     </form>
-    <div id="displayJson2"></div>
+    <br><br>
     <div id="displayJson"></div>
 
+    <br><br>
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select API to upload:
         <input type="file" name="fileToUpload" id="fileToUpload">
@@ -69,6 +79,7 @@ require_once ('FileEditor.php');
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="GetJSON.js"></script>
 <script src="EditScripts.js" ></script>
+<script src="SaveScripts.js" ></script>
 <script>
 
 
