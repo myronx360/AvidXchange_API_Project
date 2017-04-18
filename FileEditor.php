@@ -13,8 +13,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $path = filter_input(INPUT_POST, 'suggest');
 
-//$changedContent = filter_input(INPUT_POST, 'edit');
-
 
 
 static $totalIdNums = 0;
@@ -27,15 +25,8 @@ function setUpJsonText($path){
     static $content;
     global $totalIdNums;
 
-//    if(isset($_SESSION["finalContent"])){
-//        $temp = tmpfile();
-//        fwrite($temp, $_SESSION["finalContent"]);
-//        //Rewind to the start of file
-//        rewind($temp);
-//        $myfile = fopen($temp, "r") or die("Unable to open file!");
-//    }else{
-        $myfile = fopen($path, "r") or die("Unable to open file!");
-//    }
+    $myfile = fopen($path, "r") or die("Unable to open file!");
+
     $_SESSION["path"] = $path;
     $idNum = 0;
     $formattedContent = "";
@@ -100,7 +91,7 @@ function setUpJsonText($path){
             $pattern = "/(^\"|\"$|^\:)/";
             $currLineRight = preg_replace($pattern, " ", $currLineRight);
             $currLineRight = trim($currLineRight);
-
+//FIXME----------------------------------
             if (strlen($currLineRight) > 0) {// if something is there after formatting
                 if (array_key_exists($currLineRight, $findStringPosHashMap)) {//key,array {//(key,array)  if the line has been added to the array already
                     // get the strpos of this line...
@@ -152,7 +143,7 @@ function editContent(){
     for ($i = 0; $i < $totalIdNums; $i++) {// loop through all of the ids
         if ($lineID == $i) {// if the searched line id ($i) is the same as the submitted search line id ($lindID)
             $cursorPos = 0;
-//FIXME
+//FIXME------------------------------------
             // uses strpos the loop through the original file's contents to find the text that was changed ($originalText).
             //Returns the position of the first occurrence of a string inside another string, or FALSE if the string is not found.
             while ($cursorPos = strpos($content, $originalText, $cursorPos)) {  // strpos(string,find,start)
@@ -168,6 +159,8 @@ function editContent(){
 
     $_SESSION["finalContent"] = $finalContent;
 
+
+// create temporary file to save edits
     $filePath = strstr($_SESSION["path"],'.', true);
     if(strpos($filePath,"TEMP") === false) {
         $filePath = $filePath . "TEMP.json";// append temp to a new temporary file
@@ -175,7 +168,7 @@ function editContent(){
         $filePath = $filePath . ".json"; // continue to use temp file
     }
     $tempFile = fopen($filePath, "w");
-    fwrite($tempFile, $finalContent);
+    fwrite($tempFile, $finalContent) or die("Unable to open file!");
     fclose($tempFile);
 
     echo $filePath;

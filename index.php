@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Editor</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
 <?php
 /**
  * InClass # HW #
@@ -11,28 +21,25 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-//$baseUrl = "http://".$_SERVER['SERVER_NAME']."/";
+$baseUrl = "http://".$_SERVER['SERVER_NAME']."/JSONParser/";
 $dir = "jsonFiles/";
 $dh  = opendir($dir);
+
+// $baseUrl = "https://avid-api-mxw13.c9users.io/";
+//$baseUrl = "https://".$_SERVER['SERVER_NAME']."/";
+//$dir = "jsonFiles/";
+//$dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
     $files[] = $filename;
 }
 
 
 $_SESSION["dir"] = $dir;
-
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>API Editor</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-</head>
+
 <body class="panel-body">
 <header class="page-header">
     <div class="navbar-fixed-top">

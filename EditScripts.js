@@ -99,21 +99,19 @@ function setUpEditor() {
 
 
 
+
 /**
  *
- * TODO:   1. click on element show a submit button that says edit/add/remove /  cancel button, delete could break things for child objects
- *         2. display something(i.e alert box, text box/area) to enter text to edit the text
- *         3. submit button updates changes
- *         4. AvidXchange css stuff
- *         5. add API test file to remote server and get from server
- *         6. process to add and modify APIs
- *         7. a way to view/open plain text file of json
- *         8. After a file is uploaded display it on success may with a link to the index page with json file auto loaded
- *
- *header location this #@edit
+ * TODO:
  * linefinder
+ * delete TEMPfile
+ * test saving with the same name
+ * txt box protection with empty save as: alert box with txtbox and cancel save
+ *header location this #@edit
+ * \n\"\r
  * destroy sessions variables when selected file changes or save
- * txt box proction with savas
+ *
+ * AvidXchange css stuff
  *
  *
  **/
