@@ -9,14 +9,18 @@ $(document).ready(function(){
     });
 
     $("#saveAsBtn").click(function () {
-        $.post("FileWriter.php", {newName: $("#newName").val()}, function(result){
-            alert(result);
-        });
+        if($("#newName").val() == ""){
+            alert("Enter a name");
+        }else {
+            $.post("FileWriter.php", {newName: $("#newName").val()}, function (result) {
+                alert(result.trim());
+            });
+        }
     });
 
     $("#saveBtn").click(function () {
         $.post("FileWriter.php", {saveBtn: "true"}, function(result){
-            alert(result);
+            alert(result.trim());
         });
     });
 });

@@ -1712,7 +1712,7 @@
                 "parameters": [
                     {
                         "name": "q",
-                        "in": "query",
+                         "in": "query",
                         "description": "URL-encoded search query of 500 characters max",
                         "type": "string",
                         "required": true

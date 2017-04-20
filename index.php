@@ -21,7 +21,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$baseUrl = "http://".$_SERVER['SERVER_NAME']."/JSONParser/";
+//$baseUrl = "http://".$_SERVER['SERVER_NAME']."/JSONParser/";
 $dir = "jsonFiles/";
 $dh  = opendir($dir);
 

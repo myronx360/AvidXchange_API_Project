@@ -44,24 +44,49 @@ function setUpEditor() {
             }
             $("[name='confirm_btn']").click(function () {
 
-                        var form = $("#editForm");
+                var newText = $("[name='newText']").val();
+                var originalText = $("[name='originalText']").val();
+                var quote = "\"";
 
-                        $.ajax({
-                            type: form.attr('method'),
-                            url: form.attr('action'),
-                            data: form.serialize() // serializes the form's elements.
-                        }).done(function(result) {
-                            // Optionally alert the user of success here...
-                            // alert(result);
-                            $.post("FileEditor.php", {suggest: result}, function(result) {
-                                // alert(result);
-                                $("#displayJson").html(result);
-                            });
-                            // $("#displayJson").html(result);
-                            // alert(result);
-                        }).fail(function(result) {
-                            // Optionally alert the user of an error here...
-                        });
+
+
+                // if the originalText had quotes re-add quotes to newText if missing
+                if(originalText.charAt(0) == '"' && originalText.charAt(originalText.length - 1) == '"') {
+
+                    if (newText.charAt(0) !== '"' && newText.charAt(newText.length - 1) !== '"') {
+                        $("[name='newText']").val(quote.concat(newText).concat(quote));
+                    } else if (newText.charAt(0) !== '"') {
+                        $("[name='newText']").val(quote.concat(newText));
+                    } else if (newText.charAt(newText.length - 1) !== '"') {
+                        $("[name='newText']").val((newText).concat(quote));
+                    }
+
+                    // handles what happens when the new data is empty
+                    if(newText == "" || newText == "\"\""){
+                        $("[name='newText']").val(quote.concat("[]").concat(quote));
+                    }
+                }else{
+                    // handles what happens when the new data is empty
+                    if(newText == "" || newText == "\"\""){
+                        $("[name='newText']").val("[]");
+                    }
+                }
+                
+                    var form = $("#editForm");
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize() // serializes the form's elements.
+                }).done(function(result) {
+                    // Optionally alert the user of success here...
+                    $.post("FileEditor.php", {suggest: result}, function(result) {
+                        $("#displayJson").html(result);
+                    });
+                }).fail(function(result) {
+                    // Optionally alert the user of an error here...
+                    alert("ERROR: "+result);
+                });
 
             });
             $("[name='cancel_btn']").click(function () {
@@ -83,9 +108,6 @@ function setUpEditor() {
             $(this).css("background-color", "transparent");
         });
 
-        $("[name='originalText']").hover(function () {
-           alert("mess");
-        });
 
 
 
@@ -103,14 +125,17 @@ function setUpEditor() {
 /**
  *
  * TODO:
- * linefinder
+ *
  * delete TEMPfile
  * test saving with the same name
  * txt box protection with empty save as: alert box with txtbox and cancel save
  *header location this #@edit
+ * if deleted replace with empty quotes
  * \n\"\r
  * destroy sessions variables when selected file changes or save
- *
+ * prevent user double clicks on button
+ * dyanamically change the size of the textarea
+* "key": [] case /users/ user-id :/users/ {user-id} : case
  * AvidXchange css stuff
  *
  *
