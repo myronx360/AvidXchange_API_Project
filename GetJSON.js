@@ -3,22 +3,25 @@
  */
 
 //get selected json file
-function setFile(apiUrl) {
-
+function setFile(apiUrl, newAPISelected) {
+    $("#newName").val("");
     // show loading message
-    $(document).ajaxStart(function () {
-        $("#loadingMsg").text("Loading...");
-    });
-    $.post("FileEditor.php", {suggest: apiUrl}, function(result,status){
-        $("#displayJson").html(result);
-        $(document).ajaxComplete(function () {
-            if($("#apiSelector option:selected").text() != "Select an API:") {
-                $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded: " + status); // display the status of the loaded json file
-                setUpEditor();
-            }else{
-                $("#loadingMsg").text("");
+    // $(document).ajaxStart(function () {
+        $("#loadingMsg").text($("#apiSelector option:selected").text() + " loading...");
+    // });
+    $.post("FileEditor.php", {suggest: apiUrl, newAPISelected: newAPISelected}, function(result){
 
+        $("#displayJson").html(result);
+        $(document).ajaxSuccess(function () {
+
+            if(newAPISelected) {
+                $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded"); // display the status of the loaded json file
+                newAPISelected = false;
             }
+            if($("#apiSelector option:selected").text() == "Select an API:") {
+                $("#loadingMsg").text("");
+            }
+            setUpEditor();
         });
 
     });

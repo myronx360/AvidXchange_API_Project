@@ -22,55 +22,65 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$contents = $_SESSION["finalContent"];
-$path = $_SESSION["path"];
-$dir = $_SESSION["dir"];
-$deleteTemp =  $path;
+if(isset($_SESSION["finalContent"])) $contents = $_SESSION["finalContent"];//filter_input(INPUT_SESSION, "finalContent");
+$path = $_SESSION["path"];//filter_input(INPUT_SESSION, "path");
+$dir = $_SESSION["dir"];//filter_input(INPUT_SESSION, "dir");
+$deleteTempFilePath =  $path;
 $newName = filter_input(INPUT_POST, "newName");
 $save = filter_input(INPUT_POST, "saveBtn");
+if(isset($contents)) {
+    if (isset($save)) { // save
+        $path = preg_replace('/TEMP./', ".", $path);//preg_replace($pattern, $replacement, $string);
+        $originalName = preg_replace('/.json/', "", $path);
 
-if(isset($save)){ // save
-    $path = preg_replace('/TEMP./', ".", $path);//preg_replace($pattern, $replacement, $string);
-    $originalName = preg_replace('/.json/', ".", $path);
 
+        $token = strtok($originalName, "/");
+        $originalName = $token;
 
-    $token = strtok($originalName, "/");
+        while ($token !== false) {
+            $originalName = $token; // get the name of the file saved
+            $token = strtok(" ");
+        }
 
-    while ($token !== false) {
-        $originalName =  $token; // get the name of the file saved
-        $token = strtok(" ");
+        if (file_exists($deleteTempFilePath)) {
+            echo trim($originalName . " saving");
+
+        }
+
+    }else if (isset($newName)) {// save as
+
+        if (strpos($newName, ".json") === false) {
+            $path = $dir . $newName . ".json";
+        } else {
+            $path = $dir . $newName;
+        }
+
+        if (file_exists($deleteTempFilePath)) {
+            echo trim($newName . " saving");
+        }
+
     }
 
-    if(file_exists($deleteTemp)) {
-        echo $originalName . " saved";
-    }
+    // write new information to the file
+    $myfile = fopen($path, "w") or die("Unable to open file!");
+    fwrite($myfile, $contents);//fwrite(file,string,length)
+    fclose($myfile);
 
-}
-
-if (isset($newName)){// save as
-
-    if(strpos($newName,".json") === false){
-        $path = $dir.$newName.".json";
-    }else{
-        $path = $dir.$newName;
-    }
-
-    if(file_exists($deleteTemp)) {
-        echo $newName." saved";
-    }
-
-}
-$myfile = fopen($path, "w") or die("Unable to open file!");
-fwrite($myfile,$contents);//fwrite(file,string,length)
-fclose($myfile);
-
+    unset($_SESSION["finalContent"] );
+    unset($_SESSION["beginEditing"]);
 
 // delete TEMP file
-if(file_exists($deleteTemp)){
-    unlink($deleteTemp);
+    if (file_exists($deleteTempFilePath)) {
+        unlink($deleteTempFilePath);
+//        session_destroy();
+    } else {
+        echo "Error: File not saved.\n Refresh page and/or reselect file";
+    }
 }else{
-    echo "Error: File not saved.\n Refresh page and/or reselect file";
+    echo trim("No changes were made");
+
 }
+
 
 //unset($_SESSION['totIDs']);
 //unset($_SESSION['orgContent']);

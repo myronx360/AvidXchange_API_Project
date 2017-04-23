@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>API Editor</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-</head>
 <?php
 /**
  * InClass # HW #
@@ -30,6 +20,7 @@ $dh  = opendir($dir);
 //$dir = "jsonFiles/";
 //$dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
+    $filename = preg_replace('/.json/', "", $filename);
     $files[] = $filename;
 }
 
@@ -38,8 +29,13 @@ $_SESSION["dir"] = $dir;
 ?>
 
 
-
-
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>API Editor</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+</head>
 <body class="panel-body">
 <header class="page-header">
     <div class="navbar-fixed-top">
@@ -47,7 +43,12 @@ $_SESSION["dir"] = $dir;
         <a href="upload.php"><input type="button" value="Add New API"></a>
         <a id="saveBtn"><input type="button" value="Save"></a>
         <a id="saveAsFormBtn"> <input type="button" value="Save As"></a>
-        <span id='saveAsForm'> <input type='text' id="newName" name='name' value="" placeholder='Enter Name'><input type='button' id="saveAsBtn" name="saveAsBtn" value='Save'></span>
+        <span id='saveAsForm'>
+            <input type='text' id="newName" name='name' value="" placeholder='Enter Name'>
+            <input type='button' id="saveAsBtn" name="saveAsBtn" value='Save'>
+        </span>
+            <span class="text-danger" id="saveErrMsg"></span>
+            <span class="text-success" id="saveMsg"></span>
         <br><br>
          </nav>
     </div>
@@ -58,7 +59,7 @@ $_SESSION["dir"] = $dir;
     <form action="." method="post">
 
         Select a API:
-        <select id="apiSelector" name="apiSelector" onchange="setFile(this.value)">
+        <select id="apiSelector" name="apiSelector" onchange="setFile(this.value, true)">
             <option value="" selected>Select an API:</option>
             <?php foreach ($files as $file):?>
                 <?php if(!($file == "." || $file == "..")):?> // this has a not
@@ -70,10 +71,13 @@ $_SESSION["dir"] = $dir;
 
         <span id="loadingMsg"></span>
     </form>
+
     <br><br>
+
     <div id="displayJson"></div>
 
     <br><br>
+
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select API to upload:
         <input type="file" name="fileToUpload" id="fileToUpload">
@@ -86,6 +90,7 @@ $_SESSION["dir"] = $dir;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="GetJSON.js"></script>
 <script src="EditScripts.js" ></script>
+<!--<script src="autosize-master/build.js"</script>-->
 <script src="SaveScripts.js" ></script>
 <script>
 

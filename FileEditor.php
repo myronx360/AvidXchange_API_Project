@@ -10,16 +10,36 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+$editStarted = filter_input(INPUT_POST, 'editStarted');
+if(isset($editStarted)){
+    $_SESSION["beginEditing"] = $editStarted;
+}
+$newAPISelected = filter_input(INPUT_POST, 'newAPISelected');
+
+if(isset($_SESSION["beginEditing"])  && isset($newAPISelected) && $newAPISelected == true){
+    if(isset($_SESSION["finalContent"]) && isset($_SESSION["path"])){
+        unlink($_SESSION["path"]); // delete TEMP file of the prev api when a different api is selected w/o saving the changes of the prev api
+        unset($_SESSION["finalContent"]);
+        unset($_SESSION["path"]);
+        unset($_SESSION["beginEditing"]);
+    }
+}
 
 $path = filter_input(INPUT_POST, 'suggest');
-
 
 
 static $totalIdNums = 0;
 static $content = "";
 $findLineHashMap = array(); // holds an idNum as a key and a line of text as a value
 $finalContent = "";
-if(isset($path) && $path != "") setUpJsonText($path);
+if(isset($path) && $path != ""){
+    $path = $path . ".json";
+    if(substr_count($path, ".json") > 1) {
+        $path = preg_replace('/.json/', "", $path);
+        $path = $path . ".json";
+    }
+    setUpJsonText($path);
+}
 function setUpJsonText($path){
     global $findLineHashMap;
     static $content;
@@ -137,7 +157,7 @@ function setUpJsonText($path){
 
 
 
-//    fclose($myfile);
+    fclose($myfile);
 }
 
 
@@ -182,7 +202,7 @@ function editContent(){
     if(strpos($filePath,"TEMP") === false) {
         $filePath = $filePath . "TEMP.json";// append temp to a new temporary file
     }else{
-        $filePath = $filePath . ".json"; // continue to use temp file
+        $filePath = $filePath.".json"; // continue to use temp file
     }
     $tempFile = fopen($filePath, "w");
     fwrite($tempFile, $finalContent) or die("Unable to open file!");

@@ -13,7 +13,9 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 function setUpEditor() {
 
 
-
+//document.getElementById("myTextarea").style.height = "100px";
+    //document.getElementById("myTextarea").rows = "10";
+    // document.getElementById("myTextarea").select();
 
     $(document).ready(function(){
 
@@ -24,20 +26,24 @@ function setUpEditor() {
         });
         function startEdit(elementClicked) {
             // create text-area and buttons to edit items
-            var textArea = "<br> <textarea name='newText'></textarea> <br>";
+            var textArea = "<br> <textarea class='form-control form-group'  name='newText' autofocus></textarea> <br>";
+
+            // var textArea = "<br> <input type='text' class='form-control' class='input-lg' class='form-group-lg'  name='newText' autofocus> <br>";
             var originalText = "<input type='hidden' name='originalText' id='origText'>";
             var confirmBtn = "<br> <input type='button' onclick='confirmChanges()' name='confirm_btn' value='Confirm Changes'>";
-            var cancelBtn = "<input type='button' name='cancel_btn' value='Close'> <br>";
+            var cancelBtn = "<input  type='button' name='cancel_btn' value='Close'> <br>";
             var lineID = "<input type='hidden' name='lineID' id='lineID'>";
 
             if(!isEditing) {
 
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
+                setSize();
                 $("#editor").html("<form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form>");
                 $("[name='newText']").val($(elementClicked).text());
                 $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
+                $("[name='newText']").select();
 
             }else{
                 reset();
@@ -71,7 +77,7 @@ function setUpEditor() {
                         $("[name='newText']").val("[]");
                     }
                 }
-                
+
                     var form = $("#editForm");
 
                 $.ajax({
@@ -80,12 +86,14 @@ function setUpEditor() {
                     data: form.serialize() // serializes the form's elements.
                 }).done(function(result) {
                     // Optionally alert the user of success here...
-                    $.post("FileEditor.php", {suggest: result}, function(result) {
+
+                    $.post("FileEditor.php", {suggest: result, editStarted: true}, function(result) {
+                        $("#loadingMsg").text($("#apiSelector option:selected").text() + " edited");
                         $("#displayJson").html(result);
                     });
                 }).fail(function(result) {
                     // Optionally alert the user of an error here...
-                    alert("ERROR: "+result);
+                    $("#loadingMsg").text("ERROR: "+result);
                 });
 
             });
@@ -100,10 +108,21 @@ function setUpEditor() {
             $("#editor").remove();
         }
 
+        function setSize() {
+            $("[name='newText']").click(function () {
+                $(this).css("background-color", "yellow");
+                alert("efse");
+            });
+            $("[name='newText']").width("100%");
+            // alert($("[name='newText']"));
+            $("[name='newText']").css("height" , "100px");
+            $("[name='newText']").attr("rows", "15");
+        }
 
         // highlight editable text
         $(".editArea").hover(function(){
             $(this).css("background-color", "yellow");
+            $(this).css("cursor","pointer");
         }, function(){
             $(this).css("background-color", "transparent");
         });
@@ -126,16 +145,15 @@ function setUpEditor() {
  *
  * TODO:
  *
- * delete TEMPfile
- * test saving with the same name
- * txt box protection with empty save as: alert box with txtbox and cancel save
+ *
+ *
+ *
  *header location this #@edit
- * if deleted replace with empty quotes
+ *
  * \n\"\r
- * destroy sessions variables when selected file changes or save
- * prevent user double clicks on button
+ * handle what happens when a folder is in the list
+ * // pressing enter on a textarea
  * dyanamically change the size of the textarea
-* "key": [] case /users/ user-id :/users/ {user-id} : case
  * AvidXchange css stuff
  *
  *
