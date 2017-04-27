@@ -39,7 +39,7 @@ function setUpEditor() {
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
                 setSize();
-                $("#editor").html("<form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form>");
+                $("#editor").html("<h5><form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form></h5>");
                 $("[name='newText']").val($(elementClicked).text());
                 $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
@@ -84,19 +84,36 @@ function setUpEditor() {
                     type: form.attr('method'),
                     url: form.attr('action'),
                     data: form.serialize() // serializes the form's elements.
-                }).done(function(result) {
+                }).done(function(tempApiUrl) {
                     // Optionally alert the user of success here...
+                    //insert new nav links
+                    $("#navLinks").val("");
 
-                    $.post("FileEditor.php", {suggest: result, editStarted: true}, function(result) {
+                    document.getElementById("navLinks").innerHTML = "<span> Skip To: <a href='#Top'> Top </a>" ;
+                    // alert(result);
+                    $.post("FileEditor.php", {nav: tempApiUrl}, function(jsonString) {
+
+                        var jObj = JSON.parse(jsonString);
+
+                        // create nav anchor links
+                        for (var x in jObj) {
+                            document.getElementById("navLinks").innerHTML += "<a href=" + '#'.concat(x) + ">" + x + "</a>" + "\t\t";
+                            navLinks.push(x);
+                        }
+
+                    $.post("FileEditor.php", {suggest: tempApiUrl, editStarted: true, navWords: navLinks.toString()}, function(result) {
                         $("#loadingMsg").text($("#apiSelector option:selected").text() + " edited");
                         $("#displayJson").html(result);
                     });
-                }).fail(function(result) {
-                    // Optionally alert the user of an error here...
-                    $("#loadingMsg").text("ERROR: "+result);
+                        document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
+                    });
+
                 });
 
             });
+
+
+            // close editor
             $("[name='cancel_btn']").click(function () {
                 reset();
             });
@@ -130,6 +147,7 @@ function setUpEditor() {
 
 
 
+
     });
 
 
@@ -148,8 +166,9 @@ function setUpEditor() {
  *
  *
  *
- *header location this #@edit
- *
+ *header location links background
+ * tyr trimming in if statement tyr add space to true
+ * checkout h3 on mid
  * \n\"\r
  * handle what happens when a folder is in the list
  * // pressing enter on a textarea

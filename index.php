@@ -26,6 +26,7 @@ while (false !== ($filename = readdir($dh))) {
 
 
 $_SESSION["dir"] = $dir;
+
 ?>
 
 
@@ -36,26 +37,30 @@ $_SESSION["dir"] = $dir;
     <title>API Editor</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
 </head>
-<body class="panel-body">
-<header class="page-header">
-    <div class="navbar-fixed-top">
+<body class="panel-body" id="Top">
+<header id="navi" class="navbar-fixed-top page-header nav-blocks container panel-heading jumbotron"><! axc-subnav axc-toolbar axc-toobar-header-->
+    <span class="navbar-header container">
         <nav id="nav">
-        <a href="upload.php"><input type="button" value="Add New API"></a>
-        <a id="saveBtn"><input type="button" value="Save"></a>
-        <a id="saveAsFormBtn"> <input type="button" value="Save As"></a>
-        <span id='saveAsForm'>
-            <input type='text' id="newName" name='name' value="" placeholder='Enter Name'>
-            <input type='button' id="saveAsBtn" name="saveAsBtn" value='Save'>
-        </span>
-            <span class="text-danger" id="saveErrMsg"></span>
-            <span class="text-success" id="saveMsg"></span>
-        <br><br>
+            <a href="upload.php"><input type="button" value="Add New API"></a>
+            <a id="saveBtn"><input type="button" value="Save"></a>
+            <a id="saveAsFormBtn"> <input type="button" value="Save As"></a>
+            <span id='saveAsForm'>
+                <input type='text' id="newName" name='name' value="" placeholder='Enter Name'>
+                <input type='button' id="saveAsBtn" name="saveAsBtn" value='Save'>
+            </span>
+                <span class="text-danger" id="saveErrMsg"></span>
+                <span class="text-success" id="saveMsg"></span>
+            <br>
+            <span id="navLinks" class="nav-tabs-justified"></span>
+            <br>
+
          </nav>
-    </div>
+    </span>
 </header>
+<br><br><br><br><br><br>
 <h1 class="h1">Getting Started</h1>
 <br><br>
-<main>
+<main class="">
     <form action="." method="post">
 
         Select a API:
@@ -66,7 +71,6 @@ $_SESSION["dir"] = $dir;
                     <option value="<?php echo $dir.$file; ?>"><?php echo $file; ?></option>
                 <?php endif; ?>
             <?php endforeach; ?>
-
         </select>
 
         <span id="loadingMsg"></span>
@@ -84,20 +88,23 @@ $_SESSION["dir"] = $dir;
         <input type="submit" value="Upload API" name="submit">
     </form>
 
-
 </main>
-<footer></footer>
+
+<footer id="Bottom"></footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="GetJSON.js"></script>
 <script src="EditScripts.js" ></script>
-<!--<script src="autosize-master/build.js"</script>-->
 <script src="SaveScripts.js" ></script>
 <script>
 
-
+        $('#navi').hover(function() {
+            $('#navi').fadeTo("slow", 1);
+        }, function() {
+            $('#navi').fadeTo("slow", 0.5);
+        });
 
 
 </script>
-
 </body>
 </html>

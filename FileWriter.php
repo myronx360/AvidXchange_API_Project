@@ -44,7 +44,6 @@ if(isset($contents)) {
 
         if (file_exists($deleteTempFilePath)) {
             echo trim($originalName . " saving");
-
         }
 
     }else if (isset($newName)) {// save as

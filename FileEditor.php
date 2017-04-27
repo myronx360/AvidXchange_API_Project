@@ -26,24 +26,43 @@ if(isset($_SESSION["beginEditing"])  && isset($newAPISelected) && $newAPISelecte
 }
 
 $path = filter_input(INPUT_POST, 'suggest');
-
+$navPath = filter_input(INPUT_POST, 'nav');
+$navWords = filter_input(INPUT_POST, 'navWords');
 
 static $totalIdNums = 0;
 static $content = "";
 $findLineHashMap = array(); // holds an idNum as a key and a line of text as a value
 $finalContent = "";
+$navWordsArray = array();
 if(isset($path) && $path != ""){
     $path = $path . ".json";
     if(substr_count($path, ".json") > 1) {
         $path = preg_replace('/.json/', "", $path);
         $path = $path . ".json";
     }
+
     setUpJsonText($path);
+
 }
+if(isset($navPath)) {
+    $navPath = $navPath . ".json";
+    if(substr_count($navPath, ".json") > 1) {
+        $navPath = preg_replace('/.json/', "", $navPath);
+        $navPath = $navPath . ".json";
+    }
+
+    setUpNavLinks($navPath);
+}
+if (isset($navWords)){
+    global $navWords;
+}
+
 function setUpJsonText($path){
     global $findLineHashMap;
     static $content;
     global $totalIdNums;
+    global $navWords;
+    $navWordsArray= str_getcsv($navWords);
 
     $myfile = fopen($path, "r") or die("Unable to open file!");
 
@@ -59,7 +78,7 @@ function setUpJsonText($path){
     $findStringPosHashMap = array(); // Each line is added as a key and its location (in bytes/chars) in the file is stored as a value.
     //  Made so that lines with the same text could be changed without conflict
 
-    /**  */
+
     while (!feof($myfile)) { // Loop until the end of the file
         $line = fgets($myfile);     // capture the current line for displaying/editing
 
@@ -70,7 +89,8 @@ function setUpJsonText($path){
         $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n)/';
         $formattedLine = preg_replace($patterns, " ", $line);
         $formattedLine = trim($formattedLine);
-        if($formattedLine == '{' || $formattedLine == '['|| $formattedLine == '}'|| $formattedLine == ']'){
+        if($formattedLine == '{' || $formattedLine == '['|| $formattedLine == '}'|| $formattedLine == ']'||
+           $formattedLine == '},'|| $formattedLine == '],'){
             $formattedLine = "";
         }
 
@@ -94,10 +114,21 @@ function setUpJsonText($path){
                     $lineLengthLeft = $findStringPosHashMap[$currLineLeft];
                 }
 
+                //check if the word is part of the navigation list
+                    $quote = "\"";
+                    for($x = 0; $x < count($navWordsArray); $x++) {
+                        $currWord = $quote.$navWordsArray[$x].$quote;
+                        if($currWord == $currLineLeft){
+                            $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                        }
+                    }
+
                 // $formattedContent holds what is displayed on an HTML webpage
-                $formattedContent .= "<span class='editArea' id=" . $idNum . ">" . $currLineLeft. "</span> : " . "<br>";
+                $formattedContent .= "<h2>"."<span class='editArea' id=" . $idNum . ">" . $currLineLeft. "</span> : " ."</h2>". "<br>";
                 $findLineHashMap[$idNum] = $lineLengthLeft; // assigns a line of text to an $idNum
                 $idNum++;
+
+
             }
                             /********** Start right side **********/
             // $currLineRight holds the sub-string that is right of ':' in the $formattedLine
@@ -121,8 +152,17 @@ function setUpJsonText($path){
                         $lineLength = $findStringPosHashMap[$formattedLine];
                     }
 
+                    //check if the word is part of the navigation list
+                    $quote = "\"";
+                    for($x = 0; $x < count($navWordsArray); $x++) {
+                        $currWord = $quote.$navWordsArray[$x].$quote;
+                        if($currWord == $formattedLine){
+                            $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                        }
+                    }
+
                     // $formattedContent holds what is displayed on an HTML webpage
-                    $formattedContent .= "<span class='editArea' id=" . $idNum . ">" . $formattedLine. "</span>" . "<br>";
+                    $formattedContent .= "<h2>"."<span class='editArea' id=" . $idNum . ">" . $formattedLine. "</span>" ."</h2>"."<br>";
                     $findLineHashMap[$idNum] = $lineLength; // assigns a line of text to an $idNum
                     $idNum++;
                 }
@@ -139,8 +179,17 @@ function setUpJsonText($path){
                         $lineLengthRight = $findStringPosHashMap[$currLineRight];
                 }
 
+                //check if the word is part of the navigation list
+                $quote = "\"";
+                for($x = 0; $x < count($navWordsArray); $x++) {
+                    $currWord = $quote.$navWordsArray[$x].$quote;
+                    if($currWord == $currLineRight){
+                        $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                    }
+                }
+
                 // $formattedContent holds what is displayed on an HTML webpage
-                $formattedContent .= "<span class='editArea' id=" . $idNum . ">" . $currLineRight . "</span>" . "<br><br>";
+                $formattedContent .= "<mark>"."<span class='editArea' id=" . $idNum . ">" . $currLineRight . "</span>" ."</mark>". "<br><br>";
                 $findLineHashMap[$idNum] = $lineLengthRight; // assigns a line of text to an $idNum
                 $idNum++;
             }
@@ -213,5 +262,10 @@ function editContent(){
 
     echo $filePath;
 
+}
+
+
+function setUpNavLinks($path){
+    echo file_get_contents($path);
 }
 ?>
