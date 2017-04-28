@@ -36,10 +36,21 @@ $_SESSION["dir"] = $dir;
     <meta charset="UTF-8">
     <title>API Editor</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <style>
+        /* offset the fixed nav-bar        */
+        .offset:before {
+            display: block;
+            content: " ";
+            height: 70px;      /* Give height of your fixed element */
+            margin-top: -70px; /* Give negative margin of your fixed element */
+            visibility: hidden;
+        }
+    </style>
+
 </head>
 <body class="panel-body" id="Top">
-<header id="navi" class="navbar-fixed-top page-header nav-blocks container panel-heading jumbotron"><! axc-subnav axc-toolbar axc-toobar-header-->
-    <span class="navbar-header container">
+<header id="navi" class="navbar-fixed-top nav-blocks main-container panel-heading panel-primary"><! axc-subnav axc-toolbar axc-toobar-header page-header-->
+    <span class="navbar-header">
         <nav id="nav">
             <a href="upload.php"><input type="button" value="Add New API"></a>
             <a id="saveBtn"><input type="button" value="Save"></a>
@@ -85,7 +96,7 @@ $_SESSION["dir"] = $dir;
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select API to upload:
         <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload API" name="submit">
+        <input type="submit" value="Upload API" name="submit" class="btn-success">
     </form>
 
 </main>
@@ -96,15 +107,5 @@ $_SESSION["dir"] = $dir;
 <script src="GetJSON.js"></script>
 <script src="EditScripts.js" ></script>
 <script src="SaveScripts.js" ></script>
-<script>
-
-        $('#navi').hover(function() {
-            $('#navi').fadeTo("slow", 1);
-        }, function() {
-            $('#navi').fadeTo("slow", 0.5);
-        });
-
-
-</script>
 </body>
 </html>

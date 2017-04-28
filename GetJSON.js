@@ -6,48 +6,54 @@ var navLinks = [];
 function setFile(apiUrl, newAPISelected) {
     $("#newName").val("");
     $("#navLinks").val("");
+    if(apiUrl == ""){// if "Select an API:" is selected
+        location.reload(true);
+        $("#loadingMsg").text("");
+    }else{
 
-    document.getElementById("navLinks").innerHTML = "<span > Skip To: <a href='#Top'> Top </a>" ;
-//<span style='color:blue;margin-left:30px;'>
-    // show loading message
-    // $(document).ajaxStart(function () {
+        document.getElementById("navLinks").innerHTML = "<span > Skip To: <a href='#Top'> Top </a>";
+        // show loading message
         $("#loadingMsg").text($("#apiSelector option:selected").text() + " loading...");
-    // });
-
-    $.post("FileEditor.php", {nav: apiUrl}, function(result) {
-        var jObj = JSON.parse(result);
-
-        // create nav anchor links
-        for (var x in jObj) {
-            document.getElementById("navLinks").innerHTML += "<a href="+'#'.concat(x)+">" +x+"</a>" + "\t\t";
-            navLinks.push(x);
-        }
+        $("#loadingMsg").removeClass();
+        $("#loadingMsg").addClass("text-warning");
 
 
-        $.post("FileEditor.php", {suggest: apiUrl, newAPISelected: newAPISelected, navWords: navLinks.toString()}, function(result){
+        $.post("FileEditor.php", {nav: apiUrl}, function (result) {
+            var jObj = JSON.parse(result);
 
-            $("#displayJson").html(result);
-            $(document).ajaxSuccess(function () {
+            // create nav anchor links
+            for (var x in jObj) {
+                document.getElementById("navLinks").innerHTML += "<a href=" + '#'.concat(x) + ">" + x + "</a>" + "\t\t";
+                navLinks.push(x);
+            }
 
-                if(newAPISelected) {
-                    $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded"); // display the status of the loaded json file
-                    newAPISelected = false;
-                }
-                if($("#apiSelector option:selected").text() == "Select an API:") {
-                    $("#loadingMsg").text("");
-                }
-                setUpEditor();
+
+            $.post("FileEditor.php", {
+                suggest: apiUrl,
+                newAPISelected: newAPISelected,
+                navWords: navLinks.toString()
+            }, function (result) {
+
+                $("#displayJson").html(result);
+                $(document).ajaxSuccess(function () {
+                    if (newAPISelected) {
+                        // loaded message
+                        $("#saveMsg").text("");
+                        $("#saveErrMsg").text("");
+                        $("#loadingMsg").text($("#apiSelector option:selected").text() + " loaded"); // display the status of the loaded json file
+                        $("#loadingMsg").removeClass();
+                        $("#loadingMsg").addClass("text-success");
+                        newAPISelected = false;
+                    }
+
+                    setUpEditor();
+                });
+
             });
-
+            document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
         });
-        document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
-        // var offset = $(':target').offset();
-        // var scrollto = offset.top - 60; // minus fixed header height
-        // $('html, body').animate({scrollTop:scrollto}, 0);
-        // $("#navLinks").addClass("page-header");
-    });
 
 
-
+    }
 }
 

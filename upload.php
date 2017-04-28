@@ -50,11 +50,17 @@ if(isset($_POST["submit"])) {
 
 
 <body class="panel-body">
-<header class="page-header">
-    <div class="navbar-fixed-top">
+<!--<header class="page-header">-->
+<!--    <div class="navbar-fixed-top">-->
+<header id="navi" class="navbar-fixed-top nav-blocks main-container panel-heading panel-primary"><! axc-subnav axc-toolbar axc-toobar-header page-header-->
+    <span class="navbar-header">
+        <nav id="nav">
         <a href="index.php"><input type="button" value="API Editor"></a><br>
-    </div>
+        </nav>
+    </span>
 </header>
+
+<br><br><br><br><br><br>
 <h1 class="h1">Getting Started</h1>
 
 <form action="upload.php" method="post" enctype="multipart/form-data">
@@ -66,14 +72,14 @@ if(isset($_POST["submit"])) {
 <?php
 if(isset($_POST["submit"])) {
     if (!empty($successMsg)) {
-        echo $successMsg;
+        echo "<span class='text-success'>".$successMsg."</span>";
 ?>
-    <div id = "dateTime"></div>
+    <div class="text-success" id = "dateTime"></div>
 <?php
     } else {
-        echo $failMsg;
+        echo "<span class='text-danger'>". $failMsg."</span>";
 ?>
-    <div id = "dateTime"></div>
+    <div class="text-danger" id = "dateTime"></div>
 <?php
     }
 }

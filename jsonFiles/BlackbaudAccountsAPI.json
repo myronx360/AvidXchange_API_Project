@@ -1,0 +1,2164 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Accounts Payable",
+    "version": "1.0",
+    "description": "This API is used to manage accounts payable, including vendors and invoices."
+  },
+  "host": "api.sky.blackbaud.com",
+  "basePath": "/accountspayable/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/invoices": {
+      "get": {
+        "description": "Get a list of invoices matching given criteria.",
+        "operationId": "Invoice (List)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Filter for invoices before a certain date",
+            "type": "string"
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Filter for invoices after a certain date",
+            "type": "string"
+          },
+          {
+            "name": "invoice_status",
+            "in": "query",
+            "description": "Filter by the status of the invoice",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Approved"
+            ]
+          },
+          {
+            "name": "vendor_name",
+            "in": "query",
+            "description": "Filter by vendor name",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of invoices.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[InvoiceSummary]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view invoices."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Create a new invoice.",
+        "operationId": "Invoice (Create)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createInvoice",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateInvoice"
+            },
+            "description": "The invoice to create. Note that invoices must have paired distributions where every debit distribution has a matching credit distribution of the same amount."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the ID of the created invoice.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create an invoice."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors": {
+      "get": {
+        "description": "Returns a list of all vendors.",
+        "operationId": "Vendor (List)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "vendor_name",
+            "in": "query",
+            "description": "The name of the vendor",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of vendor. \r\nActive, pending, or on hold.",
+            "type": "string",
+            "enum": [
+              "Active",
+              "Inactive",
+              "OnHold"
+            ]
+          },
+          {
+            "name": "ui_vendor_id",
+            "in": "query",
+            "description": "The UI defined ID for the vendor",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of vendors.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[VendorSummary]"
+            }
+          },
+          "400": {
+            "description": "Returned when specified vendor is not in the correct format or is invalid."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view vendors."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Adds a new vendor.",
+        "operationId": "Vendor (Create)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createVendor",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateVendor"
+            },
+            "description": "The vendor to add."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the ID of the created vendor.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create a vendor."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/invoices/{invoice_id}": {
+      "get": {
+        "description": "Retrieve the given invoice.",
+        "operationId": "Invoice (Get)",
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "description": "Format - int32. The id of the invoice to retrieve",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified invoice.",
+            "schema": {
+              "$ref": "#/definitions/InvoiceDetail"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view invoices."
+          },
+          "404": {
+            "description": "Returned when the specified invoice could not be found."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors/{vendor_id}": {
+      "get": {
+        "description": "Retrieves the vendor with the specified ID.",
+        "operationId": "Vendor (Get)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the vendor to get.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified vendor entity.",
+            "schema": {
+              "$ref": "#/definitions/VendorDetail"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view the specified vendor."
+          },
+          "404": {
+            "description": "Returned when no vendor is found with the specified ID."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors/{vendor_id}/addresses": {
+      "get": {
+        "description": "Retrieves the addresses of the vendor with the specified ID.",
+        "operationId": "Address (List)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the vendor to get.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified vendor entity's addresses.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[VendorAddress]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view the specified vendor's addresses."
+          },
+          "404": {
+            "description": "Returned when no vendor is found with the specified ID."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Adds a new vendor address.",
+        "operationId": "Address (Create)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The vendor to which we add the address.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createVendorAddress",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateVendorAddress"
+            },
+            "description": "The vendor address to be added."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the ID of the created vendor address.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create a vendor address."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors/{vendor_id}/addresses/{address_id}/contactmethods": {
+      "get": {
+        "description": "Retrieves the addresses of the vendor with the specified ID.",
+        "operationId": "Contact method (List)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the vendor to get.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "address_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the address to get.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Returned when no vendor is found with the specified ID."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view the specified address' contact methods."
+          },
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified vendor address entity's contact methods.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[AddressContactMethod]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Adds a new contact method.",
+        "operationId": "Contact method (Create)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The vendor to which to add this contact method.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "address_id",
+            "in": "path",
+            "description": "Format - int32. The address to which to add this contact method.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createAddressContactMethod",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateAddressContactMethod"
+            },
+            "description": "The contact method we are adding to this address."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the ID of the created vendor contact method.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create an address contact method."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors/{vendor_id}/notes": {
+      "get": {
+        "description": "Retrieves the notes and actions of the vendor with the specified ID.",
+        "operationId": "Note (List)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the vendor to get.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Returned when no vendor is found with the specified ID."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view the specififed vendor's notes."
+          },
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified vendor entity's notes.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[VendorNoteAction]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Adds a new vendor note.",
+        "operationId": "Note (Create)",
+        "parameters": [
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "description": "Format - int32. The vendor to which to add this note.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createVendorNoteAction",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateVendorNoteAction"
+            },
+            "description": "The note we are adding to this vendor."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the ID of the created vendor note.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create a vendor note."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/invoices/customfields": {
+      "get": {
+        "description": "Get custom field options for vendors.",
+        "operationId": "Invoice custom field (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of custom fields.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[CustomFieldOptions]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/vendors/customfields": {
+      "get": {
+        "description": "Get custom field options for vendors.",
+        "operationId": "Vendor custom field (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of custom fields.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[CustomFieldOptions]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "InvoiceFilters": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "to_date": {
+          "format": "date-time",
+          "description": "Filter for invoices before a certain date",
+          "type": "string"
+        },
+        "from_date": {
+          "format": "date-time",
+          "description": "Filter for invoices after a certain date",
+          "type": "string"
+        },
+        "invoice_status": {
+          "description": "Filter by the status of the invoice",
+          "enum": [
+            "Pending",
+            "Approved"
+          ],
+          "type": "string"
+        },
+        "vendor_name": {
+          "description": "Filter by vendor name",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[InvoiceSummary]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InvoiceSummary"
+          }
+        }
+      }
+    },
+    "InvoiceSummary": {
+      "type": "object",
+      "properties": {
+        "invoice_id": {
+          "format": "int32",
+          "description": "The invoice identifier.",
+          "type": "integer"
+        },
+        "invoice_number": {
+          "description": "The number for the invoice",
+          "type": "string"
+        },
+        "invoice_date": {
+          "format": "date-time",
+          "description": "The date for the invoice",
+          "type": "string"
+        },
+        "vendor_id": {
+          "format": "int32",
+          "description": "The Vendor associated with the invoice",
+          "type": "integer"
+        },
+        "vendor_name": {
+          "description": "The name of the vendor for this invoice",
+          "type": "string"
+        },
+        "vendor_status": {
+          "description": "The status of the vendor for this invoice",
+          "enum": [
+            "Active",
+            "Inactive",
+            "OnHold"
+          ],
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "description": "The amount of the invoice",
+          "type": "number"
+        },
+        "description": {
+          "description": "The description for theinvoice",
+          "type": "string"
+        },
+        "status": {
+          "description": "The approval status of this invoice",
+          "enum": [
+            "Pending",
+            "Approved"
+          ],
+          "type": "string"
+        },
+        "post_status": {
+          "description": "the post status of this invoice",
+          "enum": [
+            "DoNotPost",
+            "NotYetPosted",
+            "Posted"
+          ],
+          "type": "string"
+        },
+        "balance": {
+          "format": "double",
+          "description": "The current balance on this invoice",
+          "type": "number"
+        },
+        "is_past_due": {
+          "description": "Whether the invoice is past due",
+          "type": "boolean"
+        },
+        "amount_due": {
+          "format": "double",
+          "description": "The amount still due on the invoice",
+          "type": "number"
+        },
+        "age": {
+          "description": "The age of the invoice",
+          "type": "string"
+        }
+      }
+    },
+    "CreateInvoice": {
+      "description": "Contract for creating invoice.",
+      "required": [
+        "vendor_id",
+        "amount",
+        "due_date",
+        "invoice_date",
+        "post_date",
+        "distributions"
+      ],
+      "type": "object",
+      "properties": {
+        "vendor_id": {
+          "format": "int32",
+          "description": "The id of the vendor for this invoice.",
+          "type": "integer"
+        },
+        "amount": {
+          "format": "double",
+          "description": "THe amount of this invoice.",
+          "type": "number"
+        },
+        "description": {
+          "description": "The description for this invoice.",
+          "type": "string"
+        },
+        "invoice_number": {
+          "description": "The invoice number.",
+          "maxLength": 2147483647,
+          "minLength": 1,
+          "type": "string"
+        },
+        "approval_status": {
+          "description": "The approval status of this invoice.",
+          "enum": [
+            "Pending",
+            "Approved"
+          ],
+          "type": "string"
+        },
+        "due_date": {
+          "format": "date-time",
+          "description": "The due date for this invoice.",
+          "type": "string"
+        },
+        "payment_details": {
+          "$ref": "#/definitions/CreateInvoicePaymentDetails",
+          "description": "The payment details for this invoice."
+        },
+        "invoice_date": {
+          "format": "date-time",
+          "description": "The date for the invoice",
+          "type": "string"
+        },
+        "post_status": {
+          "description": "the post status of this invoice.",
+          "enum": [
+            "DoNotPost",
+            "NotYetPosted",
+            "Posted"
+          ],
+          "type": "string"
+        },
+        "post_date": {
+          "format": "date-time",
+          "description": "The post date for this invoice.",
+          "type": "string"
+        },
+        "distribute_discounts": {
+          "description": "Whether to distribute discounts to invoice expense accounts.",
+          "type": "boolean"
+        },
+        "distributions": {
+          "description": "The distributions of this invoice.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Distribution"
+          }
+        },
+        "custom_fields": {
+          "description": "The custom fields on this invoice.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateCustomField"
+          }
+        }
+      }
+    },
+    "CreateInvoicePaymentDetails": {
+      "required": [
+        "remit_to"
+      ],
+      "type": "object",
+      "properties": {
+        "remit_to": {
+          "$ref": "#/definitions/RemitToAddressId",
+          "description": "The address to which this invoice will be remitted"
+        },
+        "payment_method": {
+          "description": "The payment method",
+          "enum": [
+            "Check",
+            "EFT",
+            "BankDraft"
+          ],
+          "type": "string"
+        },
+        "paid_from": {
+          "description": "The bank from which this was paid",
+          "type": "string"
+        },
+        "hold_payment": {
+          "description": "Whether or not to hold payment on this invoice",
+          "type": "boolean"
+        },
+        "create_separate_payment": {
+          "description": "Whether or not to create a separate payment for this invoice",
+          "type": "boolean"
+        }
+      }
+    },
+    "Distribution": {
+      "description": "Distribution.",
+      "required": [
+        "distribution_splits"
+      ],
+      "type": "object",
+      "properties": {
+        "distribution_id": {
+          "format": "int32",
+          "description": "The distribution identifier.",
+          "type": "integer"
+        },
+        "distribution_splits": {
+          "description": "The distribution split",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DistributionSplit"
+          }
+        },
+        "amount": {
+          "format": "double",
+          "description": "The distribution amount.",
+          "type": "number"
+        },
+        "description": {
+          "description": "The description for this distribution",
+          "type": "string"
+        },
+        "account_number": {
+          "description": "The account number for this distribution",
+          "type": "string"
+        },
+        "type_code": {
+          "description": "The journal entry transaction type (debit or credit).",
+          "enum": [
+            "Debit",
+            "Credit"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "CreateCustomField": {
+      "description": "The create contract for custom fields.",
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "description": "The name of the custom field.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this custom field.",
+          "type": "string"
+        },
+        "comments": {
+          "description": "The description for this custom field.",
+          "type": "string"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "The date on this custom field.",
+          "type": "string"
+        }
+      }
+    },
+    "RemitToAddressId": {
+      "description": "The remit to address",
+      "required": [
+        "address_id"
+      ],
+      "type": "object",
+      "properties": {
+        "address_id": {
+          "format": "int32",
+          "description": "The address identifier",
+          "type": "integer"
+        }
+      }
+    },
+    "DistributionSplit": {
+      "description": "Journal Entry Distribution.",
+      "required": [
+        "transaction_code_values"
+      ],
+      "type": "object",
+      "properties": {
+        "distribution_split_id": {
+          "format": "int32",
+          "description": "The distribution split identifier.",
+          "type": "integer"
+        },
+        "ui_project_id": {
+          "description": "The user-visible identifier of the project.",
+          "type": "string"
+        },
+        "transaction_code_values": {
+          "description": "The distribution transaction code values.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionCodeValue"
+          }
+        },
+        "amount": {
+          "format": "double",
+          "description": "The distribution journal entry amount. Only one of Amount or Percent can be specified.",
+          "type": "number"
+        },
+        "percent": {
+          "format": "double",
+          "description": "The distribution journal entry amount percentage. Only one of Amount or Percent can be specified.",
+          "type": "number"
+        },
+        "account_class": {
+          "description": "The account class for this distribution split.",
+          "type": "string"
+        }
+      }
+    },
+    "TransactionCodeValue": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name for this transaction code",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of this transaction code",
+          "type": "string"
+        }
+      }
+    },
+    "CreatedResult[Int32]": {
+      "type": "object",
+      "properties": {
+        "record_id": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "InvoiceDetail": {
+      "description": "Invoice Information",
+      "required": [
+        "vendor_id",
+        "invoice_date",
+        "due_date",
+        "amount",
+        "description",
+        "status"
+      ],
+      "type": "object",
+      "properties": {
+        "invoice_id": {
+          "format": "int32",
+          "description": "The invoice identifier.",
+          "type": "integer"
+        },
+        "vendor_id": {
+          "format": "int32",
+          "description": "The Vendor associated with the invoice",
+          "type": "integer"
+        },
+        "vendor_name": {
+          "description": "The name of the vendor for this invoice",
+          "type": "string"
+        },
+        "invoice_number": {
+          "description": "The number for the invoice",
+          "type": "string"
+        },
+        "invoice_date": {
+          "format": "date-time",
+          "description": "The date of the invoice",
+          "type": "string"
+        },
+        "due_date": {
+          "format": "date-time",
+          "description": "The due date of the invoice",
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "description": "The amount of the invoice",
+          "type": "number"
+        },
+        "balance": {
+          "format": "double",
+          "description": "The current balance on this invoice",
+          "type": "number"
+        },
+        "total_paid": {
+          "format": "double",
+          "description": "The total amount paid on this invoice",
+          "type": "number"
+        },
+        "description": {
+          "description": "The description for the invoice",
+          "type": "string"
+        },
+        "status": {
+          "description": "The approval status of this invoice",
+          "enum": [
+            "Pending",
+            "Approved"
+          ],
+          "type": "string"
+        },
+        "invoice_payment_detail": {
+          "$ref": "#/definitions/InvoicePaymentDetails",
+          "description": "The payment details and options"
+        },
+        "post_status": {
+          "description": "the post status of this invoice",
+          "enum": [
+            "DoNotPost",
+            "NotYetPosted",
+            "Posted"
+          ],
+          "type": "string"
+        },
+        "post_date": {
+          "format": "date-time",
+          "description": "The post date for this invoice",
+          "type": "string"
+        },
+        "distribute_discounts": {
+          "description": "Whether to distribute discounts to invoice expense accounts",
+          "type": "boolean"
+        },
+        "distributions": {
+          "description": "The  distributions on this invoice",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Distribution"
+          }
+        },
+        "custom_fields": {
+          "description": "The custom fields on this invoice",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomField"
+          }
+        }
+      }
+    },
+    "InvoicePaymentDetails": {
+      "description": "Invoice Information",
+      "type": "object",
+      "properties": {
+        "remit_to": {
+          "$ref": "#/definitions/RemitToAddress",
+          "description": "The address to which this invoice will be remitted"
+        },
+        "payment_method": {
+          "description": "The payment method",
+          "enum": [
+            "Check",
+            "EFT",
+            "BankDraft"
+          ],
+          "type": "string"
+        },
+        "paid_from": {
+          "description": "The bank from which this was paid",
+          "type": "string"
+        },
+        "hold_payment": {
+          "description": "Whether or not to hold payment on this invoice",
+          "type": "boolean"
+        },
+        "create_separate_payment": {
+          "description": "Whether or not to create a separate payment for this invoice",
+          "type": "boolean"
+        },
+        "payments": {
+          "description": "The payments on this invoice",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InvoicePaymentSummary"
+          }
+        }
+      }
+    },
+    "CustomField": {
+      "description": "Custom field definition.",
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "description": "The name of the custom field.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this custom field.",
+          "type": "string"
+        },
+        "comments": {
+          "description": "The description for this custom field.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of this custom field.",
+          "enum": [
+            "Text",
+            "Number",
+            "DateTime",
+            "Currency",
+            "Boolean",
+            "Table",
+            "FuzzyDate"
+          ],
+          "type": "string"
+        },
+        "is_required": {
+          "description": "Whether this custom field is required.",
+          "type": "boolean"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "The date on this custom field.",
+          "type": "string"
+        }
+      }
+    },
+    "RemitToAddress": {
+      "description": "The remit to address",
+      "required": [
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "address_id": {
+          "format": "int32",
+          "description": "The address identifier",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this address",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country for the address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city for the address",
+          "type": "string"
+        },
+        "county": {
+          "description": "The county for the address",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province (or suburb in NZ) for the address",
+          "type": "string"
+        },
+        "postal": {
+          "description": "Refers to the Postal Code or ZIP of the address",
+          "type": "string"
+        },
+        "address_line": {
+          "description": "The street for this address",
+          "type": "string"
+        },
+        "contact_name": {
+          "description": "The full name of the contact for this address",
+          "type": "string"
+        }
+      }
+    },
+    "InvoicePaymentSummary": {
+      "type": "object",
+      "properties": {
+        "payment_date": {
+          "format": "date-time",
+          "description": "The date for this payment.",
+          "type": "string"
+        },
+        "transaction_number": {
+          "description": "The transaction number for this payment.",
+          "type": "string"
+        },
+        "payment_status": {
+          "description": "The status of this payment.",
+          "enum": [
+            "Deleted",
+            "Voided",
+            "Scheduled",
+            "Paid"
+          ],
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "description": "The amount of this payment.",
+          "type": "number"
+        },
+        "br_transaction_id": {
+          "format": "int32",
+          "description": "The transaction identifier on this payment.",
+          "type": "integer"
+        },
+        "checks_7_id": {
+          "format": "int32",
+          "description": "The checks identifier from FE7.",
+          "type": "integer"
+        }
+      }
+    },
+    "PagedResponse[CustomFieldOptions]": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldOptions"
+          }
+        }
+      }
+    },
+    "CustomFieldOptions": {
+      "type": "object",
+      "properties": {
+        "custom_field_id": {
+          "format": "int32",
+          "description": "The identifier for this custom field.",
+          "type": "integer"
+        },
+        "name": {
+          "description": "The name of this custom field.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type (boolean, table, etc) of this custom field.",
+          "enum": [
+            "Text",
+            "Number",
+            "DateTime",
+            "Currency",
+            "Boolean",
+            "Table",
+            "FuzzyDate"
+          ],
+          "type": "string"
+        },
+        "is_required": {
+          "description": "Whether this custom field is required.",
+          "type": "boolean"
+        },
+        "table_values": {
+          "description": "List of table values.\r\nOnly applicable if type = 'Table'.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "VendorFilters": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "vendor_name": {
+          "description": "The name of the vendor",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of vendor. \r\nActive, pending, or on hold.",
+          "enum": [
+            "Active",
+            "Inactive",
+            "OnHold"
+          ],
+          "type": "string"
+        },
+        "ui_vendor_id": {
+          "description": "The UI defined ID for the vendor",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[VendorSummary]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VendorSummary"
+          }
+        }
+      }
+    },
+    "VendorSummary": {
+      "description": "Brief vendor information",
+      "required": [
+        "vendor_name"
+      ],
+      "type": "object",
+      "properties": {
+        "vendor_id": {
+          "format": "int32",
+          "description": "Vendor identifier",
+          "type": "integer"
+        },
+        "vendor_name": {
+          "description": "The name of the vendor",
+          "type": "string"
+        },
+        "balance_due": {
+          "format": "double",
+          "description": "The balance due on this vendor",
+          "type": "number"
+        },
+        "ui_defined_id": {
+          "description": "The UI defined Id of this vendor",
+          "type": "string"
+        },
+        "customer_number": {
+          "description": "The customer number",
+          "type": "string"
+        },
+        "vendor_status": {
+          "description": "Status of vendor. \r\nActive, pending, or on hold.",
+          "enum": [
+            "Active",
+            "Inactive",
+            "OnHold"
+          ],
+          "type": "string"
+        },
+        "issue_1099s": {
+          "description": "Whether to issue 1099s to this vendor",
+          "type": "boolean"
+        },
+        "primary_address": {
+          "$ref": "#/definitions/VendorAddress",
+          "description": "The address(es) of the vendor"
+        },
+        "payment_method": {
+          "description": "The default payment of this vendor",
+          "enum": [
+            "Check",
+            "EFT",
+            "BankDraft"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "VendorAddress": {
+      "description": "Address information",
+      "required": [
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "address_id": {
+          "format": "int32",
+          "description": "The address identifier",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this address",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country for the address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city for the address",
+          "type": "string"
+        },
+        "county": {
+          "description": "The county for the address",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province (or suburb in NZ) for the address",
+          "type": "string"
+        },
+        "postal": {
+          "description": "Refers to the Postal Code or ZIP of the address",
+          "type": "string"
+        },
+        "address_line": {
+          "description": "The street/address line for this address",
+          "type": "string"
+        },
+        "is_primary": {
+          "description": "If this address is the primary address",
+          "type": "boolean"
+        },
+        "is_invoices": {
+          "description": "If invoices are sent to this address",
+          "type": "boolean"
+        },
+        "is_pos": {
+          "description": "If POs are sent to this address",
+          "type": "boolean"
+        },
+        "is_1099": {
+          "description": "If 1099s are sent to this address",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "The title for the primary contact",
+          "enum": [
+            "Mr",
+            "Mrs",
+            "Ms",
+            "Brother",
+            "Captain",
+            "Chief",
+            "Dr",
+            "Drs",
+            "Governor",
+            "Master",
+            "Miss",
+            "Pastor",
+            "Prof",
+            "Rabbi",
+            "Rev",
+            "TheHonorable",
+            "Major"
+          ],
+          "type": "string"
+        },
+        "first_name": {
+          "description": "The first name of the primary contact",
+          "type": "string"
+        },
+        "middle_name": {
+          "description": "The middle initial or name of the primary contact",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "The last name of the primary contact",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "The suffix of the primary contact",
+          "enum": [
+            "Sr",
+            "Jr",
+            "II",
+            "III",
+            "IV",
+            "Esq",
+            "CPA",
+            "DDS",
+            "DMin",
+            "EdD",
+            "MD",
+            "MEd",
+            "OOD",
+            "PhD",
+            "RN"
+          ],
+          "type": "string"
+        },
+        "position": {
+          "description": "The position of the primary contact",
+          "type": "string"
+        },
+        "address_contact_methods": {
+          "description": "The list of contact methods for this address",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContactMethod"
+          }
+        }
+      }
+    },
+    "AddressContactMethod": {
+      "description": "Address information",
+      "required": [
+        "contact_type",
+        "contact_info"
+      ],
+      "type": "object",
+      "properties": {
+        "contact_method_id": {
+          "format": "int32",
+          "description": "The address contact method identifier",
+          "type": "integer"
+        },
+        "contact_type": {
+          "description": "The type of contact (email, phone, etc)",
+          "enum": [
+            "Business",
+            "Cell",
+            "Emergency",
+            "Fax",
+            "Home",
+            "Pager",
+            "WebAddress",
+            "Main",
+            "Work"
+          ],
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "The contact information (email address, phone number, etc) for this method.",
+          "type": "string"
+        }
+      }
+    },
+    "CreateVendor": {
+      "description": "Contract for creating a vendor.",
+      "required": [
+        "vendor_name"
+      ],
+      "type": "object",
+      "properties": {
+        "vendor_name": {
+          "description": "Vendor name",
+          "type": "string"
+        },
+        "vendor_type": {
+          "enum": [
+            "Organization",
+            "Individual"
+          ],
+          "type": "string"
+        },
+        "customer_number": {
+          "description": "The customer number",
+          "type": "string"
+        },
+        "vendor_status": {
+          "description": "Status of vendor. \r\nActive, pending, or on hold.",
+          "enum": [
+            "Active",
+            "Inactive",
+            "OnHold"
+          ],
+          "type": "string"
+        },
+        "issue_1099s": {
+          "description": "Whether to issue 1099s to this vendor",
+          "type": "boolean"
+        },
+        "address": {
+          "description": "The address(es) of the vendor",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VendorAddress"
+          }
+        },
+        "vendor_payment_default": {
+          "$ref": "#/definitions/VendorPaymentDefault",
+          "description": "The default payment of this vendor"
+        },
+        "custom_fields": {
+          "description": "The custom fields on this vendor.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateCustomField"
+          }
+        }
+      }
+    },
+    "VendorPaymentDefault": {
+      "description": "Vendor Information.",
+      "required": [
+        "payment_method",
+        "payment_option"
+      ],
+      "type": "object",
+      "properties": {
+        "has_credit_limit": {
+          "description": "Whether or not this vendor has as credit limit",
+          "type": "boolean"
+        },
+        "credit_limit": {
+          "format": "double",
+          "description": "The credit limit, if any",
+          "type": "number"
+        },
+        "payment_terms": {
+          "description": "The terms of the payment (NET D)",
+          "enum": [
+            "Net15",
+            "Net30",
+            "Net10",
+            "Net30_1_5_10",
+            "DueOnReceipt"
+          ],
+          "type": "string"
+        },
+        "account_name": {
+          "description": "The account from which to pay invoices",
+          "type": "string"
+        },
+        "payment_method": {
+          "description": "The payment method",
+          "enum": [
+            "Check",
+            "EFT",
+            "BankDraft"
+          ],
+          "type": "string"
+        },
+        "payment_option": {
+          "description": "The payment option",
+          "enum": [
+            "OnePerInvoice",
+            "OneForAll"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "VendorDetail": {
+      "description": "Detailed vewndor information.",
+      "required": [
+        "vendor_name",
+        "vendor_type"
+      ],
+      "type": "object",
+      "properties": {
+        "vendor_id": {
+          "format": "int32",
+          "description": "Vendor identifier",
+          "type": "integer"
+        },
+        "vendor_name": {
+          "description": "The name of the vendor",
+          "type": "string"
+        },
+        "vendor_type": {
+          "enum": [
+            "Organization",
+            "Individual"
+          ],
+          "type": "string"
+        },
+        "balance_due": {
+          "format": "double",
+          "description": "The balance due on this vendor",
+          "type": "number"
+        },
+        "ui_defined_id": {
+          "description": "The UI defined ID for this vendor",
+          "type": "string"
+        },
+        "customer_number": {
+          "description": "The customer number",
+          "type": "string"
+        },
+        "vendor_status": {
+          "description": "Status of vendor. \r\nActive, pending, or on hold.",
+          "enum": [
+            "Active",
+            "Inactive",
+            "OnHold"
+          ],
+          "type": "string"
+        },
+        "issue_1099s": {
+          "description": "Whether to issue 1099s to this vendor",
+          "type": "boolean"
+        },
+        "addresses": {
+          "description": "The address(es) of the vendor",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VendorAddress"
+          }
+        },
+        "vendor_payment_default": {
+          "$ref": "#/definitions/VendorPaymentDefault",
+          "description": "The default payment of this vendor"
+        },
+        "custom_fields": {
+          "description": "The custom fields on this vendor.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomField"
+          }
+        }
+      }
+    },
+    "PagedResponse[VendorAddress]": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VendorAddress"
+          }
+        }
+      }
+    },
+    "CreateVendorAddress": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "The description for this address",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country for the address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city for the address",
+          "type": "string"
+        },
+        "county": {
+          "description": "The county for this address",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province (or suburb in NZ) for the address",
+          "type": "string"
+        },
+        "address_line": {
+          "description": "The street information / address line for this address",
+          "type": "string"
+        },
+        "postal": {
+          "description": "Refers to the Postal Code or ZIP of the address",
+          "type": "string"
+        },
+        "is_primary": {
+          "description": "If this address is the primary address",
+          "type": "boolean"
+        },
+        "is_invoices": {
+          "description": "If invoices are sent to this address",
+          "type": "boolean"
+        },
+        "is_pos": {
+          "description": "If POs are sent to this address",
+          "type": "boolean"
+        },
+        "issue_1099s": {
+          "description": "If 1099s are sent to this address",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "The title for the primary contact",
+          "enum": [
+            "Mr",
+            "Mrs",
+            "Ms",
+            "Brother",
+            "Captain",
+            "Chief",
+            "Dr",
+            "Drs",
+            "Governor",
+            "Master",
+            "Miss",
+            "Pastor",
+            "Prof",
+            "Rabbi",
+            "Rev",
+            "TheHonorable",
+            "Major"
+          ],
+          "type": "string"
+        },
+        "first_name": {
+          "description": "The first name of the primary contact",
+          "type": "string"
+        },
+        "middle_name": {
+          "description": "The middle initial or name of the primary contact",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "The last name of the primary contact",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "The suffix of the primary contact",
+          "enum": [
+            "Sr",
+            "Jr",
+            "II",
+            "III",
+            "IV",
+            "Esq",
+            "CPA",
+            "DDS",
+            "DMin",
+            "EdD",
+            "MD",
+            "MEd",
+            "OOD",
+            "PhD",
+            "RN"
+          ],
+          "type": "string"
+        },
+        "position": {
+          "description": "The position of the primary contact",
+          "type": "string"
+        },
+        "address_contact_methods": {
+          "description": "The list of contact methods for this address",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContactMethod"
+          }
+        }
+      }
+    },
+    "PagedResponse[AddressContactMethod]": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContactMethod"
+          }
+        }
+      }
+    },
+    "CreateAddressContactMethod": {
+      "required": [
+        "contact_info"
+      ],
+      "type": "object",
+      "properties": {
+        "vendor_id": {
+          "format": "int32",
+          "description": "Vendor identifier",
+          "type": "integer"
+        },
+        "address_id": {
+          "format": "int32",
+          "description": "Address identifier",
+          "type": "integer"
+        },
+        "contact_type": {
+          "description": "The type of contact (email, phone, etc)",
+          "enum": [
+            "Business",
+            "Cell",
+            "Emergency",
+            "Fax",
+            "Home",
+            "Pager",
+            "WebAddress",
+            "Main",
+            "Work"
+          ],
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "The contact information (email address, phone number, etc) for this method.",
+          "type": "string"
+        }
+      }
+    },
+    "PagedResponse[VendorNoteAction]": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VendorNoteAction"
+          }
+        }
+      }
+    },
+    "VendorNoteAction": {
+      "description": "Note and action class",
+      "type": "object",
+      "properties": {
+        "note_action_id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "note_type": {
+          "description": "Gets or sets the type - Note or Action.",
+          "enum": [
+            "Note",
+            "Action"
+          ],
+          "type": "string"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "Gets or sets the date.",
+          "type": "string"
+        },
+        "content": {
+          "description": "Gets or sets the content.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Gets or sets the description",
+          "type": "string"
+        },
+        "type": {
+          "description": "Gets or sets the action or note type.",
+          "type": "string"
+        },
+        "is_complete": {
+          "description": "Gets or sets the bool value.",
+          "type": "boolean"
+        },
+        "assign_to": {
+          "description": "Gets or sets the assign to.",
+          "type": "string"
+        },
+        "completed_date": {
+          "format": "date-time",
+          "description": "Gets or sets the date.",
+          "type": "string"
+        }
+      }
+    },
+    "CreateVendorNoteAction": {
+      "type": "object",
+      "properties": {
+        "note_type": {
+          "description": "The type of this object - note, or action",
+          "enum": [
+            "Note",
+            "Action"
+          ],
+          "type": "string"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "Gets or sets the date.",
+          "type": "string"
+        },
+        "content": {
+          "description": "Gets or sets the content.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Gets or sets the description",
+          "type": "string"
+        },
+        "type": {
+          "description": "Gets or sets the action or note type.",
+          "type": "string"
+        },
+        "is_complete": {
+          "description": "Gets or sets the bool value.",
+          "type": "boolean"
+        },
+        "assign_to": {
+          "description": "Gets or sets the assign to.",
+          "type": "string"
+        },
+        "completed_date": {
+          "format": "date-time",
+          "description": "Gets or sets the date.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

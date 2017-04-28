@@ -17,7 +17,7 @@ if(isset($editStarted)){
 $newAPISelected = filter_input(INPUT_POST, 'newAPISelected');
 
 if(isset($_SESSION["beginEditing"])  && isset($newAPISelected) && $newAPISelected == true){
-    if(isset($_SESSION["finalContent"]) && isset($_SESSION["path"])){
+    if(isset($_SESSION["finalContent"]) && isset($_SESSION["path"]) && file_exists($_SESSION["path"])){
         unlink($_SESSION["path"]); // delete TEMP file of the prev api when a different api is selected w/o saving the changes of the prev api
         unset($_SESSION["finalContent"]);
         unset($_SESSION["path"]);
@@ -86,8 +86,13 @@ function setUpJsonText($path){
 
         // patterns and preg_replace remove special characters from the line to be displayed and stored in $formattedLine
 //        $patterns = '/(^{\n|: {\n|": \[\n|},\n| ],\n|",\n|,\n)/';
-        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n)/';
+        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n|,$)/';
         $formattedLine = preg_replace($patterns, " ", $line);
+        $patterns = '/(",)/';
+        $formattedLine = preg_replace($patterns, '"', $formattedLine);// slows things down b/c of other types of json
+        $patterns = '/(": \[|": {)/';
+        $formattedLine = preg_replace($patterns, '":', $formattedLine);// slows things down b/c of other types of json
+
         $formattedLine = trim($formattedLine);
         if($formattedLine == '{' || $formattedLine == '['|| $formattedLine == '}'|| $formattedLine == ']'||
            $formattedLine == '},'|| $formattedLine == '],'){
@@ -119,7 +124,7 @@ function setUpJsonText($path){
                     for($x = 0; $x < count($navWordsArray); $x++) {
                         $currWord = $quote.$navWordsArray[$x].$quote;
                         if($currWord == $currLineLeft){
-                            $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                            $formattedContent .= "<div class='offset' id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
                         }
                     }
 
@@ -136,6 +141,10 @@ function setUpJsonText($path){
             $pattern = "/(^\:)/";
             $currLineRight = preg_replace($pattern, " ", $currLineRight);
             $currLineRight = trim($currLineRight);
+//
+//            if($currLineRight == '{' || $currLineRight == '['){
+//                $currLineRight = "";
+//            }
 
 
             /********** if the line has no ':' *****************/
@@ -157,7 +166,7 @@ function setUpJsonText($path){
                     for($x = 0; $x < count($navWordsArray); $x++) {
                         $currWord = $quote.$navWordsArray[$x].$quote;
                         if($currWord == $formattedLine){
-                            $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                            $formattedContent .= "<div class='offset' id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
                         }
                     }
 
@@ -168,7 +177,7 @@ function setUpJsonText($path){
                 }
             }
                         /********** Continue right side **********/
-            if (strlen($currLineRight) > 0) {// if something is there after formatting
+            if (strlen($currLineRight) > 0 ) {// if something is there after formatting
 
                     if (array_key_exists($currLineRight, $findStringPosHashMap)){
                         // get the strpos of this line...
@@ -184,12 +193,12 @@ function setUpJsonText($path){
                 for($x = 0; $x < count($navWordsArray); $x++) {
                     $currWord = $quote.$navWordsArray[$x].$quote;
                     if($currWord == $currLineRight){
-                        $formattedContent .= "<div id=" .$navWordsArray[$x] . "></div>" ;//add an anchor link
+                        $formattedContent .= "<div class='offset' id=" .$navWordsArray[$x] . "></div>";//add an anchor link
                     }
                 }
 
                 // $formattedContent holds what is displayed on an HTML webpage
-                $formattedContent .= "<mark>"."<span class='editArea' id=" . $idNum . ">" . $currLineRight . "</span>" ."</mark>". "<br><br>";
+                $formattedContent .= "<span class='editArea' id=" . $idNum . ">" . $currLineRight . "</span>" . "<br><br>";
                 $findLineHashMap[$idNum] = $lineLengthRight; // assigns a line of text to an $idNum
                 $idNum++;
             }

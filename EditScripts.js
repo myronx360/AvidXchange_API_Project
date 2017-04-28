@@ -15,7 +15,6 @@ function setUpEditor() {
 
 //document.getElementById("myTextarea").style.height = "100px";
     //document.getElementById("myTextarea").rows = "10";
-    // document.getElementById("myTextarea").select();
 
     $(document).ready(function(){
 
@@ -38,7 +37,6 @@ function setUpEditor() {
 
                 isEditing = true;
                 $(elementClicked).after("<div id='editor'></div>");
-                setSize();
                 $("#editor").html("<h5><form action='FileEditor.php' method='post' id='editForm'>"+textArea+originalText+confirmBtn+cancelBtn+lineID+"</form></h5>");
                 $("[name='newText']").val($(elementClicked).text());
                 $("[name='originalText']").val($(elementClicked).text());
@@ -86,6 +84,13 @@ function setUpEditor() {
                     data: form.serialize() // serializes the form's elements.
                 }).done(function(tempApiUrl) {
                     // Optionally alert the user of success here...
+                    // alert messages
+                    $("#loadingMsg").text($("#apiSelector option:selected").text() + " editing");
+                    $("#loadingMsg").removeClass();
+                    $("#loadingMsg").addClass("text-warning");
+                    $("#saveMsg").text("");
+                    $("#saveErrMsg").text($("#apiSelector option:selected").text() + " editing");
+
                     //insert new nav links
                     $("#navLinks").val("");
 
@@ -102,8 +107,12 @@ function setUpEditor() {
                         }
 
                     $.post("FileEditor.php", {suggest: tempApiUrl, editStarted: true, navWords: navLinks.toString()}, function(result) {
-                        $("#loadingMsg").text($("#apiSelector option:selected").text() + " edited");
                         $("#displayJson").html(result);
+                        $("#loadingMsg").text($("#apiSelector option:selected").text() + " edited");
+                        $("#loadingMsg").removeClass();
+                        $("#loadingMsg").addClass("text-success");
+                        $("#saveErrMsg").text("");
+                        $("#saveMsg").text($("#apiSelector option:selected").text() + " edited");
                     });
                         document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
                     });
@@ -123,17 +132,6 @@ function setUpEditor() {
         function reset() {
             isEditing = false;
             $("#editor").remove();
-        }
-
-        function setSize() {
-            $("[name='newText']").click(function () {
-                $(this).css("background-color", "yellow");
-                alert("efse");
-            });
-            $("[name='newText']").width("100%");
-            // alert($("[name='newText']"));
-            $("[name='newText']").css("height" , "100px");
-            $("[name='newText']").attr("rows", "15");
         }
 
         // highlight editable text
@@ -165,11 +163,7 @@ function setUpEditor() {
  *
  *
  *
- *
- *header location links background
- * tyr trimming in if statement tyr add space to true
- * checkout h3 on mid
- * \n\"\r
+ * saving a file with the same name overwrites file. feature?
  * handle what happens when a folder is in the list
  * // pressing enter on a textarea
  * dyanamically change the size of the textarea

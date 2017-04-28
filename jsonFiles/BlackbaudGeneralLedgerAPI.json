@@ -1,0 +1,3816 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "General Ledger",
+    "version": "1.0",
+    "description": "This API is used to manage the general ledger, including accounts, projects, and journal entries."
+  },
+  "host": "api.sky.blackbaud.com",
+  "basePath": "/generalledger/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/accounts": {
+      "get": {
+        "description": "Performs a basic account search on the provided search text.",
+        "operationId": "Account (Search)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "search_text",
+            "in": "query",
+            "description": "Text to match. Can match account number, description, or class. A blank search will match all accounts.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the accounts matching the search.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[AccountView]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalcodes": {
+      "get": {
+        "description": "Returns a list of available journal codes.",
+        "operationId": "Journal code (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of all available journal codes.",
+            "schema": {
+              "$ref": "#/definitions/JournalCodeArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalentrybatches": {
+      "get": {
+        "description": "Returns a list of all journal entry batches.",
+        "operationId": "Journal entry batch (List)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The batch status.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains list of journal entry batches.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[JournalEntryBatch]"
+            }
+          },
+          "400": {
+            "description": "Returned when specified batch is not in the correct format or is invalid."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Adds a new journal entry batch.",
+        "operationId": "Journal entry batch (Create)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createJournalEntryBatch",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateJournalEntryBatch"
+            },
+            "description": "The journal entry batch to add"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects": {
+      "get": {
+        "description": "Performs a basic project search on the provided search text.",
+        "operationId": "Project (Search)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "search_text",
+            "in": "query",
+            "description": "Text to match. Can match project Id or description. A blank search will match all projects.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the projects matching the search.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[Project]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Creates a new project.",
+        "operationId": "Project (Create)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createProject",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateProject"
+            },
+            "description": "The project to create."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the identifier for the new project.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create a project."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/transactioncodes": {
+      "get": {
+        "description": "Returns a list of available transaction codes.",
+        "operationId": "Transaction code (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of all available transaction codes.",
+            "schema": {
+              "$ref": "#/definitions/TransactionCodeArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/transactiondistributions": {
+      "get": {
+        "description": "Returns a list of specific transaction distributions",
+        "operationId": "Transaction distribution (List)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "account_number",
+            "in": "query",
+            "description": "The account number.",
+            "type": "string"
+          },
+          {
+            "name": "ui_project_id",
+            "in": "query",
+            "description": "The project user-visible identifier.",
+            "type": "string"
+          },
+          {
+            "name": "batch_id",
+            "in": "query",
+            "description": "Format - int32. The batch identifier.",
+            "type": "integer"
+          },
+          {
+            "name": "journal",
+            "in": "query",
+            "description": "The full name of the journal.",
+            "type": "string"
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). The minimum post date to include records.",
+            "type": "string"
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). The maximum post date to include records.",
+            "type": "string"
+          },
+          {
+            "name": "type_code",
+            "in": "query",
+            "description": "The journal entry transaction type (debit or credit).",
+            "type": "string",
+            "enum": [
+              "Debit",
+              "Credit"
+            ]
+          },
+          {
+            "name": "transaction_code_1_value",
+            "in": "query",
+            "description": "The transaction code 1 value.",
+            "type": "string"
+          },
+          {
+            "name": "transaction_code_2_value",
+            "in": "query",
+            "description": "The transaction code 2 value.",
+            "type": "string"
+          },
+          {
+            "name": "transaction_code_3_value",
+            "in": "query",
+            "description": "The transaction code 3 value.",
+            "type": "string"
+          },
+          {
+            "name": "transaction_code_4_value",
+            "in": "query",
+            "description": "The transaction code 4 value.",
+            "type": "string"
+          },
+          {
+            "name": "transaction_code_5_value",
+            "in": "query",
+            "description": "The transaction code 5 value.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list transaction distributions.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[TransactionDistribution]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/segments/{segment_id}": {
+      "get": {
+        "description": "Retrieves the information and values for a given account segment",
+        "operationId": "Account segment value (List)",
+        "parameters": [
+          {
+            "name": "segment_id",
+            "in": "path",
+            "description": "Format - int32. The dentifier for the account segment.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified account segment.",
+            "schema": {
+              "$ref": "#/definitions/AccountSegmentDetail"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/structure": {
+      "get": {
+        "description": "Retrieves the account structure",
+        "operationId": "Account structure (Get)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the account structure.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[AccountStructureDetail]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/codes": {
+      "get": {
+        "description": "Retrieves the account codes",
+        "operationId": "Account code (List)",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains a list of account codes.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[AccountCode]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/funds": {
+      "get": {
+        "description": "Retrieves the account funds",
+        "operationId": "Account fund (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains a list of account funds.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[Fund]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/classes": {
+      "get": {
+        "description": "Returns a list of available classes",
+        "operationId": "Class (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ClassArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/fiscalyears": {
+      "get": {
+        "description": "Returns information about fiscal years.",
+        "operationId": "Fiscal year (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the fiscal year details.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[FiscalYear]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view fiscal year details."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalentrybatches/{batch_id}": {
+      "get": {
+        "description": "Returns information about the journal entry batch with the specified ID.",
+        "operationId": "Journal entry batch (Get)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The journal entry batch identifier.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the journal entry batch details.",
+            "schema": {
+              "$ref": "#/definitions/JournalEntryBatch"
+            }
+          },
+          "400": {
+            "description": "Returned when specified id is not in the correct format."
+          },
+          "404": {
+            "description": "Returned when no journal entry batch is found with the specified id."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "description": "Deletes the journal entry batch with the specified ID.",
+        "operationId": "Journal entry batch (Delete)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the journal entry batch to delete.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful."
+          },
+          "400": {
+            "description": "Returned when specified batch cannot be deleted in its current state."
+          },
+          "404": {
+            "description": "Returned when no journal entry batch is found with the specified id."
+          }
+        }
+      }
+    },
+    "/journalentrybatches/{batch_id}/post": {
+      "post": {
+        "description": "Posts the journal entry batch with the specified ID.",
+        "operationId": "Journal entry batch (Post)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the journal entry batch to post.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the results of batch validation.",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "400": {
+            "description": "Returned when specified batch cannot be posted in its current state. The response body contains the results of batch validation."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to post a batch."
+          },
+          "404": {
+            "description": "Returned when the specified batch could not be found."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalentrybatches/{batch_id}/validate": {
+      "get": {
+        "description": "Returns validation information for the journal entry batch with the specified ID.",
+        "operationId": "Journal entry batch (Validate)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the journal entry batch to validate.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the results of batch validation.\r\n            Note that the batch may be valid or invalid, but the validation proccess completed.",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to validate this batch."
+          },
+          "404": {
+            "description": "Returned when the specified batch could not be found."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalentrybatches/{batch_id}/journalentries": {
+      "post": {
+        "description": "Adds journal entries to the journal entry batch with the specified ID.",
+        "operationId": "Journal entry (Create)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the journal entry batch to which to add journal entries.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createJournalEntryArray",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateJournalEntryArray"
+            },
+            "description": "The journal entries to add."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful."
+          },
+          "400": {
+            "description": "Returned when specified journal entries are not in the correct format or are invalid."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to add journal entries."
+          },
+          "404": {
+            "description": "Returned when no journal entry batch is found with the specified id."
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes all journal entries from the journal entry batch with the specified ID.",
+        "operationId": "Journal entry (Clear)",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "description": "Format - int32. The identifier of the journal entry batch to which to add journal entries.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful."
+          },
+          "404": {
+            "description": "Returned when no journal entry batch is found with the specified id."
+          }
+        }
+      }
+    },
+    "/projects/types": {
+      "get": {
+        "description": "Retrieves the project types.",
+        "operationId": "Project type (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TableValueList[ProjectType]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/statuses": {
+      "get": {
+        "description": "Retrieves the project statuses.",
+        "operationId": "Project status (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TableValueList[ProjectStatus]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/divisions": {
+      "get": {
+        "description": "Retrieves the project divisions.",
+        "operationId": "Project division (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TableValueList[ProjectDivision]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/locations": {
+      "get": {
+        "description": "Retrieves the project locations.",
+        "operationId": "Project location (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TableValueList[ProjectLocation]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/departments": {
+      "get": {
+        "description": "Retrieves the project departments.",
+        "operationId": "Project department (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TableValueList[ProjectDepartment]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/transactioncodes/{transaction_code_id}/values": {
+      "get": {
+        "description": "Returns a list of available values for the transaction code with the specified ID.",
+        "operationId": "Transaction code value (List)",
+        "parameters": [
+          {
+            "name": "transaction_code_id",
+            "in": "path",
+            "description": "Format - int32. The transaction code identifier.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of all values for the specified transaction code.",
+            "schema": {
+              "$ref": "#/definitions/TransactionCodeValueArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/{project_id}/contacts": {
+      "post": {
+        "description": "Creates a new contact on a given project.",
+        "operationId": "Project Contact (Create)",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "description": "Format - int32. The project to which to add this contact.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "createContactAddress",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateContactAddress"
+            },
+            "description": "The contact and address information to add."
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the identifier for the new contact.",
+            "schema": {
+              "$ref": "#/definitions/CreatedResult[Int32]"
+            }
+          },
+          "400": {
+            "description": "Returned when the request is not in the correct format."
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to create a project contact."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/budgets": {
+      "get": {
+        "description": "Returns a top level overview of every budget scenario.",
+        "operationId": "Budget (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains budget views.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[BudgetScenarioView]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view budgets."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/budgets/{scenario_id}": {
+      "get": {
+        "description": "Provides a breakdown of an individual budget scenario.",
+        "operationId": "Budget (Get)",
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "description": "Format - int32.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains budget details.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[BudgetScenarioDetail]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view budgets."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/budgets/{scenario_id}/accounts": {
+      "get": {
+        "description": "Provides a breakdown of an individual budget scenario over different accounts. Can filter by account number.",
+        "operationId": "Budget account (List)",
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "description": "Format - int32.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 1000. The maximum allowed value is 5000",
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "account_number",
+            "in": "query",
+            "description": "The account number over which to filter.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains budget details.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[BudgetAccountDetail]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view budgets."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/journalentrybatches/customfields": {
+      "get": {
+        "description": "Get custom field options for journal entries.",
+        "operationId": "Journal entry custom field (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of custom fields.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[CustomFieldOptions]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/customfields": {
+      "get": {
+        "description": "Get custom field options for projects.",
+        "operationId": "Project custom field (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of custom fields.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[CustomFieldOptions]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/summary/{fiscal_year_id}": {
+      "get": {
+        "description": "Lists general ledger summaries for the specified fiscal year and criteria. Note that summary records only exist for closed, optimized fiscal years.\r\nIf any activity occurs in a fiscal period that has not since been closed and optimized, it will not be included in the GL summary record(s).",
+        "operationId": "Ledger summary (List)",
+        "parameters": [
+          {
+            "name": "fiscal_year_id",
+            "in": "path",
+            "description": "Format - int32. The fiscal year identifier.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. The number of records to return. If not specified, the default is 1000. The maximum allowed value is 5000",
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Format - int32. The number of records to skip, for use with pagination.",
+            "type": "integer"
+          },
+          {
+            "name": "fiscal_period_id",
+            "in": "query",
+            "description": "Format - int32. The fiscal period identifier.",
+            "type": "integer"
+          },
+          {
+            "name": "account_number",
+            "in": "query",
+            "description": "The account number.",
+            "type": "string"
+          },
+          {
+            "name": "ui_project_id",
+            "in": "query",
+            "description": "The project user-visible identifier.",
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains a list of summaries.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[GlSummary]"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to view summaries."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/{account_id}": {
+      "get": {
+        "description": "Retrieves information about a given account.",
+        "operationId": "Account (Get)",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "description": "Format - int32. The identifier for the account to retrieve.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specified account.",
+            "schema": {
+              "$ref": "#/definitions/AccountDetail"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/customfields": {
+      "get": {
+        "description": "Get custom field options for accounts.",
+        "operationId": "Account custom fields (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of custom fields.",
+            "schema": {
+              "$ref": "#/definitions/PagedResponse[CustomFieldOptions]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/cashflows": {
+      "get": {
+        "description": "Get cashflow options for accounts.",
+        "operationId": "Account cashflows (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of cashflow values.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[Cashflow]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/accounts/workingcapitals": {
+      "get": {
+        "description": "Get working capital options for accounts.",
+        "operationId": "Account working capitals (List)",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the list of working capital options.",
+            "schema": {
+              "$ref": "#/definitions/ApiCollection[WorkingCapital]"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/projects/{project_id}": {
+      "get": {
+        "description": "Retrieves a project record.",
+        "operationId": "Project (Get)",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "description": "Format - int32. The identifier for the project to retrieve.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "bb-api-subscription-key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned when the operation is successful. The response body contains the specificed project.",
+            "schema": {
+              "$ref": "#/definitions/ProjectDetail"
+            }
+          },
+          "404": {
+            "description": "Returned when the specified record could not be found."
+          },
+          "403": {
+            "description": "Returned when the user does not have access to view accounts."
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SearchAccounts": {
+      "description": "Search criteria for accounts.",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "search_text": {
+          "description": "Text to match. Can match account number, description, or class. A blank search will match all accounts.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[AccountView]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountView"
+          }
+        }
+      }
+    },
+    "AccountView": {
+      "description": "General ledger account.",
+      "type": "object",
+      "properties": {
+        "account_id": {
+          "format": "int32",
+          "description": "The account identifier.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The account number.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The account description.",
+          "type": "string"
+        }
+      }
+    },
+    "AccountDetail": {
+      "description": "AccountDetail class.",
+      "type": "object",
+      "properties": {
+        "account_id": {
+          "format": "int32",
+          "description": "The identifier for this account.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The account number for this account.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description for this account.",
+          "type": "string"
+        },
+        "prevent_data_entry": {
+          "description": "Whether to prevent data entry.\r\nIf a date is given for prevent posting, this value is set to true.",
+          "type": "boolean"
+        },
+        "prevent_posting_date": {
+          "format": "date-time",
+          "description": "Whether, and the date after which, to prevent posting.\r\nFilling out this field will automatically set the prevent data entry field to 'true'.",
+          "type": "string"
+        },
+        "class": {
+          "description": "The class for this account.",
+          "type": "string"
+        },
+        "cashflow": {
+          "description": "The cash flow for this account.",
+          "type": "string"
+        },
+        "working_capital": {
+          "description": "The working capital schedule for this account.",
+          "type": "string"
+        },
+        "custom_fields": {
+          "description": "The custom fields on this account.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomField"
+          }
+        },
+        "default_transaction_codes": {
+          "description": "The default transaction codes on this account.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionCodeValue"
+          }
+        }
+      }
+    },
+    "CustomField": {
+      "description": "Custom field definition.",
+      "type": "object",
+      "properties": {
+        "custom_field_id": {
+          "format": "int32",
+          "description": "The identifier for this custom field.",
+          "type": "integer"
+        },
+        "field_name": {
+          "description": "The name of the custom field.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this custom field.",
+          "type": "string"
+        },
+        "comments": {
+          "description": "The description for this custom field.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of this custom field.",
+          "enum": [
+            "Text",
+            "Number",
+            "DateTime",
+            "Currency",
+            "Boolean",
+            "Table",
+            "FuzzyDate"
+          ],
+          "type": "string"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "The date on this custom field.",
+          "type": "string"
+        }
+      }
+    },
+    "TransactionCodeValue": {
+      "description": "Transaction code value",
+      "required": [
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The transaction code name.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The transaction code value.",
+          "type": "string"
+        }
+      }
+    },
+    "AccountSegmentDetail": {
+      "type": "object",
+      "properties": {
+        "segment_id": {
+          "format": "int32",
+          "description": "The identifier for this account segment.",
+          "type": "integer"
+        },
+        "type": {
+          "description": "The type for this account segment.",
+          "type": "string"
+        },
+        "values": {
+          "description": "The values for this account segment.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountSegmentValue"
+          }
+        }
+      }
+    },
+    "AccountSegmentValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "format": "int32",
+          "description": "The value for this account segment.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description of this account segment.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[AccountStructureDetail]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountStructureDetail"
+          }
+        }
+      }
+    },
+    "AccountStructureDetail": {
+      "type": "object",
+      "properties": {
+        "segment_id": {
+          "format": "int32",
+          "description": "The identifier for this account segment.",
+          "type": "integer"
+        },
+        "separator": {
+          "description": "The separator for this account segment.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of this account segment.",
+          "type": "string"
+        },
+        "length": {
+          "format": "int32",
+          "description": "The length of this account segment",
+          "type": "integer"
+        },
+        "sequence": {
+          "format": "int32",
+          "description": "The sequence for this account segment.",
+          "type": "integer"
+        }
+      }
+    },
+    "ListAccountCodes": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
+    "ApiCollection[AccountCode]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountCode"
+          }
+        }
+      }
+    },
+    "AccountCode": {
+      "type": "object",
+      "properties": {
+        "account_code_id": {
+          "format": "int32",
+          "description": "The identifier for this account code.",
+          "type": "integer"
+        },
+        "value": {
+          "format": "int32",
+          "description": "The value of this account code.",
+          "type": "integer"
+        },
+        "category": {
+          "description": "The category for this account code.",
+          "type": "string"
+        },
+        "class": {
+          "description": "The class of this account code.",
+          "type": "string"
+        },
+        "is_contra": {
+          "description": "Whether this account code is contra.",
+          "type": "boolean"
+        },
+        "is_control": {
+          "description": "Whether this account code is control.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "The description for this account code.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[Fund]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fund"
+          }
+        }
+      }
+    },
+    "Fund": {
+      "type": "object",
+      "properties": {
+        "fund_id": {
+          "format": "int32",
+          "description": "The identifier for this fund.",
+          "type": "integer"
+        },
+        "value": {
+          "description": "The value for this fund.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description for this fund.",
+          "type": "string"
+        }
+      }
+    },
+    "PagedResponse[CustomFieldOptions]": {
+      "type": "object",
+      "properties": {
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldOptions"
+          }
+        }
+      }
+    },
+    "CustomFieldOptions": {
+      "type": "object",
+      "properties": {
+        "custom_field_id": {
+          "format": "int32",
+          "description": "The identifier for this custom field.",
+          "type": "integer"
+        },
+        "name": {
+          "description": "The name of this custom field.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type (boolean, table, etc) of this custom field.",
+          "enum": [
+            "Text",
+            "Number",
+            "DateTime",
+            "Currency",
+            "Boolean",
+            "Table",
+            "FuzzyDate"
+          ],
+          "type": "string"
+        },
+        "is_required": {
+          "description": "Whether this custom field is required.",
+          "type": "boolean"
+        },
+        "table_values": {
+          "description": "List of table values.\r\nOnly applicable if type = 'Table'.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ApiCollection[Cashflow]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Cashflow"
+          }
+        }
+      }
+    },
+    "Cashflow": {
+      "description": "Account cashflow value.",
+      "type": "object",
+      "properties": {
+        "cashflow_id": {
+          "format": "int32",
+          "description": "The cashflow identifier.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this cashflow.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this cashflow.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[WorkingCapital]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkingCapital"
+          }
+        }
+      }
+    },
+    "WorkingCapital": {
+      "description": "Account working capital value.",
+      "type": "object",
+      "properties": {
+        "working_capital_id": {
+          "format": "int32",
+          "description": "The working capital value identifier.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this working capital value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this working capital value.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[BudgetScenarioView]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BudgetScenarioView"
+          }
+        }
+      }
+    },
+    "BudgetScenarioView": {
+      "type": "object",
+      "properties": {
+        "budget_scenario_id": {
+          "format": "int32",
+          "description": "The identifier for this budget scenario.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this budget scenario.",
+          "type": "string"
+        },
+        "start_fiscal_year": {
+          "description": "The start fiscal year for this budget scenario.",
+          "type": "string"
+        },
+        "end_fiscal_year": {
+          "description": "The end fiscal year for this budget scenario.",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The start date for this budget scenario.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The end date for this budget scenario.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of this budget scenario.",
+          "enum": [
+            "Active",
+            "Inactive"
+          ],
+          "type": "string"
+        },
+        "budget_type": {
+          "description": "The type for this budget scenario.",
+          "enum": [
+            "FiscalYear",
+            "PeriodRange"
+          ],
+          "type": "string"
+        },
+        "locked": {
+          "description": "The locked status of this budget scenario.",
+          "enum": [
+            "Locked",
+            "Unlocked"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[BudgetScenarioDetail]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BudgetScenarioDetail"
+          }
+        }
+      }
+    },
+    "BudgetScenarioDetail": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "description": "The budget category for this period.",
+          "enum": [
+            "Revenues",
+            "Expenses",
+            "Gains",
+            "Losses",
+            "Gifts",
+            "Transfers",
+            "Adjustments",
+            "Other"
+          ],
+          "type": "string"
+        },
+        "fiscal_year": {
+          "description": "The fiscal year of this period.",
+          "type": "string"
+        },
+        "total_amount": {
+          "format": "double",
+          "description": "The total amount for this period.",
+          "type": "number"
+        },
+        "fiscal_period": {
+          "format": "int32",
+          "description": "The fiscal period.",
+          "type": "integer"
+        },
+        "period_amount": {
+          "format": "double",
+          "description": "The amount for this period.",
+          "type": "number"
+        }
+      }
+    },
+    "BudgetAccountFilters": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 1000. The maximum allowed value is 5000",
+          "maximum": 5000,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The account number over which to filter.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[BudgetAccountDetail]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BudgetAccountDetail"
+          }
+        }
+      }
+    },
+    "BudgetAccountDetail": {
+      "type": "object",
+      "properties": {
+        "budget_category": {
+          "description": "The budget category for this period.",
+          "enum": [
+            "Revenues",
+            "Expenses",
+            "Gains",
+            "Losses",
+            "Gifts",
+            "Transfers",
+            "Adjustments",
+            "Other"
+          ],
+          "type": "string"
+        },
+        "account_number": {
+          "description": "The account number for this period.",
+          "type": "string"
+        },
+        "fiscal_year": {
+          "description": "The fiscal year for this period.",
+          "type": "string"
+        },
+        "total_amount": {
+          "format": "double",
+          "description": "The total amount for this period.",
+          "type": "number"
+        },
+        "fiscal_period": {
+          "format": "int32",
+          "description": "The fiscal period.",
+          "type": "integer"
+        },
+        "period_amount": {
+          "format": "double",
+          "description": "The amount for this period.",
+          "type": "number"
+        },
+        "period_percent": {
+          "format": "double",
+          "description": "The percent for this period.",
+          "type": "number"
+        }
+      }
+    },
+    "Class": {
+      "description": "Account class.",
+      "type": "object",
+      "properties": {
+        "class_id": {
+          "format": "int32",
+          "description": "The class identifier.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this class.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this class.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[FiscalYear]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FiscalYear"
+          }
+        }
+      }
+    },
+    "FiscalYear": {
+      "type": "object",
+      "properties": {
+        "fiscal_year_id": {
+          "format": "int32",
+          "description": "The identifier for this fiscal year.",
+          "type": "integer"
+        },
+        "year": {
+          "description": "The year of this fiscal year.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description of this fiscal year.",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The start date for this fiscal year.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The end date for this fiscal year.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of this fiscal year.",
+          "enum": [
+            "Open",
+            "PreClosed",
+            "Closed",
+            "Purged",
+            "Optimized"
+          ],
+          "type": "string"
+        },
+        "fiscal_periods": {
+          "description": "The fiscal periods for this fiscal year.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FiscalPeriod"
+          }
+        }
+      }
+    },
+    "FiscalPeriod": {
+      "type": "object",
+      "properties": {
+        "fiscal_period_id": {
+          "format": "int32",
+          "description": "The identifier for this fiscal period.",
+          "type": "integer"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The start date for this fiscal period.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The end date for this fiscal period.",
+          "type": "string"
+        },
+        "sequence": {
+          "format": "int32",
+          "description": "The sequence of this fiscal period.",
+          "type": "integer"
+        },
+        "closed": {
+          "description": "Whether or not this fiscal period is closed.",
+          "type": "boolean"
+        }
+      }
+    },
+    "JournalCode": {
+      "description": "Journal Entry Code.",
+      "type": "object",
+      "properties": {
+        "journal_code_id": {
+          "format": "int32",
+          "description": "The identifier of the journal.",
+          "type": "integer"
+        },
+        "code": {
+          "description": "The abbreviated code of the journal.",
+          "type": "string"
+        },
+        "journal": {
+          "description": "The full journal name of the journal.",
+          "type": "string"
+        }
+      }
+    },
+    "JournalEntryBatch": {
+      "description": "Journal Entry Batch.",
+      "required": [
+        "description",
+        "batch_status"
+      ],
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "format": "int32",
+          "description": "The batch identifier.",
+          "type": "integer"
+        },
+        "ui_batch_id": {
+          "description": "The batch user-visible identifier.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The batch description.",
+          "type": "string"
+        },
+        "batch_status": {
+          "description": "The batch status.",
+          "enum": [
+            "Open",
+            "PendingApproval",
+            "Approved",
+            "Posted",
+            "Deleted"
+          ],
+          "type": "string"
+        },
+        "create_interfund_sets": {
+          "description": "Indicates whether or not the batch should create interfund entries when posted.",
+          "type": "boolean"
+        },
+        "create_bank_account_adjustments": {
+          "description": "Indicates whether or not the batch should create bank account admustments when posted.",
+          "type": "boolean"
+        },
+        "journal_entries": {
+          "description": "The set of journal entries for the batch.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JournalEntry"
+          }
+        }
+      }
+    },
+    "JournalEntry": {
+      "description": "Journal entry.",
+      "required": [
+        "type_code",
+        "account_number",
+        "post_date",
+        "encumbrance",
+        "journal",
+        "reference",
+        "amount",
+        "distributions"
+      ],
+      "type": "object",
+      "properties": {
+        "journal_entry_id": {
+          "format": "int32",
+          "description": "The journal entry identifier.",
+          "type": "integer"
+        },
+        "type_code": {
+          "description": "The journal entry transaction type (debit or credit).",
+          "enum": [
+            "Debit",
+            "Credit"
+          ],
+          "type": "string"
+        },
+        "line_number": {
+          "format": "int32",
+          "description": "The journal entry line number.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The journal entry account number.",
+          "type": "string"
+        },
+        "post_date": {
+          "format": "date-time",
+          "description": "The journal entry post date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "encumbrance": {
+          "description": "The journal entry encumbrance type.",
+          "enum": [
+            "Regular",
+            "Encumbrance"
+          ],
+          "type": "string"
+        },
+        "journal": {
+          "description": "The full name of the journal.",
+          "type": "string"
+        },
+        "reference": {
+          "description": "The journal entry reference.",
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "description": "The journal entry amount.",
+          "type": "number"
+        },
+        "notes": {
+          "description": "The journal entry notes.",
+          "type": "string"
+        },
+        "distributions": {
+          "description": "The journal entry distributions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Distribution"
+          }
+        },
+        "custom_fields": {
+          "description": "The journal entry custom fields",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomField"
+          }
+        }
+      }
+    },
+    "Distribution": {
+      "description": "Journal Entry Distribution.",
+      "required": [
+        "transaction_code_values"
+      ],
+      "type": "object",
+      "properties": {
+        "distribution_id": {
+          "format": "int32",
+          "description": "The distribution identifier.",
+          "type": "integer"
+        },
+        "ui_project_id": {
+          "description": "The user-visible identifier of the project.",
+          "type": "string"
+        },
+        "account_class": {
+          "description": "The class for this distribution.",
+          "type": "string"
+        },
+        "transaction_code_values": {
+          "description": "The distribution transaction code values.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionCodeValue"
+          }
+        },
+        "amount": {
+          "format": "double",
+          "description": "The distribution amount. Only one of Amount or Percent can be specified.",
+          "type": "number"
+        },
+        "percent": {
+          "format": "double",
+          "description": "The distribution journal entry amount percentage. Only one of Amount or Percent can be specified.",
+          "type": "number"
+        }
+      }
+    },
+    "SearchJournalEntryBatches": {
+      "description": "Search criteria for batches.",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "description": "The batch status.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[JournalEntryBatch]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JournalEntryBatch"
+          }
+        }
+      }
+    },
+    "CreateJournalEntryBatch": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "batch_status": {
+          "enum": [
+            "Open",
+            "PendingApproval",
+            "Approved",
+            "Posted",
+            "Deleted"
+          ],
+          "type": "string"
+        },
+        "create_interfund_sets": {
+          "type": "boolean"
+        },
+        "create_bank_account_adjustments": {
+          "type": "boolean"
+        },
+        "journal_entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateJournalEntry"
+          }
+        }
+      }
+    },
+    "CreateJournalEntry": {
+      "description": "Journal entry.",
+      "required": [
+        "type_code",
+        "account_number",
+        "post_date",
+        "encumbrance",
+        "journal",
+        "reference",
+        "amount",
+        "distributions"
+      ],
+      "type": "object",
+      "properties": {
+        "journal_entry_id": {
+          "format": "int32",
+          "description": "The journal entry identifier.",
+          "type": "integer"
+        },
+        "type_code": {
+          "description": "The journal entry transaction type (debit or credit).",
+          "enum": [
+            "Debit",
+            "Credit"
+          ],
+          "type": "string"
+        },
+        "line_number": {
+          "format": "int32",
+          "description": "The journal entry line number.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The journal entry account number.",
+          "type": "string"
+        },
+        "post_date": {
+          "format": "date-time",
+          "description": "The journal entry post date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "encumbrance": {
+          "description": "The journal entry encumbrance type.",
+          "enum": [
+            "Regular",
+            "Encumbrance"
+          ],
+          "type": "string"
+        },
+        "journal": {
+          "description": "The full name of the journal.",
+          "type": "string"
+        },
+        "reference": {
+          "description": "The journal entry reference.",
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "description": "The journal entry amount.",
+          "type": "number"
+        },
+        "notes": {
+          "description": "The journal entry notes.",
+          "type": "string"
+        },
+        "distributions": {
+          "description": "The journal entry distributions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Distribution"
+          }
+        },
+        "custom_fields": {
+          "description": "The journal entry custom fields",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateCustomField"
+          }
+        }
+      }
+    },
+    "CreateCustomField": {
+      "description": "The create contract for custom fields.",
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "description": "The name of the custom field. Can be retrieved from the /customfields endpoints.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this custom field.",
+          "type": "string"
+        },
+        "comments": {
+          "description": "The description for this custom field.",
+          "type": "string"
+        },
+        "date": {
+          "format": "date-time",
+          "description": "The date on this custom field.",
+          "type": "string"
+        }
+      }
+    },
+    "CreatedResult[Int32]": {
+      "description": "Information about created resources.",
+      "type": "object",
+      "properties": {
+        "record_id": {
+          "format": "int32",
+          "description": "The identifier of the created entity.",
+          "type": "integer"
+        }
+      }
+    },
+    "ValidationResult": {
+      "description": "A result of an operation that may or may not succeed",
+      "type": "object",
+      "properties": {
+        "is_valid": {
+          "description": "Indicates whether the request was valid.",
+          "type": "boolean"
+        },
+        "errors": {
+          "description": "The list of errors received during validation.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SearchProjects": {
+      "description": "Search criteria for projects.",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "search_text": {
+          "description": "Text to match. Can match project Id or description. A blank search will match all projects.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[Project]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Project"
+          }
+        }
+      }
+    },
+    "Project": {
+      "description": "General ledger project",
+      "type": "object",
+      "properties": {
+        "project_id": {
+          "format": "int32",
+          "description": "The project database identifier.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The project description.",
+          "type": "string"
+        },
+        "ui_project_id": {
+          "description": "The project user-visible identifier.",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The project start date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The project end date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "location": {
+          "description": "The project location.",
+          "type": "string"
+        },
+        "division": {
+          "description": "The project division",
+          "type": "string"
+        },
+        "department": {
+          "description": "The project department",
+          "type": "string"
+        },
+        "status": {
+          "description": "The project status",
+          "type": "string"
+        }
+      }
+    },
+    "CreateProject": {
+      "required": [
+        "ui_project_id",
+        "description",
+        "status",
+        "type",
+        "account_restrictions"
+      ],
+      "type": "object",
+      "properties": {
+        "ui_project_id": {
+          "description": "The UI Project Id for this project.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description of this project.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The project status.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The project type",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The start date for this project.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The end date for this project.",
+          "type": "string"
+        },
+        "prevent_data_entry": {
+          "description": "Whether to prevent data entry for this project.",
+          "type": "boolean"
+        },
+        "prevent_posting_after": {
+          "description": "If preventing data entry, whether to prevent posting after a certain date.",
+          "type": "boolean"
+        },
+        "posting_date": {
+          "format": "date-time",
+          "description": "The date after which to prevent posting, if applicable.",
+          "type": "string"
+        },
+        "location": {
+          "description": "The location for reporting.",
+          "type": "string"
+        },
+        "division": {
+          "description": "The division for reporting.",
+          "type": "string"
+        },
+        "department": {
+          "description": "The department for reporting.",
+          "type": "string"
+        },
+        "account_restrictions": {
+          "$ref": "#/definitions/CreateProjectAccountRestrictions",
+          "description": "The account allowances or restrictions for this project."
+        },
+        "contacts": {
+          "description": "The contacts for this project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateContactAddress"
+          }
+        },
+        "custom_fields": {
+          "description": "The custom fields for this project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateCustomField"
+          }
+        }
+      }
+    },
+    "CreateProjectAccountRestrictions": {
+      "type": "object",
+      "properties": {
+        "allow_or_restrict": {
+          "enum": [
+            "Allow",
+            "Restrict"
+          ],
+          "type": "string"
+        },
+        "criteria": {
+          "enum": [
+            "All",
+            "Selected",
+            "Range",
+            "Query"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "CreateContactAddress": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "The description for this address",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country for the address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city for the address",
+          "type": "string"
+        },
+        "county": {
+          "description": "The county for this address",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province (or suburb in NZ) for the address",
+          "type": "string"
+        },
+        "address_line": {
+          "description": "The street information / address line for this address",
+          "type": "string"
+        },
+        "postal": {
+          "description": "Refers to the Postal Code or ZIP of the address",
+          "type": "string"
+        },
+        "title": {
+          "description": "The title for the primary contact",
+          "enum": [
+            "Mr",
+            "Mrs",
+            "Ms",
+            "Brother",
+            "Captain",
+            "Chief",
+            "Dr",
+            "Drs",
+            "Governor",
+            "Master",
+            "Miss",
+            "Pastor",
+            "Prof",
+            "Rabbi",
+            "Rev",
+            "TheHonorable",
+            "Major"
+          ],
+          "type": "string"
+        },
+        "first_name": {
+          "description": "The first name of the primary contact",
+          "type": "string"
+        },
+        "middle_name": {
+          "description": "The middle initial or name of the primary contact",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "The last name of the primary contact",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "The suffix of the primary contact",
+          "enum": [
+            "Sr",
+            "Jr",
+            "II",
+            "III",
+            "IV",
+            "Esq",
+            "CPA",
+            "DDS",
+            "DMin",
+            "EdD",
+            "MD",
+            "MEd",
+            "OOD",
+            "PhD",
+            "RN"
+          ],
+          "type": "string"
+        },
+        "position": {
+          "description": "The position of the primary contact",
+          "type": "string"
+        },
+        "organization": {
+          "description": "The organization with which the primary contact is associated.",
+          "type": "string"
+        },
+        "address_contact_methods": {
+          "description": "The list of contact methods for this address",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateAddressContactMethod"
+          }
+        }
+      }
+    },
+    "CreateAddressContactMethod": {
+      "description": "Address information",
+      "required": [
+        "contact_type",
+        "contact_info"
+      ],
+      "type": "object",
+      "properties": {
+        "contact_type": {
+          "description": "The type of contact (email, phone, etc)",
+          "enum": [
+            "Business",
+            "Cell",
+            "Emergency",
+            "Fax",
+            "Home",
+            "Pager",
+            "WebAddress",
+            "Main",
+            "Work"
+          ],
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "The contact information (email address, phone number, etc) for this method.",
+          "type": "string"
+        }
+      }
+    },
+    "ProjectDetail": {
+      "type": "object",
+      "properties": {
+        "project_id": {
+          "format": "int32",
+          "description": "The project database identifier.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The project description.",
+          "type": "string"
+        },
+        "ui_project_id": {
+          "description": "The project user-visible identifier.",
+          "type": "string"
+        },
+        "start_date": {
+          "format": "date-time",
+          "description": "The project start date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "end_date": {
+          "format": "date-time",
+          "description": "The project end date, in ISO 8601 format: 2016-03-14.",
+          "type": "string"
+        },
+        "location": {
+          "description": "The project location.",
+          "type": "string"
+        },
+        "division": {
+          "description": "The project division",
+          "type": "string"
+        },
+        "department": {
+          "description": "The project department",
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "description": "The project status",
+          "type": "string"
+        },
+        "prevent_data_entry": {
+          "description": "Whether to prevent data entry for this project.",
+          "type": "boolean"
+        },
+        "prevent_posting_after": {
+          "description": "If preventing data entry, whether to prevent posting after a certain date.",
+          "type": "boolean"
+        },
+        "posting_date": {
+          "format": "date-time",
+          "description": "The date after which to prevent posting, if applicable.",
+          "type": "string"
+        },
+        "account_restrictions": {
+          "$ref": "#/definitions/ProjectAccountRestrictions",
+          "description": "The account allowances or restrictions for this project."
+        },
+        "contacts": {
+          "description": "The contacts for this project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactAddress"
+          }
+        },
+        "custom_fields": {
+          "description": "The custom fields for this project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomField"
+          }
+        }
+      }
+    },
+    "ProjectAccountRestrictions": {
+      "type": "object",
+      "properties": {
+        "allow_or_restrict": {
+          "enum": [
+            "Allow",
+            "Restrict"
+          ],
+          "type": "string"
+        },
+        "criteria": {
+          "enum": [
+            "All",
+            "Selected",
+            "Range",
+            "Query"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "ContactAddress": {
+      "type": "object",
+      "properties": {
+        "contact_id": {
+          "format": "int32",
+          "description": "The identifier for this contact.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this address",
+          "type": "string"
+        },
+        "country": {
+          "description": "The country for the address",
+          "type": "string"
+        },
+        "city": {
+          "description": "The city for the address",
+          "type": "string"
+        },
+        "county": {
+          "description": "The county for this address",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state or province (or suburb in NZ) for the address",
+          "type": "string"
+        },
+        "address_line": {
+          "description": "The street information / address line for this address",
+          "type": "string"
+        },
+        "postal": {
+          "description": "Refers to the Postal Code or ZIP of the address",
+          "type": "string"
+        },
+        "title": {
+          "description": "The title for the primary contact",
+          "enum": [
+            "Mr",
+            "Mrs",
+            "Ms",
+            "Brother",
+            "Captain",
+            "Chief",
+            "Dr",
+            "Drs",
+            "Governor",
+            "Master",
+            "Miss",
+            "Pastor",
+            "Prof",
+            "Rabbi",
+            "Rev",
+            "TheHonorable",
+            "Major"
+          ],
+          "type": "string"
+        },
+        "first_name": {
+          "description": "The first name of the primary contact",
+          "type": "string"
+        },
+        "middle_name": {
+          "description": "The middle initial or name of the primary contact",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "The last name of the primary contact",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "The suffix of the primary contact",
+          "enum": [
+            "Sr",
+            "Jr",
+            "II",
+            "III",
+            "IV",
+            "Esq",
+            "CPA",
+            "DDS",
+            "DMin",
+            "EdD",
+            "MD",
+            "MEd",
+            "OOD",
+            "PhD",
+            "RN"
+          ],
+          "type": "string"
+        },
+        "position": {
+          "description": "The position of the primary contact",
+          "type": "string"
+        },
+        "address_contact_methods": {
+          "description": "The list of contact methods for this address",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressContactMethod"
+          }
+        }
+      }
+    },
+    "AddressContactMethod": {
+      "description": "Address information",
+      "required": [
+        "contact_type",
+        "contact_info"
+      ],
+      "type": "object",
+      "properties": {
+        "contact_method_id": {
+          "format": "int32",
+          "description": "The address contact method identifier",
+          "type": "integer"
+        },
+        "contact_type": {
+          "description": "The type of contact (email, phone, etc)",
+          "enum": [
+            "Business",
+            "Cell",
+            "Emergency",
+            "Fax",
+            "Home",
+            "Pager",
+            "WebAddress",
+            "Main",
+            "Work"
+          ],
+          "type": "string"
+        },
+        "contact_info": {
+          "description": "The contact information (email address, phone number, etc) for this method.",
+          "type": "string"
+        }
+      }
+    },
+    "TableValueList[ProjectType]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "description": "The type of the lookup",
+          "type": "integer"
+        },
+        "values": {
+          "description": "The value for this lookup.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectType"
+          }
+        }
+      }
+    },
+    "ProjectType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "description": "The identifier for this lookup value.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this lookup value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this lookup value.",
+          "type": "string"
+        }
+      }
+    },
+    "TableValueList[ProjectStatus]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "description": "The type of the lookup",
+          "type": "integer"
+        },
+        "values": {
+          "description": "The value for this lookup.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectStatus"
+          }
+        }
+      }
+    },
+    "ProjectStatus": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "description": "The identifier for this lookup value.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this lookup value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this lookup value.",
+          "type": "string"
+        }
+      }
+    },
+    "TableValueList[ProjectDivision]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "description": "The type of the lookup",
+          "type": "integer"
+        },
+        "values": {
+          "description": "The value for this lookup.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectDivision"
+          }
+        }
+      }
+    },
+    "ProjectDivision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "description": "The identifier for this lookup value.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this lookup value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this lookup value.",
+          "type": "string"
+        }
+      }
+    },
+    "TableValueList[ProjectLocation]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "description": "The type of the lookup",
+          "type": "integer"
+        },
+        "values": {
+          "description": "The value for this lookup.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectLocation"
+          }
+        }
+      }
+    },
+    "ProjectLocation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "description": "The identifier for this lookup value.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this lookup value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this lookup value.",
+          "type": "string"
+        }
+      }
+    },
+    "TableValueList[ProjectDepartment]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "description": "The type of the lookup",
+          "type": "integer"
+        },
+        "values": {
+          "description": "The value for this lookup.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectDepartment"
+          }
+        }
+      }
+    },
+    "ProjectDepartment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "description": "The identifier for this lookup value.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "The description for this lookup value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value for this lookup value.",
+          "type": "string"
+        }
+      }
+    },
+    "GlSummaryFilters": {
+      "description": "List criteria for GL summary.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 1000. The maximum allowed value is 5000",
+          "maximum": 5000,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "type": "integer"
+        },
+        "fiscal_period_id": {
+          "format": "int32",
+          "description": "The fiscal period identifier.",
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The account number.",
+          "type": "string"
+        },
+        "ui_project_id": {
+          "description": "The project user-visible identifier.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[GlSummary]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GlSummary"
+          }
+        }
+      }
+    },
+    "GlSummary": {
+      "type": "object",
+      "properties": {
+        "fiscal_year": {
+          "type": "string"
+        },
+        "fiscal_period": {
+          "type": "string"
+        },
+        "period_start_date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "period_end_date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "account_number": {
+          "type": "string"
+        },
+        "ui_project_id": {
+          "type": "string"
+        },
+        "transaction_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionCodeValue"
+          }
+        },
+        "beginning_balance": {
+          "format": "double",
+          "type": "number"
+        },
+        "debit": {
+          "format": "double",
+          "type": "number"
+        },
+        "credit": {
+          "format": "double",
+          "type": "number"
+        },
+        "encumbered_beginning_balance": {
+          "format": "double",
+          "type": "number"
+        },
+        "encumbered_debit": {
+          "format": "double",
+          "type": "number"
+        },
+        "encumbered_credit": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "TransactionCode": {
+      "description": "Journal entry transaction code",
+      "type": "object",
+      "properties": {
+        "transaction_code_id": {
+          "format": "int32",
+          "description": "The transaction code identifier.",
+          "type": "integer"
+        },
+        "name": {
+          "description": "The transaction code name.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The transaction code description.",
+          "type": "string"
+        }
+      }
+    },
+    "SearchTransactionDistributions": {
+      "description": "Search criteria for transaction distributions.",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "format": "int32",
+          "description": "The number of records to skip, for use with pagination.",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "limit": {
+          "format": "int32",
+          "description": "The number of records to return. If not specified, the default is 100. The maximum allowed value is 500.",
+          "maximum": 500,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "account_number": {
+          "description": "The account number.",
+          "type": "string"
+        },
+        "ui_project_id": {
+          "description": "The project user-visible identifier.",
+          "type": "string"
+        },
+        "batch_id": {
+          "format": "int32",
+          "description": "The batch identifier.",
+          "type": "integer"
+        },
+        "journal": {
+          "description": "The full name of the journal.",
+          "type": "string"
+        },
+        "from_date": {
+          "format": "date-time",
+          "description": "The minimum post date to include records.",
+          "type": "string"
+        },
+        "to_date": {
+          "format": "date-time",
+          "description": "The maximum post date to include records.",
+          "type": "string"
+        },
+        "type_code": {
+          "description": "The journal entry transaction type (debit or credit).",
+          "enum": [
+            "Debit",
+            "Credit"
+          ],
+          "type": "string"
+        },
+        "transaction_code_1_value": {
+          "description": "The transaction code 1 value.",
+          "type": "string"
+        },
+        "transaction_code_2_value": {
+          "description": "The transaction code 2 value.",
+          "type": "string"
+        },
+        "transaction_code_3_value": {
+          "description": "The transaction code 3 value.",
+          "type": "string"
+        },
+        "transaction_code_4_value": {
+          "description": "The transaction code 4 value.",
+          "type": "string"
+        },
+        "transaction_code_5_value": {
+          "description": "The transaction code 5 value.",
+          "type": "string"
+        }
+      }
+    },
+    "ApiCollection[TransactionDistribution]": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionDistribution"
+          }
+        }
+      }
+    },
+    "TransactionDistribution": {
+      "description": "Transaction Distribution.",
+      "required": [
+        "transaction_code_values"
+      ],
+      "type": "object",
+      "properties": {
+        "transaction_id": {
+          "format": "int32",
+          "description": "The transaction identifier.",
+          "type": "integer"
+        },
+        "transaction_amount": {
+          "format": "double",
+          "description": "The transaction amount.",
+          "type": "number"
+        },
+        "distribution_id": {
+          "format": "int32",
+          "description": "The distribution identifier.",
+          "type": "integer"
+        },
+        "batch_id": {
+          "format": "int32",
+          "description": "The batch identifier",
+          "type": "integer"
+        },
+        "distribution_amount": {
+          "format": "double",
+          "description": "The distribution amount.",
+          "type": "number"
+        },
+        "account_number": {
+          "description": "The account number.",
+          "type": "string"
+        },
+        "account_class": {
+          "description": "The account class.",
+          "type": "string"
+        },
+        "ui_project_id": {
+          "description": "The project user-visible identifier.",
+          "type": "string"
+        },
+        "post_date": {
+          "format": "date-time",
+          "description": "The transaction post date.",
+          "type": "string"
+        },
+        "type_code": {
+          "description": "The transaction type (debit or credit).",
+          "enum": [
+            "Debit",
+            "Credit"
+          ],
+          "type": "string"
+        },
+        "reference": {
+          "description": "The transaction reference.",
+          "type": "string"
+        },
+        "journal": {
+          "description": "The full name of the journal.",
+          "type": "string"
+        },
+        "encumbrance": {
+          "description": "The transaction encumbrance type.",
+          "type": "string"
+        },
+        "transaction_code_values": {
+          "description": "The distribution transaction codes.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionCodeValue"
+          }
+        }
+      }
+    },
+    "ClassArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Class"
+      }
+    },
+    "JournalCodeArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/JournalCode"
+      }
+    },
+    "CreateJournalEntryArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CreateJournalEntry"
+      }
+    },
+    "TransactionCodeArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TransactionCode"
+      }
+    },
+    "TransactionCodeValueArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TransactionCodeValue"
+      }
+    }
+  }
+}
