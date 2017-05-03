@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89034d5e-92b9-46c9-9081-81727ec5c7d7" name="Default" comment="Fixed more issues with boolean and number values">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jsonFiles/UberAPI.json" afterPath="" />
+    <list default="true" id="89034d5e-92b9-46c9-9081-81727ec5c7d7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EditScripts.js" afterPath="$PROJECT_DIR$/EditScripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FileEditor.php" afterPath="$PROJECT_DIR$/FileEditor.php" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -81,28 +79,18 @@
       <file leaf-file-name="BlackbaudGeneralLedgerAPI.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPI.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="12" />
+            <state relative-caret-position="269">
+              <caret line="21" column="50" lean-forward="false" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlackbaudAccountsAPITEMP.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25952">
-              <caret line="2163" column="1" lean-forward="false" selection-start-line="2163" selection-start-column="1" selection-end-line="2163" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EditScripts.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="EditScripts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EditScripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
+            <state relative-caret-position="266">
+              <caret line="116" column="75" lean-forward="false" selection-start-line="116" selection-start-column="75" selection-end-line="116" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -140,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>a {</find>
       <find>list-style</find>
       <find>none</find>
       <find>pager</find>
@@ -170,6 +157,7 @@
       <find>true,</find>
       <find>false</find>
       <find>999</find>
+      <find>null</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,10 +199,10 @@
         <option value="$PROJECT_DIR$/upload.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/FileEditor.php" />
-        <option value="$PROJECT_DIR$/EditScripts.js" />
         <option value="$PROJECT_DIR$/jsonFiles/TwitterAPITEMP.json" />
         <option value="$PROJECT_DIR$/jsonFiles/InstagramAPITEMP.json" />
         <option value="$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json" />
+        <option value="$PROJECT_DIR$/EditScripts.js" />
       </list>
     </option>
   </component>
@@ -410,7 +398,7 @@
       <workItem from="1492372525567" duration="106670000" />
       <workItem from="1492812516900" duration="77967000" />
       <workItem from="1493086221744" duration="56425000" />
-      <workItem from="1493727932171" duration="52942000" />
+      <workItem from="1493727932171" duration="54384000" />
     </task>
     <task id="LOCAL-00001" summary="Code is cleaned up some">
       <created>1489895323595</created>
@@ -566,11 +554,18 @@
       <option name="project" value="LOCAL" />
       <updated>1493826154988</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Fixed more... issues with boolean and number values (hopefully)">
+      <created>1493844453426</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1493844453426</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="865369000" />
+    <option name="totallyTimeSpent" value="866811000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -677,7 +672,8 @@
     <MESSAGE value="Added css to nav bar" />
     <MESSAGE value="Fixed issues with boolean and number values" />
     <MESSAGE value="Fixed more issues with boolean and number values" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed more issues with boolean and number values" />
+    <MESSAGE value="Fixed more... issues with boolean and number values (hopefully)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed more... issues with boolean and number values (hopefully)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -948,26 +944,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EditScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPI.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="12" />
+        <state relative-caret-position="269">
+          <caret line="21" column="50" lean-forward="false" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25952">
-          <caret line="2163" column="1" lean-forward="false" selection-start-line="2163" selection-start-column="1" selection-end-line="2163" selection-end-column="1" />
+        <state relative-caret-position="269">
+          <caret line="263" column="24" lean-forward="false" selection-start-line="263" selection-start-column="24" selection-end-line="263" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EditScripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="116" column="75" lean-forward="false" selection-start-line="116" selection-start-column="75" selection-end-line="116" selection-end-column="75" />
           <folding />
         </state>
       </provider>

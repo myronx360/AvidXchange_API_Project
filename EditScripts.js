@@ -107,9 +107,14 @@ function setUpEditor() {
                         newText = $("[name='newText']").val();
                     }
                 }
+
                 if(originalText.charAt(0) == ':'){
                     if (newText.charAt(0) !== ':') {
                         $("[name='newText']").val(colon.concat(newText));
+                        newText = $("[name='newText']").val();
+                    }
+                    if(newText.charAt(0) == ':' && newText.charAt(1) !== ' '){// add space after :
+                        $("[name='newText']").val(newText.replace(/:/, ": "));//:newText == : newText
                         newText = $("[name='newText']").val();
                     }
                 }
