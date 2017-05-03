@@ -86,12 +86,15 @@ function setUpJsonText($path){
 
         // patterns and preg_replace remove special characters from the line to be displayed and stored in $formattedLine
 //        $patterns = '/(^{\n|: {\n|": \[\n|},\n| ],\n|",\n|,\n)/';
-        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n|,$)/';
+        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n|,$|,\n )/';
         $formattedLine = preg_replace($patterns, " ", $line);
         $patterns = '/(",)/';
         $formattedLine = preg_replace($patterns, '"', $formattedLine);// slows things down b/c of other types of json
-        $patterns = '/(": \[|": {)/';
-        $formattedLine = preg_replace($patterns, '":', $formattedLine);// slows things down b/c of other types of json
+        if(strstr($formattedLine, "[]") === false) {
+            $patterns = '/(": \[|": {)/';
+            $formattedLine = preg_replace($patterns, '":', $formattedLine);// slows things down b/c of other types of json
+        }
+
 
         $formattedLine = trim($formattedLine);
         if($formattedLine == '{' || $formattedLine == '['|| $formattedLine == '}'|| $formattedLine == ']'||

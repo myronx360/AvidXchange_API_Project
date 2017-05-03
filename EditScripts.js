@@ -33,6 +33,8 @@ function setUpEditor() {
             var cancelBtn = "<input  type='button' name='cancel_btn' value='Close'> <br>";
             var lineID = "<input type='hidden' name='lineID' id='lineID'>";
 
+
+
             if(!isEditing) {
 
                 isEditing = true;
@@ -42,6 +44,17 @@ function setUpEditor() {
                 $("[name='originalText']").val($(elementClicked).text());
                 $("[name='lineID']").val($(elementClicked).attr("id"));
                 $("[name='newText']").select();
+                $("[name='newText']").on("keypress",function(e) {
+                    var key = e.keyCode;
+
+                    // If the user has pressed enter
+                    if (key == 13) {
+                        // $("[name='confirm_btn']").click(); //submit change
+                        $("[name='newText']").val($("[name='newText']").val() + '\\n'); // add new line w/o messing up .json file
+                        return false;
+                    }
+                });
+
 
             }else{
                 reset();
@@ -91,20 +104,23 @@ function setUpEditor() {
                     $("#saveMsg").text("");
                     $("#saveErrMsg").text($("#apiSelector option:selected").text() + " editing");
 
-                    //insert new nav links
-                    $("#navLinks").val("");
-
-                    document.getElementById("navLinks").innerHTML = "<span> Skip To: <a href='#Top'> Top </a>" ;
-                    // alert(result);
+                     // alert(result);
                     $.post("FileEditor.php", {nav: tempApiUrl}, function(jsonString) {
 
                         var jObj = JSON.parse(jsonString);
 
+                        //insert new nav links
+                        $("#navLinks").val("");
+
+                        document.getElementById("navLinks").innerHTML = "<span class='nav-tabs nav-divider pager pagination'><li class='lead'>Skip to: &nbsp</li><li><a href='#Top'> Top </a></li></span>" ;
+
                         // create nav anchor links
                         for (var x in jObj) {
-                            document.getElementById("navLinks").innerHTML += "<a href=" + '#'.concat(x) + ">" + x + "</a>" + "\t\t";
+                            document.getElementById("navLinks").innerHTML += "<span class='nav-tabs  pager pagination'><li><a class='' href=" + '#'.concat(x) + ">" + x + "</a></li></span>";
                             navLinks.push(x);
                         }
+
+                        document.getElementById("navLinks").innerHTML += "<span class='nav-tabs  pager pagination'> <li><a href='#Bottom'> Bottom </a></li><li></li></span>";
 
                     $.post("FileEditor.php", {suggest: tempApiUrl, editStarted: true, navWords: navLinks.toString()}, function(result) {
                         $("#displayJson").html(result);
@@ -114,7 +130,6 @@ function setUpEditor() {
                         $("#saveErrMsg").text("");
                         $("#saveMsg").text($("#apiSelector option:selected").text() + " edited");
                     });
-                        document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
                     });
 
                 });
@@ -155,14 +170,12 @@ function setUpEditor() {
 
 
 
-
-
 /**
  *
  * TODO:
  *
- *
- *
+ * blackboard api 31
+ * disable upload button if no file is selected // add color to message
  * saving a file with the same name overwrites file. feature?
  * handle what happens when a folder is in the list
  * // pressing enter on a textarea

@@ -11,22 +11,25 @@ function setFile(apiUrl, newAPISelected) {
         $("#loadingMsg").text("");
     }else{
 
-        document.getElementById("navLinks").innerHTML = "<span > Skip To: <a href='#Top'> Top </a>";
         // show loading message
         $("#loadingMsg").text($("#apiSelector option:selected").text() + " loading...");
         $("#loadingMsg").removeClass();
         $("#loadingMsg").addClass("text-warning");
 
 
-        $.post("FileEditor.php", {nav: apiUrl}, function (result) {
+        $.post("FileEditor.php", {nav: apiUrl}, function (result) {// list-inline
             var jObj = JSON.parse(result);
 
             // create nav anchor links
+            document.getElementById("navLinks").innerHTML = "<span class='nav-tabs nav-divider pager pagination'><li class='lead'>Skip to: &nbsp</li><li><a href='#Top'> Top </a></li></span>";
+
             for (var x in jObj) {
-                document.getElementById("navLinks").innerHTML += "<a href=" + '#'.concat(x) + ">" + x + "</a>" + "\t\t";
+                document.getElementById("navLinks").innerHTML += "<span class='nav-tabs  pager pagination'><li><a class='' href=" + '#'.concat(x) + ">" + x + "</a></li></span>";
+
                 navLinks.push(x);
             }
 
+            document.getElementById("navLinks").innerHTML += "<span class='nav-tabs  pager pagination'> <li><a href='#Bottom'> Bottom </a></li><li></li></span>";
 
             $.post("FileEditor.php", {
                 suggest: apiUrl,
@@ -50,8 +53,7 @@ function setFile(apiUrl, newAPISelected) {
                 });
 
             });
-            document.getElementById("navLinks").innerHTML += "<a href='#Bottom'> Bottom </a></span>";
-        });
+         });
 
 
     }

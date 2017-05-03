@@ -55,37 +55,40 @@ if(isset($_POST["submit"])) {
 <header id="navi" class="navbar-fixed-top nav-blocks main-container panel-heading panel-primary"><! axc-subnav axc-toolbar axc-toobar-header page-header-->
     <span class="navbar-header">
         <nav id="nav">
+             <img src="https://2udm7l4frjjz47k5wg248qz0-wpengine.netdna-ssl.com/wp-content/uploads/avidxchange-logo.svg" width="192" height="31" style="height:31px; overflow:hidden;">
+            &nbsp&nbsp&nbsp
         <a href="index.php"><input type="button" value="API Editor"></a><br>
         </nav>
     </span>
 </header>
 
-<br><br><br><br><br><br>
-<h1 class="h1">Getting Started</h1>
+<br><br><br><br><br><br><br><br>
+<div class = 'container'>
+    <h1 class="h1">Getting Started</h1>
 
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    Select API to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input class="btn-success" type="submit" value="Upload API" name="submit">
-</form>
-<div class="has-error" id="uploadMessage">
-<?php
-if(isset($_POST["submit"])) {
-    if (!empty($successMsg)) {
-        echo "<span class='text-success'>".$successMsg."</span>";
-?>
-    <div class="text-success" id = "dateTime"></div>
-<?php
-    } else {
-        echo "<span class='text-danger'>". $failMsg."</span>";
-?>
-    <div class="text-danger" id = "dateTime"></div>
-<?php
-    }
-}
-?>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        Select API to upload:
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input class="btn-success" type="submit" value="Upload API" name="submit">
+    </form>
+    <div class="has-error" id="uploadMessage">
+        <?php
+        if(isset($_POST["submit"])) {
+            if (!empty($successMsg)) {
+                echo "<span class='text-success'>".$successMsg."</span>";
+                ?>
+                <div class="text-success" id = "dateTime"></div>
+                <?php
+            } else {
+                echo "<span class='text-danger'>". $failMsg."</span>";
+                ?>
+                <div class="text-danger" id = "dateTime"></div>
+                <?php
+            }
+        }
+        ?>
+    </div>
 </div>
-
 <footer></footer>
 <script>
     var date = new Date();
