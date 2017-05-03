@@ -65,7 +65,7 @@ function setUpEditor() {
                 var originalText = $("[name='originalText']").val();
                 var quote = "\"";
 
-
+                // alert("old=" + originalText+" new= "+newText);
 
                 // if the originalText had quotes re-add quotes to newText if missing
                 if(originalText.charAt(0) == '"' && originalText.charAt(originalText.length - 1) == '"') {
@@ -77,15 +77,17 @@ function setUpEditor() {
                     } else if (newText.charAt(newText.length - 1) !== '"') {
                         $("[name='newText']").val((newText).concat(quote));
                     }
-
+                    newText = $("[name='newText']").val();
                     // handles what happens when the new data is empty
                     if(newText == "" || newText == "\"\""){
                         $("[name='newText']").val(quote.concat("[]").concat(quote));
+                        newText = $("[name='newText']").val();
                     }
                 }else{
                     // handles what happens when the new data is empty
                     if(newText == "" || newText == "\"\""){
                         $("[name='newText']").val("[]");
+                        newText = $("[name='newText']").val();
                     }
                 }
 
@@ -94,19 +96,34 @@ function setUpEditor() {
 
                 // if the originalText had a colon and/or a comma re-add colon and/or comma to newText if missing
                 if(originalText.charAt(0) == ':' && originalText.charAt(originalText.length - 1) == ',') {
-                    if (newText.charAt(0) !== ':' && newText.charAt(newText.length - 1) !== ',') {
-                        $("[name='newText']").val((colon).concat(newText).concat(comma));
-                    } else if (newText.charAt(0) !== ':') {
-                        $("[name='newText']").val(colon.concat(newText));
-                    } else if (newText.charAt(newText.length - 1) !== ',') {
-                        $("[name='newText']").val((newText).concat(comma));
-                    }
-
                     // handles what happens when the new data is empty
                     if(newText == "" || newText == "\"\""){
                         $("[name='newText']").val((colon).concat("[]").concat(comma));
+                        newText = $("[name='newText']").val();
+                    }
+
+                    if (newText.charAt(0) !== ':' && newText.charAt(newText.length - 1) !== ',') {
+                        $("[name='newText']").val((colon).concat(newText).concat(comma));
+                        newText = $("[name='newText']").val();
                     }
                 }
+                if(originalText.charAt(0) == ':'){
+                    if (newText.charAt(0) !== ':') {
+                        $("[name='newText']").val(colon.concat(newText));
+                        newText = $("[name='newText']").val();
+                    }
+                }
+
+                if(originalText.charAt(originalText.length - 1) == ','){
+                    if (newText.charAt(newText.length - 1) !== ',') {
+                        $("[name='newText']").val((newText).concat(comma));
+                        newText = $("[name='newText']").val();
+                    }
+                }
+
+
+
+                // alert("old=" + originalText+" new= "+newText);
                     var form = $("#editForm");
 
                 $.ajax({

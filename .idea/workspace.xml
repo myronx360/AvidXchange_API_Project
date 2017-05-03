@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89034d5e-92b9-46c9-9081-81727ec5c7d7" name="Default" comment="">
+    <list default="true" id="89034d5e-92b9-46c9-9081-81727ec5c7d7" name="Default" comment="Fixed more issues with boolean and number values">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jsonFiles/UberAPI.json" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EditScripts.js" afterPath="$PROJECT_DIR$/EditScripts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FileEditor.php" afterPath="$PROJECT_DIR$/FileEditor.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GetJSON.js" afterPath="$PROJECT_DIR$/GetJSON.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jsonFiles/test.json" afterPath="$PROJECT_DIR$/jsonFiles/test.json" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +24,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
-              <caret line="51" column="68" lean-forward="false" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="81" />
+            <state relative-caret-position="362">
+              <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
               <folding>
                 <element signature="e#6#106#0#PHP" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#nav#0;n#span#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -35,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TwitterAPI.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Back up JSONs/TwitterAPI.json">
+      <file leaf-file-name="InstagramAPI.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPI.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="1" column="21" lean-forward="true" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="21" />
+            <state relative-caret-position="176">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,10 +47,32 @@
       <file leaf-file-name="FileEditor.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FileEditor.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="88" column="57" lean-forward="false" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
+            <state relative-caret-position="22">
+              <caret line="88" column="64" lean-forward="true" selection-start-line="88" selection-start-column="64" selection-end-line="88" selection-end-column="64" />
               <folding>
                 <element signature="e#6#107#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TwitterAPI.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsonFiles/TwitterAPI.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="192" column="42" lean-forward="false" selection-start-line="192" selection-start-column="36" selection-end-line="192" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="upload.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/upload.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="704">
+              <caret line="70" column="64" lean-forward="true" selection-start-line="70" selection-start-column="64" selection-end-line="70" selection-end-column="64" />
+              <folding>
+                <marker date="1493835051300" expanded="true" signature="1290:1309" ph="..." />
               </folding>
             </state>
           </provider>
@@ -67,32 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InstagramAPI.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPI.json">
+      <file leaf-file-name="BlackbaudAccountsAPITEMP.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#info#0;n#!!top" expanded="false" />
-                <element signature="e#4446#4469#0" expanded="false" />
-                <element signature="e#4487#4521#0" expanded="false" />
-                <element signature="e#4539#4573#0" expanded="false" />
-                <element signature="e#4587#5862#0" expanded="false" />
-                <element signature="n#!!block;n#securityDefinitions#0;n#!!top" expanded="false" />
-                <element signature="e#6684#6901#0" expanded="false" />
-                <element signature="n#!!block;n#parameters#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#paths#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#definitions#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bootstrap.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="1863" column="14" lean-forward="false" selection-start-line="1863" selection-start-column="10" selection-end-line="1863" selection-end-column="14" />
+            <state relative-caret-position="25952">
+              <caret line="2163" column="1" lean-forward="false" selection-start-line="2163" selection-start-column="1" selection-end-line="2163" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -101,8 +101,8 @@
       <file leaf-file-name="EditScripts.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EditScripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="89" column="17" lean-forward="true" selection-start-line="89" selection-start-column="17" selection-end-line="89" selection-end-column="17" />
+            <state relative-caret-position="288">
+              <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -128,16 +128,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlackbaudGeneralLedgerAPITEMP.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPITEMP.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="1606" column="26" lean-forward="false" selection-start-line="1606" selection-start-column="26" selection-end-line="1606" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -150,7 +140,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>padding</find>
       <find>a {</find>
       <find>list-style</find>
       <find>none</find>
@@ -166,7 +155,6 @@
       <find>fa;</find>
       <find>falsee</find>
       <find>99</find>
-      <find>true,</find>
       <find>true</find>
       <find>500</find>
       <find>mark</find>
@@ -174,12 +162,14 @@
       <find>fcf8e3</find>
       <find>poin</find>
       <find>false,</find>
-      <find>false</find>
       <find>false,</find>
       <find>&quot;Returns results with an ID less than or equal to the specified ID&quot;</find>
       <find>&quot;Format - int32. The identifier of the journal entry batch to which to add journal entries.&quot;</find>
       <find>5000</find>
       <find>[]</find>
+      <find>true,</find>
+      <find>false</find>
+      <find>999</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -205,26 +195,26 @@
         <option value="$PROJECT_DIR$/Back up JSONs/index.php" />
         <option value="$PROJECT_DIR$/FileHandler.php" />
         <option value="$PROJECT_DIR$/jsonFiles/TwitterAPI.json" />
-        <option value="$PROJECT_DIR$/jsonFiles/InstagramAPITEMP.json" />
         <option value="$PROJECT_DIR$/jsonFiles/newIN.json" />
         <option value="$PROJECT_DIR$/SaveScripts.js" />
         <option value="$PROJECT_DIR$/FileWriter.php" />
         <option value="$PROJECT_DIR$/Navigator.php" />
         <option value="$PROJECT_DIR$/bootstrap.css" />
-        <option value="$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json" />
         <option value="$PROJECT_DIR$/jsonFiles/blackboardAPITEMP.json" />
-        <option value="$PROJECT_DIR$/upload.php" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/jsonFiles/fix.json" />
         <option value="$PROJECT_DIR$/jsonFiles/InstagramAPI.json" />
         <option value="$PROJECT_DIR$/GetJSON.js" />
         <option value="$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPI.json" />
-        <option value="$PROJECT_DIR$/jsonFiles/TwitterAPITEMP.json" />
         <option value="$PROJECT_DIR$/jsonFiles/test.json" />
         <option value="$PROJECT_DIR$/jsonFiles/testTEMP.json" />
+        <option value="$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPITEMP.json" />
+        <option value="$PROJECT_DIR$/upload.php" />
+        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/FileEditor.php" />
         <option value="$PROJECT_DIR$/EditScripts.js" />
-        <option value="$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPITEMP.json" />
+        <option value="$PROJECT_DIR$/jsonFiles/TwitterAPITEMP.json" />
+        <option value="$PROJECT_DIR$/jsonFiles/InstagramAPITEMP.json" />
+        <option value="$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json" />
       </list>
     </option>
   </component>
@@ -420,7 +410,7 @@
       <workItem from="1492372525567" duration="106670000" />
       <workItem from="1492812516900" duration="77967000" />
       <workItem from="1493086221744" duration="56425000" />
-      <workItem from="1493727932171" duration="47282000" />
+      <workItem from="1493727932171" duration="52942000" />
     </task>
     <task id="LOCAL-00001" summary="Code is cleaned up some">
       <created>1489895323595</created>
@@ -569,11 +559,18 @@
       <option name="project" value="LOCAL" />
       <updated>1493805084209</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fixed more issues with boolean and number values">
+      <created>1493826154988</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1493826154988</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="859709000" />
+    <option name="totallyTimeSpent" value="865369000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -589,7 +586,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14427084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -679,7 +676,8 @@
     <MESSAGE value="works with one more json type. Added alert messages for editing" />
     <MESSAGE value="Added css to nav bar" />
     <MESSAGE value="Fixed issues with boolean and number values" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed issues with boolean and number values" />
+    <MESSAGE value="Fixed more issues with boolean and number values" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed more issues with boolean and number values" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -732,7 +730,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fit 20.json" />
-    <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPITEMP.json" />
     <entry file="file://$PROJECT_DIR$/autosize-master/src/autosize.js" />
     <entry file="file://$PROJECT_DIR$/autosize-master/build.js" />
     <entry file="file://$PROJECT_DIR$/jsonFiles/newINTEMP.json" />
@@ -788,7 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json" />
     <entry file="file://$PROJECT_DIR$/jsonFiles/blackboardAPITEMP.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -805,30 +801,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="64" column="32" lean-forward="false" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#nav#0;n#span#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1493773427869" expanded="true" signature="1290:1309" ph="..." />
-            <marker date="1493773427869" expanded="true" signature="1290:1765" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsonFiles/fix.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="3503" column="21" lean-forward="false" selection-start-line="3503" selection-start-column="21" selection-end-line="3503" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonFiles/TwitterAPI.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="192" column="42" lean-forward="false" selection-start-line="192" selection-start-column="36" selection-end-line="192" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -869,36 +845,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="51" column="68" lean-forward="false" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="81" />
-          <folding>
-            <element signature="e#6#106#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#nav#0;n#span#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPI.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#info#0;n#!!top" expanded="false" />
-            <element signature="e#4446#4469#0" expanded="false" />
-            <element signature="e#4487#4521#0" expanded="false" />
-            <element signature="e#4539#4573#0" expanded="false" />
-            <element signature="e#4587#5862#0" expanded="false" />
-            <element signature="n#!!block;n#securityDefinitions#0;n#!!top" expanded="false" />
-            <element signature="e#6684#6901#0" expanded="false" />
-            <element signature="n#!!block;n#parameters#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#paths#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#definitions#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Back up JSONs/TwitterAPI.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
@@ -923,10 +869,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="70" column="64" lean-forward="true" selection-start-line="70" selection-start-column="64" selection-end-line="70" selection-end-column="64" />
+          <folding>
+            <marker date="1493835051300" expanded="true" signature="1290:1309" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#106#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#nav#0;n#span#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FileEditor.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="88" column="64" lean-forward="true" selection-start-line="88" selection-start-column="64" selection-end-line="88" selection-end-column="64" />
+          <folding>
+            <element signature="e#6#107#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonFiles/TwitterAPI.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="192" column="42" lean-forward="false" selection-start-line="192" selection-start-column="36" selection-end-line="192" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsonFiles/TwitterAPITEMP.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="64" column="106" lean-forward="false" selection-start-line="64" selection-start-column="39" selection-end-line="64" selection-end-column="106" />
+        <state relative-caret-position="269">
+          <caret line="71" column="64" lean-forward="false" selection-start-line="71" selection-start-column="59" selection-end-line="71" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonFiles/InstagramAPITEMP.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="91" column="29" lean-forward="false" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPITEMP.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="1549" column="27" lean-forward="false" selection-start-line="1549" selection-start-column="24" selection-end-line="1549" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EditScripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -939,36 +964,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FileEditor.php">
+    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPITEMP.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="88" column="57" lean-forward="false" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
-          <folding>
-            <element signature="e#6#107#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EditScripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="89" column="17" lean-forward="true" selection-start-line="89" selection-start-column="17" selection-end-line="89" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudAccountsAPI.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonFiles/BlackbaudGeneralLedgerAPITEMP.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="1606" column="26" lean-forward="false" selection-start-line="1606" selection-start-column="26" selection-end-line="1606" selection-end-column="26" />
+        <state relative-caret-position="25952">
+          <caret line="2163" column="1" lean-forward="false" selection-start-line="2163" selection-start-column="1" selection-end-line="2163" selection-end-column="1" />
           <folding />
         </state>
       </provider>
