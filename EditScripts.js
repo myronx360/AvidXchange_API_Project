@@ -89,6 +89,14 @@ function setUpEditor() {
                     }
                 }
 
+                // if the originalText had a comma re-add comma to newText if missing
+                if(originalText.charAt(originalText.length - 1) == ',') {
+                    if (newText.charAt(newText.length - 1) !== ',') {
+                        $("[name='newText']").val((newText).concat(','));
+                    }
+                }
+
+
                     var form = $("#editForm");
 
                 $.ajax({
@@ -174,13 +182,10 @@ function setUpEditor() {
  *
  * TODO:
  *
- * blackboard api 31
  * disable upload button if no file is selected // add color to message
  * saving a file with the same name overwrites file. feature?
  * handle what happens when a folder is in the list
- * // pressing enter on a textarea
  * dyanamically change the size of the textarea
- * AvidXchange css stuff
  *
  *
  **/

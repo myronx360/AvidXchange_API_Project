@@ -86,10 +86,12 @@ function setUpJsonText($path){
 
         // patterns and preg_replace remove special characters from the line to be displayed and stored in $formattedLine
 //        $patterns = '/(^{\n|: {\n|": \[\n|},\n| ],\n|",\n|,\n)/';
-        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n|,$|,\n )/';
+        $patterns = '/(^{\n|: {\n|: \[\n|},\n| ],\n|,\n|,$|,\n)/';
         $formattedLine = preg_replace($patterns, " ", $line);
         $patterns = '/(",)/';
         $formattedLine = preg_replace($patterns, '"', $formattedLine);// slows things down b/c of other types of json
+//        $patterns = '/(,\r)/';
+//        $formattedLine = preg_replace($patterns, " ", $formattedLine);// slows things down b/c of other types of json
         if(strstr($formattedLine, "[]") === false) {
             $patterns = '/(": \[|": {)/';
             $formattedLine = preg_replace($patterns, '":', $formattedLine);// slows things down b/c of other types of json
@@ -109,7 +111,6 @@ function setUpJsonText($path){
             // $currLineLeft holds the sub-string that is left of ':' in the $formattedLine
             $currLineLeft = strstr($formattedLine, ":", true); //strstr(string,search,before_search)
             $currLineLeft = trim($currLineLeft);
-
 
             if (strlen($currLineLeft) > 0) { // if something is there after formatting
 
