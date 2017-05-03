@@ -89,14 +89,24 @@ function setUpEditor() {
                     }
                 }
 
-                // if the originalText had a comma re-add comma to newText if missing
-                if(originalText.charAt(originalText.length - 1) == ',') {
-                    if (newText.charAt(newText.length - 1) !== ',') {
-                        $("[name='newText']").val((newText).concat(','));
+                var colon = ": ";
+                var comma = ',';
+
+                // if the originalText had a colon and/or a comma re-add colon and/or comma to newText if missing
+                if(originalText.charAt(0) == ':' && originalText.charAt(originalText.length - 1) == ',') {
+                    if (newText.charAt(0) !== ':' && newText.charAt(newText.length - 1) !== ',') {
+                        $("[name='newText']").val((colon).concat(newText).concat(comma));
+                    } else if (newText.charAt(0) !== ':') {
+                        $("[name='newText']").val(colon.concat(newText));
+                    } else if (newText.charAt(newText.length - 1) !== ',') {
+                        $("[name='newText']").val((newText).concat(comma));
+                    }
+
+                    // handles what happens when the new data is empty
+                    if(newText == "" || newText == "\"\""){
+                        $("[name='newText']").val((colon).concat("[]").concat(comma));
                     }
                 }
-
-
                     var form = $("#editForm");
 
                 $.ajax({
@@ -114,8 +124,21 @@ function setUpEditor() {
 
                      // alert(result);
                     $.post("FileEditor.php", {nav: tempApiUrl}, function(jsonString) {
+                        // alert messages
+                        $("#loadingMsg").text("checking if " + $("#apiSelector option:selected").text() + " is json format");
+                        $("#loadingMsg").removeClass();
+                        $("#loadingMsg").addClass("text-warning");
+                        $("#saveMsg").text("");
+                        $("#saveErrMsg").text("checking if " + $("#apiSelector option:selected").text() + " is json format");
 
                         var jObj = JSON.parse(jsonString);
+
+                        // alert messages
+                        $("#loadingMsg").text($("#apiSelector option:selected").text() + " is json format");
+                        $("#loadingMsg").removeClass();
+                        $("#loadingMsg").addClass("text-success");
+                        $("#saveErrMsg").text("");
+                        $("#saveMsg").text($("#apiSelector option:selected").text() + " is json format");
 
                         //insert new nav links
                         $("#navLinks").val("");
@@ -159,10 +182,12 @@ function setUpEditor() {
 
         // highlight editable text
         $(".editArea").hover(function(){
-            $(this).css("background-color", "yellow");
+            // $(this).css("background-color", "yellow");
+            $(this).addClass("mark");
             $(this).css("cursor","pointer");
         }, function(){
-            $(this).css("background-color", "transparent");
+            $(this).removeClass("mark");
+            // $(this).css("background-color", "transparent");
         });
 
 
@@ -183,7 +208,7 @@ function setUpEditor() {
  * TODO:
  *
  * disable upload button if no file is selected // add color to message
- * saving a file with the same name overwrites file. feature?
+ * saving a file with the same name overwrites file w/o warning
  * handle what happens when a folder is in the list
  * dyanamically change the size of the textarea
  *

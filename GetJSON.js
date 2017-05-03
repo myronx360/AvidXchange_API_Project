@@ -17,11 +17,11 @@ function setFile(apiUrl, newAPISelected) {
         $("#loadingMsg").addClass("text-warning");
 
 
-        $.post("FileEditor.php", {nav: apiUrl}, function (result) {// list-inline
+        $.post("FileEditor.php", {nav: apiUrl}, function (result) {// list-inline nav-divider
             var jObj = JSON.parse(result);
 
             // create nav anchor links
-            document.getElementById("navLinks").innerHTML = "<span class='nav-tabs nav-divider pager pagination'><li class='lead'>Skip to: &nbsp</li><li><a href='#Top'> Top </a></li></span>";
+            document.getElementById("navLinks").innerHTML = "<span class='nav-tabs  pager pagination'><li class='lead'>Skip to: &nbsp</li><li><a href='#Top'> Top </a></li></span>";
 
             for (var x in jObj) {
                 document.getElementById("navLinks").innerHTML += "<span class='nav-tabs  pager pagination'><li><a class='' href=" + '#'.concat(x) + ">" + x + "</a></li></span>";
